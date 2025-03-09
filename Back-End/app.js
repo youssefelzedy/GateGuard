@@ -9,6 +9,11 @@ const hpp = require('hpp');
 
 const AppError = require('./utils/appError');
 const globalErrorhandler = require('./controllers/errorController');
+const adminRouter = require('./routes/adminRoutes');
+const garageRouter = require('./routes/garageRoutes');
+const userRouter = require('./routes/userRoutes');
+const logsRouter = require('./routes/logsRoutes');
+const authRouter = require('./routes/authRoutes');
 
 const app = express();
 
@@ -73,9 +78,12 @@ app.use((req, res, next) => {
 //   });
 // });
 
-// app.use('/api/v2/tours', tourRouter); //tourRouter is a middleware we use in /api/v2/tours
-// app.use('/api/v2/users', userRouter); //userRouter is a middleware we use in /api/v2/users
-// app.use('/api/v2/reviews', reviewRouter);
+const API = '/api/v1';
+// app.use(`${API}/admins`, adminRouter);
+app.use(`${API}/auth`, authRouter);
+// app.use(`${API}/garages`, garageRouter);
+// app.use(`${API}/users`, userRouter);
+// app.use(`${API}/logs`, logsRouter);
 
 app.all('*', (req, res, next) => {
   // res.status(404).json({
