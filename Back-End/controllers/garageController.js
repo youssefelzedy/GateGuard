@@ -4,7 +4,6 @@ const AppError = require('../utils/appError');
 
 exports.getAllGarages = catchAsync(async (req, res, next) => {
   const garages = await Garage.find();
-
   res.status(200).json({
     status: 'success',
     results: garages.length,
@@ -29,22 +28,21 @@ exports.getGarage = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.createGarage = catchAsync(async (req, res, next) => {
-  const garage = await Garage.create(req.body);
+// exports.createGarage = catchAsync(async (req, res, next) => {
+//   const garage = await Garage.create(req.body);
 
-  if (!garage) {
-    return next(new AppError('Error creating garage', 400));
-  }
+//   if (!garage) {
+//     return next(new AppError('Error creating garage', 400));
+//   }
 
-  res.status(201).json({
-    status: 'success',
-    data: {
-      data: garage,
-    },
-  });
-});
+//   res.status(201).json({
+//     status: 'success',
+//     data: {
+//       data: garage,
+//     },
+//   });
+// });
 
-// Compare this sinnpoe
 exports.deleteGarage = catchAsync(async (req, res, next) => {
   const garage = await Garage.findByIdAndUpdate(req.params.id, {
     active: false,

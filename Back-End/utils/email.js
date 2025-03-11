@@ -5,6 +5,7 @@ const sendEmail = async (options) => {
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
+    secure: process.env.EMAIL_PORT === '465', // true for 465, false for other ports
     auth: {
       user: process.env.EMAIL_USERNAME,
       pass: process.env.EMAIL_PASSWORD,
@@ -13,15 +14,22 @@ const sendEmail = async (options) => {
 
   // 2) Define the email options
   const mailOptions = {
-    from: 'Youssef Megahed <bor3y@natours.io',
+    from: `GateGuard <${process.env.EMAIL_FROM || 'noreply@gateguard.com'}>`,
     to: options.email,
     subject: options.subject,
     text: options.message,
-    // html:
+    html: options.html || undefined,
   };
 
   // 3) Actually send the email
-  await transporter.sendMail(mailOptions);
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Email sent: ', info.messageId);
+    return info;
+  } catch (error) {
+    console.error('Error sending email:', error);
+    throw error;
+  }
 };
 
 module.exports = sendEmail;

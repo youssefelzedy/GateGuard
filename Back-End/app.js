@@ -14,6 +14,7 @@ const garageRouter = require('./routes/garageRoutes');
 const userRouter = require('./routes/userRoutes');
 const logsRouter = require('./routes/logsRoutes');
 const authRouter = require('./routes/authRoutes');
+const invitationRouter = require('./routes/invitationRoutes');
 
 const app = express();
 
@@ -79,9 +80,10 @@ app.use((req, res, next) => {
 // });
 
 const API = '/api/v1';
-// app.use(`${API}/admins`, adminRouter);
+app.use(`${API}/admins`, adminRouter);
 app.use(`${API}/auth`, authRouter);
-// app.use(`${API}/garages`, garageRouter);
+app.use(`${API}/garages`, garageRouter);
+app.use(`${API}/invitations`, invitationRouter);
 // app.use(`${API}/users`, userRouter);
 // app.use(`${API}/logs`, logsRouter);
 

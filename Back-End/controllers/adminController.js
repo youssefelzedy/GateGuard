@@ -2,6 +2,12 @@ const Admin = require('../models/Admin');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
+exports.setTourUsersIds = (req, res, next) => {
+  // Nested Routes
+  req.body.user = req.user.id; // forcing the user too add his id
+  next();
+};
+
 exports.getAllAdmins = catchAsync(async (req, res, next) => {
   const admins = await Admin.find();
 

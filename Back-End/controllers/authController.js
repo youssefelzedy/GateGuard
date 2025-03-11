@@ -14,6 +14,9 @@ const signToken = (id) => {
   });
 };
 
+// Export signToken for use in other controllers
+exports.signToken = signToken;
+
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
   const cookieOptions = {
@@ -179,6 +182,8 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   // GRANT ACCESS TO PROTECTED ROUTE
   req.user = currentUser; // data for the current logged in user
+
+  console.log('User is logged in', req.user);
 
   next();
 });

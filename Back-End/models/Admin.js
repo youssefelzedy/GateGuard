@@ -35,7 +35,6 @@ const adminSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: ['Owner', 'Observer'],
-    default: 'Observer',
     required: true,
   },
   registeredDate: { type: Date, default: Date.now },
