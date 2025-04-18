@@ -1,63 +1,51 @@
 import { LayoutDashboard, FileText, Video, Users } from "lucide-react";
 import { NavLink } from "react-router";
 
+const sidebarItems = [
+    {
+        to: "/dashboard",
+        icon: <LayoutDashboard size={20} />,
+        label: "Overview",
+    },
+    {
+        to: "/logs",
+        icon: <FileText size={20} />,
+        label: "Logs",
+    },
+    {
+        to: "/live-stream",
+        icon: <Video size={20} />,
+        label: "Live Stream",
+    },
+    {
+        to: "/users",
+        icon: <Users size={20} />,
+        label: "Users",
+    },
+];
 function Sidebar() {
     return (
-        <aside
-            className={`bg-[#F9F7F7] text-Dark Blue h-screen sticky top-0 transition-all duration-300
-      } flex flex-col`}>
-            <div className="p-4 flex items-center ">
-                <div className="p-2 rounded-lg">
-                    <img
-                        src="/Shield.svg"
-                        alt="Gate Guard Logo"
-                        className="w-45px h-60px"
-                    />
-                </div>
-                <div>
-                    <h1 className="font-bold text-3xl text-primary">Gate</h1>
-                    <h1 className="font-bold text-3xl text-primary">Guard</h1>
-                </div>
+        <aside className="h-screen sticky top-0 transition-all duration-300 flex flex-col justify-center">
+            <div className="p-4 flex items-center justify-center w-40">
+                <img
+                    src="/Logo_shield.svg"
+                    alt="Logo"
+                    className="h-auto w-auto bg-transparent"
+                />
             </div>
 
             <nav className="flex-1 py-8">
                 <ul className="space-y-2 px-3">
-                    <NavItem
-                        to="/dashboard"
-                        icon={<LayoutDashboard size={20} />}
-                        label="Overview"
-                    />
-                    <NavItem
-                        to="/logs"
-                        icon={<FileText size={20} />}
-                        label="Logs"
-                    />
-                    <NavItem
-                        to="/live-stream"
-                        icon={<Video size={20} />}
-                        label="Live Stream"
-                    />
-                    <NavItem
-                        to="/users"
-                        icon={<Users size={20} />}
-                        label="Users"
-                    />
+                    {sidebarItems.map(item => (
+                        <NavItem
+                            key={item.to}
+                            to={item.to}
+                            icon={item.icon}
+                            label={item.label}
+                        />
+                    ))}
                 </ul>
             </nav>
-
-            <div className="p-4 border-t border-blue-800">
-                <div className="bg-[#DBE2EF80] bg-opacity-50 rounded-lg p-10 text-sm">
-                    <p className="text-[#112D4E] text-2xl font-bold">
-                        Need help?
-                    </p>
-                    <p className="text-base text-[#112D4E] mb-4">
-                        Reach out to our support team
-                    </p>
-                    <button className="bg-[#112D4E] hover:bg-[#112D4E] text-white font-bold text-base py-1.5 px-1.5 rounded-md w-full">
-                        Contact us
-                    </button>
-                </div>
-            </div>
         </aside>
     );
 }
