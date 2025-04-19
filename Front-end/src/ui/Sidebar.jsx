@@ -25,17 +25,16 @@ const sidebarItems = [
 ];
 function Sidebar() {
     return (
-        <aside className="h-screen sticky top-0 transition-all duration-300 flex flex-col justify-center">
-            <div className="p-4 flex items-center justify-center w-40">
+        <aside className="h-screen sticky top-0 transition-all duration-300 flex flex-col justify-center w-60 bg-primary-50">
+            <div className="p-10 flex items-center justify-center">
                 <img
                     src="/Logo_shield.svg"
                     alt="Logo"
                     className="h-auto w-auto bg-transparent"
                 />
             </div>
-
             <nav className="flex-1 py-8">
-                <ul className="space-y-2 px-3">
+                <ul className="space-y-2 px-4">
                     {sidebarItems.map(item => (
                         <NavItem
                             key={item.to}
@@ -56,10 +55,10 @@ function NavItem({ to, icon, label }) {
             <NavLink
                 to={to}
                 className={({ isActive }) =>
-                    `flex items-center gap-3 p-3 rounded-lg transition-colors ${
+                    `flex items-center gap-4 p-3 text-xl font-bold ${
                         isActive
-                            ? "bg-[#DBE2EF80] text-xl font-bold text-[#112D4E]"
-                            : "text-[#112D4E] text-xl font-bold hover:bg-[#DBE2EF80]"
+                            ? "bg-primary-400/40 text-primary-900 rounded-2xl"
+                            : "text-primary-900 hover:bg-primary-400/30 rounded-3xl"
                     }`
                 }>
                 <span>{icon}</span>
