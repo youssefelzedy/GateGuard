@@ -18,6 +18,10 @@ export default {
                     950: "#17243a",
                 },
             },
+            fontFamily: {
+                brand: ["IBM Plex Sans", "sans-serif"],
+                arabic: ["Noto Naskh Arabic", "serif"],
+            },
         },
     },
     plugins: [],
