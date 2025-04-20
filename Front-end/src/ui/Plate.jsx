@@ -7,9 +7,9 @@ function Plate() {
                 <span className="font-arabic">مصر</span>
             </div>
 
-            <div className="grid flex-1 grid-cols-2 text-center font-arabic text-xl font-bold text-black">
+            <div className="grid flex-1 grid-cols-2 content-center text-center font-arabic text-2xl font-bold text-black">
                 <div className="flex items-center justify-center border-r border-black">
-                    ٣٩٤٥
+                    ٣ ٩ ٤ ٥
                 </div>
                 <div className="flex items-center justify-center">ط ب ج</div>
             </div>
