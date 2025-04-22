@@ -1,8 +1,9 @@
 import express from 'express';
 import garageController from '../controllers/garageController';
+// const authController = require('../controllers/authController');
 import adminRouter from './adminRoutes';
 import userRouter from './userRoutes';
-// const authController = require('../controllers/authController');
+import logsRouter from './logsRoutes';
 
 const router = express.Router();
 
@@ -11,6 +12,7 @@ const router = express.Router();
 
 router.use('/:garageId/admins', adminRouter);
 router.use('/:garageId/users', userRouter);
+router.use('/:garageId/logs', logsRouter);
 
 // Public routes
 router.get('/', garageController.getAllGarages);

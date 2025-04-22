@@ -13,7 +13,7 @@ import adminRouter from './routes/adminRoutes';
 import garageRouter from './routes/garageRoutes';
 import userRouter from './routes/userRoutes';
 import dataRouter from './routes/dataRoutes';
-// import logsRouter from './routes/logsRoutes';
+import logsRouter from './routes/logsRoutes';
 import authRouter from './routes/authRoutes';
 import invitationRouter from './routes/invitationRoutes';
 
@@ -56,7 +56,7 @@ app.use(`${API}/garages`, garageRouter);
 app.use(`${API}/invitations`, invitationRouter);
 app.use(`${API}/users`, userRouter);
 app.use(`${API}/data`, dataRouter);
-// app.use(`${API}/logs`, logsRouter);
+app.use(`${API}/logs`, logsRouter);
 
 app.all('*', (req: customRequest, res: Response, next: NextFunction) => {
   // res.status(404).json({
