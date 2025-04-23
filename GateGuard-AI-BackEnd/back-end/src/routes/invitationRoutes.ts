@@ -23,5 +23,6 @@ router.post(
 );
 router.get('/', invitationController.getInvitations);
 // router.delete('/:id', invitationController.deleteInvitation);
+router.get('/check/:token', invitationController.checkInvitation);
 
 export default router;

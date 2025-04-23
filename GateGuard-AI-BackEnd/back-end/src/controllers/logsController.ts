@@ -1,9 +1,12 @@
 import { Logs } from '../models/logsModel';
 import expressAsyncHandler from 'express-async-handler';
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import AppError from '../utils/appError';
 import ILog from '../interfaces/intLog';
-import { get } from 'http';
+import IUser from '../interfaces/intUser';
+
+import { User } from '../models/userModel';
+import { Garage } from '../models/garageModel';
 
 const logsController = {
   getAllLogs: expressAsyncHandler(async (req: Request, res: Response) => {
@@ -34,6 +37,56 @@ const logsController = {
       },
     });
   }),
+
+  createLog: expressAsyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const { screenshot, carPlate, location } = req.body;
+
+      if (!carPlate || !location) {
+        return next(new AppError('Car plate and location are required', 400));
+      }
+
+      // Run queries in parallel for better performance
+      const [user, garage] = await Promise.all([
+        User.findOne({ carPlate }),
+        Garage.findOne({ location }),
+      ]);
+
+      // Handle not found cases
+      if (!user) {
+        return next(
+          new AppError(`User with car plate ${carPlate} not found`, 404),
+        );
+      }
+
+      if (!garage) {
+        return next(
+          new AppError(`Garage at location ${location} not found`, 404),
+        );
+      }
+
+      // Check access and create log
+      const hasAccess = user.garage.toString() === garage._id.toString();
+      const action = hasAccess ? 'Accepted' : 'Denied';
+
+      const log = await Logs.create({
+        action,
+        screenshot,
+        accessTime: new Date(),
+        user: user._id,
+        garage: garage._id,
+      });
+
+      // Return consistent response structure with appropriate status code
+      res.status(hasAccess ? 201 : 403).json({
+        status: hasAccess ? 'success' : 'fail',
+        message: hasAccess
+          ? 'Access granted'
+          : 'User does not have access to this garage',
+        data: { log },
+      });
+    },
+  ),
 };
 
 export default logsController;

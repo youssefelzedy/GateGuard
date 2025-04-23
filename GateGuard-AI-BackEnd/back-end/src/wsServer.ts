@@ -4,8 +4,8 @@ import path from 'path';
 
 const IMAGE_PATH = path.join(__dirname, 'image.jpg');
 // Use the PORT from environment or default to 5174 (your server port)
-const WS_PORT = process.env.PORT || 5174;
-const WS_URL = `ws://localhost:${WS_PORT}/ws`;
+const WS_PORT = process.env.AIPORT || 8000;
+const WS_URL = `ws://10.182.241.70:${WS_PORT}/ws`;
 
 function getImageBase64(): string {
   try {
@@ -36,6 +36,7 @@ export default function startWsClient() {
       }, 1000);
 
       ws.on('message', (data: WebSocket.Data) => {
+        
         console.log('AI Response:', data.toString());
       });
 

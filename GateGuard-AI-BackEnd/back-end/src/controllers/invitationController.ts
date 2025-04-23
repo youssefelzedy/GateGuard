@@ -11,6 +11,7 @@ import { User } from '../models/userModel';
 import IUser from '../interfaces/intUser';
 import { Request, Response, NextFunction } from 'express';
 import { signToken } from './authController';
+import { checkPrime } from 'crypto';
 
 // Send an invitation to a new admin (Observer role)
 
@@ -162,6 +163,51 @@ const invitationController = {
         await Invitation.findByIdAndDelete(invitation._id);
         return next(new AppError('Error sending the invitation email', 500));
       }
+    },
+  ),
+  // maka a route or middleware to make the frontend get the details of the invitation based on the token
+  checkInvitation: expressAsyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const { token } = req.params;
+      // Find the invitation by token, ensuring it's valid and not expired
+      const invitation = await Invitation.findOne({
+        token,
+        expires: { $gt: new Date() },
+        accepted: false,
+      });
+      if (!invitation) {
+        return next(new AppError('Invalid or expired invitation token', 400));
+      }
+      // Fetch the associated garage
+      const garage = await Garage.findById(invitation.garage);
+      if (!garage) {
+        return next(new AppError('Associated garage not found', 404));
+      }
+      // Check if the user is already registered
+      const existingUser = await User.findOne({ email: invitation.email });
+      if (existingUser) {
+        return next(
+          new AppError('This email is already registered as a user', 400),
+        );
+      }
+      // Check if the admin is already registered
+      const existingAdmin = await Admin.findOne({ email: invitation.email });
+      if (existingAdmin) {
+        return next(
+          new AppError('This email is already registered as an admin', 400),
+        );
+      }
+
+      // Send back the data of the invitation
+      res.status(200).json({
+        status: 'success',
+        data: {
+          email: invitation.email,
+          garage: garage,
+          type: invitation.type,
+          expires: invitation.expires,
+        },
+      });
     },
   ),
 
