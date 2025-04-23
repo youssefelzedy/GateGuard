@@ -6,6 +6,7 @@ import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
 import xssClean from 'xss-clean';
+import cors from 'cors';
 
 import AppError from './utils/appError';
 import globalErrorhandler from './utils/errorHandler';
@@ -20,11 +21,26 @@ import invitationRouter from './routes/invitationRoutes';
 const app = express();
 
 //1) GLOBAL MIDDLEWARES
-// Serving static files
-// app.use(express.static(path.join(__dirname, 'public')));
+// Enable CORS for all routes
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || '*', // Allow specified origin or all origins
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true, // Allow cookies to be sent with requests
+  }),
+);
+
+// Handle preflight requests
+app.options('*', cors());
 
 //Set Security - HTTP Headers
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: false, // You may need to configure this based on your needs
+    crossOriginEmbedderPolicy: false, // Might be needed for certain iframe scenarios
+  }),
+);
 
 app.use(morgan('dev'));
 //Development logging
@@ -47,8 +63,7 @@ app.use(mongoSanitize());
 // Data sanitization against XSS
 app.use(xssClean());
 
-//Test middleware
-
+// Routes
 const API = '/api/v1';
 app.use(`${API}/admins`, adminRouter);
 app.use(`${API}/auth`, authRouter);
@@ -59,15 +74,6 @@ app.use(`${API}/data`, dataRouter);
 app.use(`${API}/logs`, logsRouter);
 
 app.all('*', (req: customRequest, res: Response, next: NextFunction) => {
-  // res.status(404).json({
-  //   status: 'fail',
-  //   message: `Can't find ${req.originalUrl} on this server!`,
-  // });
-
-  // const err = new Error(`Can't find ${req.originalUrl} on this server!`);
-  // err.status = 'fail';
-  // err.statusCode = 404;
-
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
