@@ -2,14 +2,7 @@ import { useState } from "react";
 import CameraStreamBox from "../features/StreamLive/CameraStreamBox";
 
 function LiveStream() {
-    const initialCameras = [
-        {
-            id: 1,
-            title: "Cam 1: Gate",
-            src: "./public/WhatsApp Video 2025-04-22 at 10.43.40 AM.mp4",
-            muted: false,
-        },
-    ];
+    const initialCameras = [];
 
     const [cameras, setCameras] = useState(initialCameras);
     const [AddCamera, setAddCamera] = useState(false);
