@@ -1,12 +1,5 @@
 import mongoose from 'mongoose';
-
-interface ILog extends Document {
-  action: 'Denied' | 'Accepted';
-  screenshot: string;
-  accessTime: Date;
-  plateId: string;
-  garage: mongoose.Types.ObjectId;
-}
+import ILog from '../interfaces/intLog';
 
 const logSchema = new mongoose.Schema({
   action: { type: String, enum: ['Denied', 'Accepted'], required: true },
