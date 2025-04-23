@@ -1,5 +1,5 @@
-import HeaderLogin from "../Components/HeaderLogin";
-import LoginForm from "../Components/LoginForm";
+import HeaderLogin from "../features/auth/HeaderLogin";
+import LoginForm from "../features/auth/LoginForm";
 
 function Login() {
     return (

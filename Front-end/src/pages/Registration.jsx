@@ -1,5 +1,5 @@
-import HeaderLogin from "../Components/HeaderLogin";
-import UserForm from "../Components/RegistrationForm";
+import HeaderLogin from "../features/auth/HeaderLogin";
+import UserForm from "../features/auth/RegistrationForm";
 
 function Registration() {
     return (

@@ -1,17 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import HeaderLogin from "../Components/HeaderLogin";
 
 function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    useEffect(() => {
-        setIsLoaded(true);
-    }, []);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -21,15 +16,9 @@ function LoginForm() {
     };
 
     return (
-        <div
-            className={`relative w-full max-w-md overflow-hidden rounded-lg bg-white p-8 shadow-lg transition-all duration-500 ${
-                isLoaded
-                    ? "translate-y-0 opacity-100"
-                    : "translate-y-8 opacity-0"
-            }`}
-        >
+        <div className="animate-fadeSlideUp relative w-full max-w-md overflow-hidden rounded-lg bg-white p-8 shadow-lg transition-all duration-500">
             <div className="mb-6 text-center transition-all delay-100 duration-700">
-                <h1 className="inline-block bg-gradient-to-r from-blue-800 to-blue-500 bg-clip-text text-2xl font-bold text-slate-800">
+                <h1 className="animate-fadeSlideUp inline-block bg-gradient-to-r from-blue-800 to-blue-500 bg-clip-text text-2xl font-bold text-slate-800">
                     Welcome to Gate Guard
                 </h1>
             </div>
@@ -38,14 +27,15 @@ function LoginForm() {
                 <img
                     src="/Shield.svg"
                     alt="Logo"
-                    className={`h-auto w-auto transition-opacity duration-700 ${
-                        isLoaded ? "opacity-100" : "opacity-0"
-                    }`}
+                    className="h-auto w-auto transition-opacity duration-700"
                 />
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="animate-in" style={{ animationDelay: "200ms" }}>
+                <div
+                    className="animate-fadeSlideUp"
+                    style={{ animationDelay: "200ms" }}
+                >
                     <input
                         type="email"
                         value={email}
@@ -58,7 +48,7 @@ function LoginForm() {
                 </div>
 
                 <div
-                    className="animate-in relative"
+                    className="animate-fadeSlideUp relative"
                     style={{ animationDelay: "300ms" }}
                 >
                     <input
@@ -87,7 +77,7 @@ function LoginForm() {
                 <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`animate-in relative w-full rounded-md bg-[#0F2543] px-4 py-3 font-medium text-white transition-all duration-300 hover:bg-[#0c1e36] focus:ring-4 focus:ring-blue-200 ${
+                    className={`animate-fadeSlideUp relative w-full rounded-md bg-[#0F2543] px-4 py-3 font-medium text-white transition-all duration-300 hover:bg-[#0c1e36] focus:ring-4 focus:ring-blue-200 ${
                         isSubmitting ? "animate-pulse" : ""
                     }`}
                     style={{ animationDelay: "400ms" }}
@@ -137,40 +127,6 @@ function LoginForm() {
                     </a>
                 </p>
             </div>
-
-            <style jsx>{`
-                @keyframes fadeSlideUp {
-                    from {
-                        opacity: 0;
-                        transform: translateY(20px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
-
-                @keyframes float {
-                    0% {
-                        transform: translateY(0px) rotate(0deg);
-                    }
-                    50% {
-                        transform: translateY(-10px) rotate(2deg);
-                    }
-                    100% {
-                        transform: translateY(0px) rotate(0deg);
-                    }
-                }
-
-                .animate-in {
-                    opacity: 0;
-                    animation: fadeSlideUp 0.6s ease forwards;
-                }
-
-                .animate-float {
-                    animation: float 6s ease-in-out infinite;
-                }
-            `}</style>
         </div>
     );
 }

@@ -24,9 +24,7 @@ function RegistrationForm() {
     const inputClass =
         "w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all duration-200 hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200";
 
-    const containerClass = `relative w-full max-w-md overflow-hidden rounded-lg bg-white p-8 shadow-lg transition-all duration-500 ${
-        isLoaded ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
-    }`;
+    const containerClass = `relative w-full max-w-md overflow-hidden rounded-lg bg-white p-8 shadow-lg transition-all duration-500 animate-fadeSlideUp `;
 
     return (
         <div className={containerClass}>
@@ -141,35 +139,6 @@ function RegistrationForm() {
                     {isSubmitting ? "Processing..." : "Register"}
                 </button>
             </form>
-
-            <style jsx>{`
-                @keyframes fadeSlideUp {
-                    from {
-                        opacity: 0;
-                        transform: translateY(20px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
-
-                @keyframes float {
-                    0% {
-                        transform: translateY(0px) rotate(0deg);
-                    }
-                    50% {
-                        transform: translateY(-10px) rotate(2deg);
-                    }
-                    100% {
-                        transform: translateY(0px) rotate(0deg);
-                    }
-                }
-
-                .animate-float {
-                    animation: float 6s ease-in-out infinite;
-                }
-            `}</style>
         </div>
     );
 }
