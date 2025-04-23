@@ -1,13 +1,13 @@
 import HeaderLogin from "../Components/HeaderLogin";
-import LoginForm from "../Components/LoginForm";
+import UserForm from "../Components/RegistrationForm";
 
-function Login() {
+function Registration() {
     return (
         <div className="flex h-screen flex-col items-center justify-center bg-gray-100">
             <HeaderLogin />
-            <LoginForm />
+            <UserForm />
         </div>
     );
 }
 
-export default Login;
+export default Registration;
