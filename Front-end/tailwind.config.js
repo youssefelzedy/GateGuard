@@ -22,6 +22,34 @@ export default {
                 brand: ["IBM Plex Sans", "sans-serif"],
                 arabic: ["Noto Naskh Arabic", "serif"],
             },
+            keyframes: {
+                fadeSlideUp: {
+                    "0%": {
+                        opacity: "0",
+                        transform: "translateY(20px)",
+                    },
+                    "100%": {
+                        opacity: "1",
+                        transform: "translateY(0px)",
+                    },
+                },
+
+                float: {
+                    "0%": {
+                        transform: "translateY(0px) rotate(0deg)",
+                    },
+                    "50%": {
+                        transform: "translateY(-10px) rotate(2deg)",
+                    },
+                    "100%": {
+                        transform: "translateY(0px) rotate(0deg)",
+                    },
+                },
+            },
+            animation: {
+                fadeSlideUp: "fadeSlideUp 0.5s ease-in-out",
+                float: "float 3s ease-in-out infinite",
+            },
         },
     },
     plugins: [],

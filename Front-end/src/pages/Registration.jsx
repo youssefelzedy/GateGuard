@@ -1,13 +1,13 @@
 import HeaderLogin from "../features/auth/HeaderLogin";
-import LoginForm from "../features/auth/LoginForm";
+import UserForm from "../features/auth/RegistrationForm";
 
-function Login() {
+function Registration() {
     return (
         <div className="flex h-screen flex-col items-center justify-center bg-gray-100">
             <HeaderLogin />
-            <LoginForm />
+            <UserForm />
         </div>
     );
 }
 
-export default Login;
+export default Registration;

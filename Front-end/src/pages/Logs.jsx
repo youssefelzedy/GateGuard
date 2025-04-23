@@ -1,4 +1,4 @@
-import LogsTable from "../features/logs/LogsTable";
+import LogsTable from "../features/logsPage/LogsTable";
 
 function Logs() {
     return (
