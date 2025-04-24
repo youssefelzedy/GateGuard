@@ -1,9 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { login as apiLogin } from "../../services/apiAuth";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router";
 
 export function useLogin({ email, password }) {
     const queryClient = useQueryClient();
+    const navigate = useNavigate();
     const { mutate: login, isPending } = useMutation({
         mutationKey: ["user"],
         mutationFn: () => apiLogin({ email, password }),
@@ -14,6 +16,7 @@ export function useLogin({ email, password }) {
         onSuccess: (data) => {
             localStorage.setItem("token", data.token);
             queryClient.setQueryData(["user"], data.data.user);
+            navigate("/dashboard");
             toast.success("Login successful!");
         },
         onError: (error) => {

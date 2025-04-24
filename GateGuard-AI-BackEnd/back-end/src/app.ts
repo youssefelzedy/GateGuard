@@ -20,16 +20,16 @@ import invitationRouter from './routes/invitationRoutes';
 
 const app = express();
 
-//1) GLOBAL MIDDLEWARES
+// 1) GLOBAL MIDDLEWARES
 // Enable CORS for all routes
-// app.use(
-//   cors({
-//     origin: process.env.FRONTEND_URL || '*', // Allow specified origin or all origins
-//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-//     allowedHeaders: ['Content-Type', 'Authorization'],
-//     credentials: true, // Allow cookies to be sent with requests
-//   }),
-// );
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || '*', // Allow specified origin or all origins
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true, // Allow cookies to be sent with requests
+  }),
+);
 
 // Handle preflight requests
 app.options('*', cors());
