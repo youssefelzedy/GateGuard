@@ -23,13 +23,13 @@ const adminController = {
 
   getAdmin: expressAsyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const admin: IAdmin | null = await Admin.findById(req.params.id);
-      if (!admin) return next(new AppError('Admin not found', 404));
+      const user: IAdmin | null = await Admin.findById(req.params.id);
+      if (!user) return next(new AppError('Admin not found', 404));
 
       res.status(200).json({
         status: 'success',
         data: {
-          admin,
+          user,
         },
       });
     },
@@ -38,6 +38,12 @@ const adminController = {
     console.log('req.user:', req.user);
     req.params.id = req.user!.id;
     next();
+  },
+  uploadImage: (req: Request, res: Response, next: NextFunction) => {
+    res.status(200).json({
+      status: 'success',
+      message: 'Image uploaded successfully',
+    });
   },
 };
 
