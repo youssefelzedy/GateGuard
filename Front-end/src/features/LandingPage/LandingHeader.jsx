@@ -1,47 +1,41 @@
 function LandingHeader() {
     return (
-        <header className="bg-transparentpx-6 flex flex-row items-center justify-between py-4 shadow-sm">
+        <header className="flex items-center justify-between bg-transparent px-10 py-6">
             <div className="flex items-center">
                 <img
-                    src="/Logo_shield.svg"
+                    src="/Logo.svg"
                     alt="Logo"
-                    className="h-12 w-auto bg-transparent"
+                    className="h-14 w-auto bg-transparent"
                 />
             </div>
 
-            <nav className="hidden space-x-6 md:flex">
+            <nav className="hidden gap-4 space-x-8 md:flex">
                 <a
                     href="#features"
-                    className="text-gray-700 transition-colors hover:text-blue-600"
+                    className="font-semibold text-primary-50 transition-colors hover:text-primary-600"
                 >
                     Features
                 </a>
                 <a
                     href="#about"
-                    className="text-gray-700 transition-colors hover:text-blue-600"
+                    className="font-semibold text-primary-50 transition-colors hover:text-primary-600"
                 >
                     About
                 </a>
                 <a
                     href="#contact"
-                    className="text-gray-700 transition-colors hover:text-blue-600"
+                    className="font-semibold text-primary-50 transition-colors hover:text-primary-600"
                 >
                     Contact
                 </a>
             </nav>
 
-            <div className="flex items-center space-x-4">
-                <a
-                    href="/login"
-                    className="rounded px-4 py-2 font-medium text-blue-600 transition-colors hover:bg-blue-50"
-                >
-                    Login
-                </a>
+            <div className="flex items-center">
                 <a
                     href="/register"
-                    className="rounded bg-blue-600 px-4 py-2 font-medium text-white transition-colors hover:bg-blue-700"
+                    className="rounded bg-primary-950 px-4 py-2 font-medium text-primary-50 transition-colors hover:bg-blue-700"
                 >
-                    Sign Up
+                    Login
                 </a>
             </div>
         </header>
