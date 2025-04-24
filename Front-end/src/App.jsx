@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Toaster } from "react-hot-toast";
 import AppLayout from "./ui/AppLayout";
 import Dashboard from "./pages/Dashboard";
 import LandingPage from "./pages/LandingPage";
@@ -8,8 +9,8 @@ import Logs from "./pages/Logs";
 import Users from "./pages/Users";
 import LiveStream from "./pages/LiveStream";
 import Login from "./pages/Login";
-import UserLogin from "./pages/Registration";
-import { Toaster } from "react-hot-toast";
+import Registration from "./pages/Registration";
+import Invite from "./pages/Invite";
 
 const queryClient = new QueryClient();
 
@@ -31,7 +32,9 @@ function App() {
                         <Route path="live-stream" element={<LiveStream />} />
                     </Route>
                     <Route path="login" element={<Login />} />
-                    <Route path="registration" element={<UserLogin />} />
+                    <Route path="registration" element={<Registration />} />
+                    <Route path="invite" element={<Invite />} />
+                    <Route path="landingPage" element={<LandingPage />} />
                 </Routes>
             </BrowserRouter>
             <Toaster
