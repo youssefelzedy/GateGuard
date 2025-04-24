@@ -7,7 +7,8 @@ import Logs from "./pages/Logs";
 import Users from "./pages/Users";
 import LiveStream from "./pages/LiveStream";
 import Login from "./pages/Login";
-import UserLogin from "./pages/Registration";
+import Registration from "./pages/Registration";
+import Invite from "./pages/Invite";
 
 function App() {
     return (
@@ -26,7 +27,9 @@ function App() {
                         <Route path="live-stream" element={<LiveStream />} />
                     </Route>
                     <Route path="login" element={<Login />} />
-                    <Route path="registration" element={<UserLogin />} />
+                    <Route path="registration" element={<Registration />} />
+                    <Route path="invite" element={<Invite />} />
+                    <Route path="landingPage" element={<LandingPage />} />
                 </Routes>
             </BrowserRouter>
         </>
