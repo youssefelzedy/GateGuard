@@ -34,6 +34,11 @@ const adminController = {
       });
     },
   ),
+  getMe: (req: Request, res: Response, next: NextFunction) => {
+    console.log('req.user:', req.user);
+    req.params.id = req.user!.id;
+    next();
+  },
 };
 
 export default adminController;
