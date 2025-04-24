@@ -1,18 +1,24 @@
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { useLogin } from "./useLogin";
 
 function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-
-    const [isSubmitting, setIsSubmitting] = useState(false);
-
+    const { login, isPending } = useLogin({ email, password });
     const handleSubmit = (e) => {
         e.preventDefault();
-        setIsSubmitting(true);
-
-        setTimeout(() => setIsSubmitting(false), 1500);
+        login(
+            { email, password },
+            {
+                onSettled: () => {
+                    setEmail("");
+                    setPassword("");
+                    setShowPassword(false);
+                },
+            },
+        );
     };
 
     return (
@@ -43,7 +49,7 @@ function LoginForm() {
                         placeholder="Email"
                         className="w-full transform rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                         required
-                        disabled={isSubmitting}
+                        disabled={isPending}
                     />
                 </div>
 
@@ -58,13 +64,13 @@ function LoginForm() {
                         placeholder="Password"
                         className="w-full transform rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                         required
-                        disabled={isSubmitting}
+                        disabled={isPending}
                     />
                     <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
                         className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 transition-all duration-300 hover:text-slate-700"
-                        disabled={isSubmitting}
+                        disabled={isPending}
                     >
                         {showPassword ? (
                             <EyeOff size={20} />
@@ -76,13 +82,13 @@ function LoginForm() {
 
                 <button
                     type="submit"
-                    disabled={isSubmitting}
+                    disabled={isPending}
                     className={`animate-fadeSlideUp relative w-full rounded-md bg-[#0F2543] px-4 py-3 font-medium text-white transition-all duration-300 hover:bg-[#0c1e36] focus:ring-4 focus:ring-blue-200 ${
-                        isSubmitting ? "animate-pulse" : ""
+                        isPending ? "animate-pulse" : ""
                     }`}
                     style={{ animationDelay: "400ms" }}
                 >
-                    {isSubmitting ? (
+                    {isPending ? (
                         <span className="flex items-center justify-center">
                             <svg
                                 className="-ml-1 mr-3 h-5 w-5 animate-spin"
