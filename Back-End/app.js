@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const cors = require('cors');
 
 const AppError = require('./utils/appError');
 const globalErrorhandler = require('./controllers/errorController');
@@ -36,6 +37,14 @@ const limiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
   message: 'Too many requests from this IP, Please try again in an hour!',
 });
+
+app.use(
+  cors({
+    origin: '*', // Allow your front-end origin
+    methods: ['*'], // Allow specific methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allow headers
+  }),
+);
 
 app.use('/api', limiter);
 
