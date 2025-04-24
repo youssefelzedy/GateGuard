@@ -1,9 +1,13 @@
 import { Logs } from '../models/logsModel';
 import expressAsyncHandler from 'express-async-handler';
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import AppError from '../utils/appError';
+import { handleLogCreation } from '../utils/handleLogCreation';
 import ILog from '../interfaces/intLog';
-import { get } from 'http';
+import IUser from '../interfaces/intUser';
+
+import { User } from '../models/userModel';
+import { Garage } from '../models/garageModel';
 
 const logsController = {
   getAllLogs: expressAsyncHandler(async (req: Request, res: Response) => {
@@ -35,5 +39,21 @@ const logsController = {
     });
   }),
 };
+
+export const createLog = expressAsyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { carPlate, location, screenshot } = req.body;
+      const result = await handleLogCreation({
+        carPlate,
+        location,
+        screenshot,
+      });
+      res.status(result.statusCode).json(result);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
 
 export default logsController;

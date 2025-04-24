@@ -9,7 +9,9 @@ const dbConnect = async () => {
       dbName: 'gateguard', // Add this line to specify database name
     });
 
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    console.log(
+      `DB Connected Successfully: ${conn.connection.host}\n-------------------------`,
+    );
   } catch (error) {
     console.error(`Error: ${(error as Error).message}`);
     process.exit(1);
