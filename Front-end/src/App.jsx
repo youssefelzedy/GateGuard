@@ -32,7 +32,7 @@ function App() {
                         <Route path="live-stream" element={<LiveStream />} />
                     </Route>
                     <Route path="login" element={<Login />} />
-                    <Route path="registration" element={<Registration />} />
+                    <Route path="signup" element={<Registration />} />
                     <Route path="invite" element={<Invite />} />
                     <Route path="landingPage" element={<LandingPage />} />
                 </Routes>
