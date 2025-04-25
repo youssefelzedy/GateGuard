@@ -1,6 +1,11 @@
 import Plate from "../../ui/Plate";
+import { useAdmin } from "../auth/useAdmin";
+import { useUsers } from "./useUsers";
 
 function UsersTable() {
+    const { admin } = useAdmin();
+    const { users } = useUsers(admin?.garage.id);
+
     return (
         <div className="mt-6">
             <table className="w-full table-auto border-collapse text-left">
@@ -13,21 +18,28 @@ function UsersTable() {
                         <th className="p-3">National ID</th>
                     </tr>
                 </thead>
+                {}
                 <tbody>
-                    {[1, 2, 3, 4, 5].map((item) => (
+                    {users?.map((user, index) => (
                         <tr
-                            key={item}
+                            key={index}
                             className="border-b border-primary-200 transition hover:bg-primary-50"
                         >
                             <td className="p-3 text-primary-900">
-                                <Plate />
+                                <Plate carPlate={user.carPlate} />
                             </td>
-                            <td className="p-3 text-primary-900">John Doe</td>
                             <td className="p-3 text-primary-900">
-                                JohnDoe@JohnDoe.com
+                                {user.name}
                             </td>
-                            <td className="p-3 text-primary-900">123456789</td>
-                            <td className="p-3 text-primary-900">123456789</td>
+                            <td className="p-3 text-primary-900">
+                                {user.email}
+                            </td>
+                            <td className="p-3 text-primary-900">
+                                {user.phoneNumber}
+                            </td>
+                            <td className="p-3 text-primary-900">
+                                {user.nationalSecurityNumber}
+                            </td>
                         </tr>
                     ))}
                 </tbody>
