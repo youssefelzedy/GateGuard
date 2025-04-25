@@ -2,11 +2,12 @@ import WebSocket from 'ws';
 import fs from 'fs';
 import path from 'path';
 
+import logsController from './controllers/logsController';
+
 const IMAGE_PATH = path.join(__dirname, 'image.jpg');
 // Use the PORT from environment or default to 5174 (your server port)
 const WS_PORT = process.env.AIPORT || 8000;
-const WS_URL = `const WS_URL = ws://https://8000-ahmedgaberelb-challenge-h3yaj5njso7.ws-eu118.gitpod.io:${WS_PORT}/ws;
-`;
+const WS_URL = `ws://10.182.241.56:${WS_PORT}/ws`;
 
 function getImageBase64(): string {
   try {
@@ -38,6 +39,7 @@ export default function startWsClient() {
 
       ws.on('message', (data: WebSocket.Data) => {
         console.log('AI Response:', data.toString());
+        // save a log in the database
       });
 
       ws.on('close', () => {

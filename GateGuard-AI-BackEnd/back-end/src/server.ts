@@ -36,11 +36,11 @@ server.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
 
   // Only start the WS client if needed
-  // startWsClient();
+  startWsClient();
 });
 
 process.on('unhandledRejection', (err: Error) => {
-  // listting to event
+  // listting to event+++++
   console.log(err.name, err.message);
   console.log('UNHANDLED REJECTION! Shutting down...');
   server.close(() => {

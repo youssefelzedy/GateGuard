@@ -11,6 +11,11 @@ const garageSchema = new mongoose.Schema(
       default: true,
       select: false,
     },
+    cameraLink: {
+      type: String,
+      required: true,
+      unique: true,
+    },
   },
   {
     toJSON: { virtuals: true },
@@ -30,7 +35,7 @@ garageSchema.virtual('logs', {
   localField: '_id',
 });
 
-// garageSchema.pre<IGarage>(/^find/, function (next) {  
+// garageSchema.pre<IGarage>(/^find/, function (next) {
 //   this.populate({ path: 'admin', select: 'name email' });
 //   next();
 // });
