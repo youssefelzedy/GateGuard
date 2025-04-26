@@ -1,6 +1,5 @@
 import { convertEnglishToArabic } from "../utils/helper";
 
-// eslint-disable-next-line no-unused-vars
 function Plate({ carPlate }) {
     const { numbers, letters } = convertEnglishToArabic(carPlate.split("-"));
     return (
