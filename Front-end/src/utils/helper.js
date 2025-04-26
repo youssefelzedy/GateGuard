@@ -1,55 +1,52 @@
 // Arabic to English Maps
 
-// const arabicToEnglishLetters = new Map([
-//     ["أ", "alif"],
-//     ["ب", "baa"],
-//     ["ج", "jeem"],
-//     ["د", "daal"],
-//     ["ر", "raa"],
-//     ["س", "seen"],
-//     ["ص", "saad"],
-//     ["ط", "Taa"],
-//     ["ع", "ain"],
-//     ["ف", "faa"],
-//     ["ق", "qaaf"],
-//     ["ل", "laam"],
-//     ["م", "meem"],
-//     ["ن", "noon"],
-//     ["هـ", "haa"],
-//     ["و", "waw"],
-//     ["ي", "yaa"],
-// ]);
-
-// const arabicToEnglishNumbers = new Map([
-//     ["٠", "0"],
-//     ["١", "1"],
-//     ["٢", "2"],
-//     ["٣", "3"],
-//     ["٤", "4"],
-//     ["٥", "5"],
-//     ["٦", "6"],
-//     ["٧", "7"],
-//     ["٨", "8"],
-//     ["٩", "9"],
-// ]);
+const arabicToEnglish = new Map([
+    ["أ", "alif"],
+    ["ب", "baa"],
+    ["ج", "jeem"],
+    ["د", "daal"],
+    ["ر", "raa"],
+    ["س", "seen"],
+    ["ص", "saad"],
+    ["ط", "Taa"],
+    ["ع", "ain"],
+    ["ف", "faa"],
+    ["ق", "qaaf"],
+    ["ل", "laam"],
+    ["م", "meem"],
+    ["ن", "noon"],
+    ["هـ", "haa"],
+    ["و", "waw"],
+    ["ي", "yaa"],
+    ["٠", "0"],
+    ["١", "1"],
+    ["٢", "2"],
+    ["٣", "3"],
+    ["٤", "4"],
+    ["٥", "5"],
+    ["٦", "6"],
+    ["٧", "7"],
+    ["٨", "8"],
+    ["٩", "9"],
+]);
 
 // Function to convert Arabic numbers to English
-// const convertArabicToEnglish = input => {
-//     let letters = "";
-//     let numbers = "";
-//     for (let char of input) {
-//         // Check if the character is Arabic letter or number
-//         if (arabicToEnglishLetters.has(char)) {
-//             letters += arabicToEnglishLetters.get(char);
-//             continue;
-//         }
-//         if (arabicToEnglishNumbers.has(char)) {
-//             numbers += arabicToEnglishNumbers.get(char);
-//             continue;
-//         }
-//     }
-//     return { numbers, letters };
-// };
+
+export const convertArabicToEnglish = (input) => {
+    let output = "";
+    for (let char of input) {
+        // Check if the character is Arabic letter or number
+        if (arabicToEnglish.has(char)) {
+            output += arabicToEnglish.get(char) + "-";
+            continue;
+        }
+    }
+    // Remove the last hyphen if it exists
+    if (output.endsWith("-")) {
+        output = output.slice(0, -1);
+    }
+    return output;
+};
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -99,6 +96,7 @@ export const convertEnglishToArabic = (input) => {
             continue;
         }
     }
+    const stringPlate = [...letters, ...numbers].join("");
 
-    return { numbers, letters };
+    return { numbers, letters, stringPlate };
 };

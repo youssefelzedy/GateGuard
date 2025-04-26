@@ -5,7 +5,7 @@ function Plate({ carPlate }) {
     const { numbers, letters } = convertEnglishToArabic(carPlate.split("-"));
     return (
         <div className="flex h-20 w-40 flex-col border border-black text-lg">
-            <div className="flex items-center justify-between bg-primary-700 px-1 font-bold text-white">
+            <div className="flex items-center justify-between bg-primary-700 px-2 font-bold text-white">
                 <span>EGYPT</span>
                 <span className="font-arabic">مصر</span>
             </div>
