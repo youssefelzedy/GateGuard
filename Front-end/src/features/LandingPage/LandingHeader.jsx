@@ -30,12 +30,18 @@ function LandingHeader() {
                 </a>
             </nav>
 
-            <div className="flex items-center">
+            <div className="flex items-center gap-8">
                 <a
-                    href="/register"
-                    className="rounded bg-primary-950 px-4 py-2 font-medium text-primary-50 transition-colors hover:bg-blue-700"
+                    href="/login"
+                    className="rounded bg-primary-700 px-4 py-2 font-medium text-primary-50 transition-colors hover:bg-primary-400"
                 >
-                    Login
+                    Log in
+                </a>
+                <a
+                    href="/signup"
+                    className="rounded bg-primary-700 px-4 py-2 font-medium text-primary-50 transition-colors hover:bg-primary-400"
+                >
+                    Get Started
                 </a>
             </div>
         </header>
