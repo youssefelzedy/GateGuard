@@ -11,8 +11,20 @@ import LiveStream from "./pages/LiveStream";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import Invite from "./pages/Invite";
+import RegisterAdmin from "./pages/RegisterAdmin";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            refetchOnWindowFocus: false,
+            retry: 0,
+            staleTime: 1000 * 60,
+        },
+        mutations: {
+            retry: 0,
+        },
+    },
+});
 
 function App() {
     return (
@@ -26,7 +38,6 @@ function App() {
                             element={<Navigate replace to="dashboard" />}
                         />
                         <Route path="dashboard" element={<Dashboard />} />
-                        <Route path="Landing-page" element={<LandingPage />} />
                         <Route path="logs" element={<Logs />} />
                         <Route path="users" element={<Users />} />
                         <Route path="live-stream" element={<LiveStream />} />
@@ -35,6 +46,7 @@ function App() {
                     <Route path="signup" element={<Registration />} />
                     <Route path="invite" element={<Invite />} />
                     <Route path="landingPage" element={<LandingPage />} />
+                    <Route path="get-started" element={<RegisterAdmin />} />
                 </Routes>
             </BrowserRouter>
             <Toaster

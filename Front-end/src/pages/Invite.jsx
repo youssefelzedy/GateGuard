@@ -3,8 +3,8 @@ import InviteForm from "../features/auth/InviteForm";
 
 function Invite() {
     return (
-        <div className="flex h-screen flex-col items-center justify-center bg-gray-100">
-            <HeaderLogin />
+        <div className="flex h-screen flex-col items-center justify-center bg-primary-100">
+            {/* <HeaderLogin /> */}
             <InviteForm />
         </div>
     );

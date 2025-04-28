@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wdth,wght@0,75..100,100..700;1,75..100,100..700&display=swap');
-@import '@fontsource/noto-naskh-arabic';
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wdth,wght@0,75..100,100..700;1,75..100,100..700&display=swap");
+@import "@fontsource/noto-naskh-arabic";
 
 @tailwind base;
 @tailwind components;
@@ -8,5 +8,13 @@
 @layer base {
     html {
         font-family: "IBM Plex Sans", sans-serif;
+    }
+    * {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    *::-webkit-scrollbar {
+        display: none;
     }
 }
