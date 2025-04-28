@@ -11,6 +11,7 @@ import LiveStream from "./pages/LiveStream";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import Invite from "./pages/Invite";
+import RegisterAdmin from "./pages/RegisterAdmin";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -45,6 +46,7 @@ function App() {
                     <Route path="signup" element={<Registration />} />
                     <Route path="invite" element={<Invite />} />
                     <Route path="landingPage" element={<LandingPage />} />
+                    <Route path="get-started" element={<RegisterAdmin />} />
                 </Routes>
             </BrowserRouter>
             <Toaster
