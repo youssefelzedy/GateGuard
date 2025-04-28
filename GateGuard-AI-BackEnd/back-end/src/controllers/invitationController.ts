@@ -11,9 +11,6 @@ import { User } from '../models/userModel';
 import IUser from '../interfaces/intUser';
 import { Request, Response, NextFunction } from 'express';
 import { signToken } from './authController';
-import { checkPrime } from 'crypto';
-
-// Send an invitation to a new admin (Observer role)
 
 const invitationController = {
   createInvitationForAdmin: expressAsyncHandler(
@@ -48,7 +45,8 @@ const invitationController = {
         type: 'admin', // Add this line
       });
 
-      const invitationURL = `${req.protocol}://${req.get('host')}/api/v1/invitations/accept/${invitation.token}`;
+      // https://localhost:5173/inviteUser/:token
+      const invitationURL = `https://localhost:5173/inviteUser/${invitation.token}`;
       const htmlMessage = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e1e1e1; border-radius: 5px;">
         <h2 style="color: #333; text-align: center;">GateGuard Invitation</h2>
@@ -122,7 +120,7 @@ const invitationController = {
         invitedBy: req.user!._id,
         type: 'user', // Add this line
       });
-      const invitationURL = `${req.protocol}://${req.get('host')}/api/v1/invitations/accept/${invitation.token}`;
+      const invitationURL = `https://localhost:5173/inviteAdmin/${invitation.token}`;
       const htmlMessage = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e1e1e1; border-radius: 5px;">
         <h2 style="color: #333; text-align: center;">GateGuard Invitation</h2>
