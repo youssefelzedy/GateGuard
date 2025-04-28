@@ -7,11 +7,23 @@ const Footer = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle email submission logic here
         console.log("Email submitted:", email);
-        // Reset form
         setEmail("");
-        // Show success message or trigger notification
+    };
+
+    // Variants
+    const fadeInVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: (customDelay = 0) => ({
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.5, delay: customDelay },
+        }),
+    };
+
+    const buttonVariants = {
+        hover: { scale: 1.05 },
+        tap: { scale: 0.95 },
     };
 
     return (
@@ -21,13 +33,14 @@ const Footer = () => {
                     {/* Logo and Made with love section */}
                     <div className="flex flex-col">
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5 }}
+                            variants={fadeInVariants}
+                            initial="hidden"
+                            whileInView="visible"
+                            custom={0}
                             viewport={{ once: true }}
                             className="mb-6"
                         >
-                            <a href="" className="flex items-center">
+                            <a href="#" className="flex items-center">
                                 <img
                                     src="/Logo.svg"
                                     alt="GateGuard Logo"
@@ -37,10 +50,12 @@ const Footer = () => {
                                 />
                             </a>
                         </motion.div>
+
                         <motion.p
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: 0.2 }}
+                            variants={fadeInVariants}
+                            initial="hidden"
+                            whileInView="visible"
+                            custom={0.2}
                             viewport={{ once: true }}
                             className="mb-2 text-sm"
                         >
@@ -49,10 +64,12 @@ const Footer = () => {
                             <br />
                             Faculty of Engineering, Port Said University.
                         </motion.p>
+
                         <motion.p
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: 0.3 }}
+                            variants={fadeInVariants}
+                            initial="hidden"
+                            whileInView="visible"
+                            custom={0.3}
                             viewport={{ once: true }}
                             className="text-sm text-gray-400"
                         >
@@ -63,18 +80,21 @@ const Footer = () => {
                     {/* Support Links */}
                     <div className="flex flex-col">
                         <motion.h3
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5 }}
+                            variants={fadeInVariants}
+                            initial="hidden"
+                            whileInView="visible"
+                            custom={0}
                             viewport={{ once: true }}
                             className="mb-6 text-2xl font-bold"
                         >
                             Support
                         </motion.h3>
+
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: 0.1 }}
+                            variants={fadeInVariants}
+                            initial="hidden"
+                            whileInView="visible"
+                            custom={0.1}
                             viewport={{ once: true }}
                             className="flex flex-col space-y-4"
                         >
@@ -114,27 +134,32 @@ const Footer = () => {
                     {/* Contact Form */}
                     <div className="flex flex-col">
                         <motion.h3
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5 }}
+                            variants={fadeInVariants}
+                            initial="hidden"
+                            whileInView="visible"
+                            custom={0}
                             viewport={{ once: true }}
                             className="mb-6 text-2xl font-bold"
                         >
                             Want to know more about our solution?
                         </motion.h3>
+
                         <motion.p
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: 0.1 }}
+                            variants={fadeInVariants}
+                            initial="hidden"
+                            whileInView="visible"
+                            custom={0.1}
                             viewport={{ once: true }}
                             className="mb-4 text-sm"
                         >
                             Provide us your email and we will contact you.
                         </motion.p>
+
                         <motion.form
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: 0.2 }}
+                            variants={fadeInVariants}
+                            initial="hidden"
+                            whileInView="visible"
+                            custom={0.2}
                             viewport={{ once: true }}
                             onSubmit={handleSubmit}
                             className="flex flex-col space-y-4 sm:flex-row sm:space-x-2 sm:space-y-0"
@@ -148,9 +173,10 @@ const Footer = () => {
                                 className="rounded bg-gray-200 px-4 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary-500"
                             />
                             <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
                                 type="submit"
+                                variants={buttonVariants}
+                                whileHover="hover"
+                                whileTap="tap"
                                 className="rounded bg-primary-500 px-6 py-2 font-medium text-white transition-colors hover:bg-primary-600"
                             >
                                 Send
