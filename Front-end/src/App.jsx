@@ -37,7 +37,6 @@ function App() {
                             element={<Navigate replace to="dashboard" />}
                         />
                         <Route path="dashboard" element={<Dashboard />} />
-                        <Route path="Landing-page" element={<LandingPage />} />
                         <Route path="logs" element={<Logs />} />
                         <Route path="users" element={<Users />} />
                         <Route path="live-stream" element={<LiveStream />} />

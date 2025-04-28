@@ -10,12 +10,10 @@ const CameraStreamBox = ({ cameraTitle, cameraSrc }) => {
     const [error, setError] = useState(null);
     const [isFullscreen, setIsFullscreen] = useState(false);
 
-    // Determine stream type
     useEffect(() => {
         const determineStreamType = async () => {
             try {
                 const urlLower = cameraSrc.toLowerCase();
-                // Check URL patterns
                 if (
                     urlLower.endsWith(".mp4") ||
                     urlLower.endsWith(".webm") ||
@@ -28,7 +26,7 @@ const CameraStreamBox = ({ cameraTitle, cameraSrc }) => {
                     urlLower.includes("mjpeg") ||
                     urlLower.includes("jpg") ||
                     urlLower.includes("jpeg") ||
-                    urlLower.includes("videofeed") // Handle 'videofeed' as MJPEG
+                    urlLower.includes("videofeed")
                 ) {
                     setStreamType("mjpeg");
                     return;
@@ -41,7 +39,6 @@ const CameraStreamBox = ({ cameraTitle, cameraSrc }) => {
                     return;
                 }
 
-                // Try fetching headers, but fallback if it fails
                 try {
                     const response = await fetch(cameraSrc, {
                         method: "HEAD",
@@ -61,7 +58,6 @@ const CameraStreamBox = ({ cameraTitle, cameraSrc }) => {
                     ) {
                         setStreamType("mjpeg");
                     } else {
-                        // Fallback to MJPEG for 'videofeed' if headers are unclear
                         if (urlLower.includes("videofeed")) {
                             setStreamType("mjpeg");
                         } else {
@@ -71,7 +67,6 @@ const CameraStreamBox = ({ cameraTitle, cameraSrc }) => {
                     }
                 } catch (fetchErr) {
                     console.warn("Fetch failed, trying as MJPEG:", fetchErr);
-                    // Fallback to MJPEG for 'videofeed' URLs
                     if (urlLower.includes("videofeed")) {
                         setStreamType("mjpeg");
                     } else {
@@ -91,7 +86,6 @@ const CameraStreamBox = ({ cameraTitle, cameraSrc }) => {
         determineStreamType();
     }, [cameraSrc]);
 
-    // Check for audio track in video streams
     useEffect(() => {
         if (streamType === "video" && videoRef.current) {
             const videoElement = videoRef.current;
@@ -108,7 +102,6 @@ const CameraStreamBox = ({ cameraTitle, cameraSrc }) => {
         }
     }, [streamType]);
 
-    // Track fullscreen state
     useEffect(() => {
         const handleFullscreenChange = () => {
             setIsFullscreen(!!document.fullscreenElement);
