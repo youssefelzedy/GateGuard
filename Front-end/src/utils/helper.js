@@ -35,7 +35,6 @@ const arabicToEnglish = new Map([
 export const convertArabicToEnglish = (input) => {
     let output = "";
     for (let char of input) {
-        // Check if the character is Arabic letter or number
         if (arabicToEnglish.has(char)) {
             output += arabicToEnglish.get(char) + "-";
             continue;
@@ -96,7 +95,7 @@ export const convertEnglishToArabic = (input) => {
             continue;
         }
     }
-    const stringPlate = [...letters, ...numbers].join("");
+    // const stringPlate = [...letters, ...numbers].join("");
 
-    return { numbers, letters, stringPlate };
+    return { numbers, letters };
 };
