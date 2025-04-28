@@ -10,4 +10,11 @@ router.use(authController.protect);
 router.get('/me', adminController.getMe, adminController.getAdmin);
 router.get('/:id', adminController.getAdmin);
 
+// Image upload route - need both middleware functions
+router.post(
+  '/uploadImage',
+  adminController.uploadAdminPhoto,
+  adminController.uploadImage,
+);
+
 export default router;

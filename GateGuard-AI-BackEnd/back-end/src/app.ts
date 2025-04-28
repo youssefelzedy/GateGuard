@@ -7,6 +7,8 @@ import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
 import xssClean from 'xss-clean';
 import cors from 'cors';
+import fs from 'fs';
+import path from 'path';
 
 import AppError from './utils/appError';
 import globalErrorhandler from './utils/errorHandler';
@@ -20,16 +22,22 @@ import invitationRouter from './routes/invitationRoutes';
 
 const app = express();
 
-//1) GLOBAL MIDDLEWARES
+// Ensure the upload directory exists
+const uploadDir = path.join(__dirname, '../public/images/admins');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+// 1) GLOBAL MIDDLEWARES
 // Enable CORS for all routes
-// app.use(
-//   cors({
-//     origin: process.env.FRONTEND_URL || '*', // Allow specified origin or all origins
-//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-//     allowedHeaders: ['Content-Type', 'Authorization'],
-//     credentials: true, // Allow cookies to be sent with requests
-//   }),
-// );
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || '*', // Allow specified origin or all origins
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true, // Allow cookies to be sent with requests
+  }),
+);
 
 // Handle preflight requests
 app.options('*', cors());

@@ -22,14 +22,14 @@ function LoginForm() {
     };
 
     return (
-        <div className="animate-fadeSlideUp relative w-full max-w-md overflow-hidden rounded-lg bg-white p-8 shadow-lg transition-all duration-500">
+        <div className="relative w-full max-w-md animate-fadeSlideUp overflow-hidden rounded-lg bg-white p-8 shadow-lg transition-all duration-500">
             <div className="mb-6 text-center transition-all delay-100 duration-700">
-                <h1 className="animate-fadeSlideUp inline-block bg-gradient-to-r from-blue-800 to-blue-500 bg-clip-text text-2xl font-bold text-slate-800">
+                <h1 className="inline-block animate-fadeSlideUp bg-gradient-to-r from-blue-800 to-blue-500 bg-clip-text text-2xl font-bold text-slate-800">
                     Welcome to Gate Guard
                 </h1>
             </div>
 
-            <div className="-z-1 animate-float absolute -bottom-7 -right-4 opacity-25 transition-opacity duration-700">
+            <div className="-z-1 absolute -bottom-7 -right-4 animate-float opacity-25 transition-opacity duration-700">
                 <img
                     src="/Shield.svg"
                     alt="Logo"
@@ -54,7 +54,7 @@ function LoginForm() {
                 </div>
 
                 <div
-                    className="animate-fadeSlideUp relative"
+                    className="relative animate-fadeSlideUp"
                     style={{ animationDelay: "300ms" }}
                 >
                     <input
@@ -83,7 +83,7 @@ function LoginForm() {
                 <button
                     type="submit"
                     disabled={isPending}
-                    className={`animate-fadeSlideUp relative w-full rounded-md bg-[#0F2543] px-4 py-3 font-medium text-white transition-all duration-300 hover:bg-[#0c1e36] focus:ring-4 focus:ring-blue-200 ${
+                    className={`relative w-full animate-fadeSlideUp rounded-md bg-[#0F2543] px-4 py-3 font-medium text-white transition-all duration-300 hover:bg-[#0c1e36] focus:ring-4 focus:ring-blue-200 ${
                         isPending ? "animate-pulse" : ""
                     }`}
                     style={{ animationDelay: "400ms" }}

@@ -12,7 +12,18 @@ import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import Invite from "./pages/Invite";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            refetchOnWindowFocus: false,
+            retry: 0,
+            staleTime: 1000 * 60,
+        },
+        mutations: {
+            retry: 0,
+        },
+    },
+});
 
 function App() {
     return (
