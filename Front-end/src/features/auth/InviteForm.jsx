@@ -1,89 +1,125 @@
-import { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import Plate from "../../ui/Plate";
+import {
+    englishToArabicLetters,
+    englishToArabicNumbers,
+} from "../../utils/constants";
+import toast from "react-hot-toast";
 
-const intialState = {
-    firstName: "",
-    lastName: "",
+const defaultValues = {
+    fullName: "",
+    phoneNumber: "",
     email: "",
-    id: "",
+    nationalId: "",
     numbers: ["", "", "", ""],
     letters: ["", "", ""],
     confirmed: false,
-    agreed: false,
 };
 
 function CarForm() {
-    const [formData, setFormData] = useState(intialState);
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const {
+        register,
+        handleSubmit,
+        control,
+        watch,
+        reset,
+        formState: { errors, isSubmitting },
+    } = useForm({
+        defaultValues,
+    });
 
-    const handleChange = (e, index, type) => {
-        const value = e.target.value;
-        const updated = [...formData[type]];
-        updated[index] = value;
-        setFormData({ ...formData, [type]: updated });
+    const numbers = watch("numbers");
+    const letters = watch("letters");
+
+    const onSubmit = (data) => {
+        const hasNumber = numbers.some((n) => n !== "");
+        const hasLetter = letters.some((l) => l !== "");
+        if (!hasNumber || !hasLetter) {
+            toast.error("Please select at least one number and one letter");
+            return;
+        }
+        const finalData = {
+            name: data.fullName,
+            phoneNumber: data.phoneNumber,
+            nationalSecurityNumber: data.nationalId,
+            carPlate: [...data.numbers, ...data.letters]
+                .filter(Boolean)
+                .join("-"),
+        };
+
+        console.log("Submitted Data:", data);
+        console.log("Final Data:", finalData);
+        reset();
     };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setIsSubmitting(true);
-        setTimeout(() => setIsSubmitting(false), 1500);
-    };
-
-    const arabicNums = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
-    const arabicLetters = [
-        "أ",
-        "ب",
-        "ج",
-        "د",
-        "ر",
-        "س",
-        "ص",
-        "ط",
-        "ع",
-        "ف",
-        "ق",
-        "ل",
-        "م",
-        "ن",
-        "هـ",
-        "و",
-        "ي",
-    ];
 
     return (
-        <div className="relative w-full max-w-2xl animate-fadeSlideUp overflow-hidden rounded-lg bg-white p-8 shadow-lg transition-all duration-500">
+        <div className="relative w-full max-w-2xl animate-fadeSlideUp overflow-hidden rounded-lg bg-primary-50 p-8 shadow-lg transition-all duration-500">
             <div className="mb-6 text-center">
-                <h1 className="inline-block animate-fadeSlideUp bg-gradient-to-r from-blue-800 to-blue-500 bg-clip-text text-2xl font-bold text-slate-800">
-                    Submit your car data
+                <h1 className="inline-block bg-gradient-to-r from-blue-800 to-blue-500 bg-clip-text text-2xl font-bold capitalize text-primary-800">
+                    Submit your data
                 </h1>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <h2 className="mb-2 font-semibold text-slate-700">
                     Personal Information
                 </h2>
+
                 <div className="grid grid-cols-1 gap-4">
                     <div className="grid grid-cols-2 gap-4">
-                        <input
-                            placeholder="Full Name"
-                            type="text"
-                            className="w-full transform rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                        />
-                        <input
-                            placeholder="Phone Number"
-                            type="text"
-                            className="w-full transform rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                        />
+                        <div className="w-full">
+                            <input
+                                className="w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3"
+                                placeholder="Full Name"
+                                type="text"
+                                {...register("fullName", {
+                                    required: "Name is required",
+                                })}
+                            />
+                            {errors.fullName && (
+                                <p className="mt-1 pl-4 text-sm text-red-500">
+                                    {errors.fullName.message}
+                                </p>
+                            )}
+                        </div>
+                        <div className="w-full">
+                            <input
+                                className="w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3"
+                                placeholder="Phone Number"
+                                type="text"
+                                {...register("phoneNumber", {
+                                    required: "Phone number is required",
+                                    pattern: {
+                                        value: /^(010|011|012|015)[0-9]{8}$/,
+                                        message: "Invalid phone number format",
+                                    },
+                                })}
+                            />
+                            {errors.phoneNumber && (
+                                <p className="mt-1 pl-4 text-sm text-red-500">
+                                    {errors.phoneNumber.message}
+                                </p>
+                            )}
+                        </div>
                     </div>
-                    <input
-                        placeholder="Email"
-                        type="email"
-                        className="w-full transform rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                    />
-                    <input
-                        placeholder="National/Corporate ID"
-                        className="w-full transform rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                    />
+                    <div>
+                        <input
+                            className="w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3"
+                            placeholder="National/Corporate ID"
+                            {...register("nationalId", {
+                                required: "National ID is required",
+                                pattern: {
+                                    value: /^[2-3][0-9]{13}$/,
+                                    message: "Invalid National ID format",
+                                },
+                            })}
+                        />
+                        {errors.nationalId && (
+                            <p className="mt-1 pl-4 text-sm text-red-500">
+                                {errors.nationalId.message}
+                            </p>
+                        )}
+                    </div>
                 </div>
 
                 <div>
@@ -91,90 +127,91 @@ function CarForm() {
                         Car Information
                     </h2>
                     <div className="flex flex-wrap gap-2">
-                        {formData.numbers.map((val, i) => (
-                            <select
-                                key={i}
-                                value={val}
-                                onChange={(e) => handleChange(e, i, "numbers")}
-                                className="rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none"
-                            >
-                                <option value="">-</option>
-                                {arabicNums.map((num, idx) => (
-                                    <option key={idx} value={num}>
-                                        {num}
-                                    </option>
-                                ))}
-                            </select>
+                        {Array.from({ length: 4 }).map((_, i) => (
+                            <Controller
+                                key={`num-${i}`}
+                                name={`numbers.${i}`}
+                                control={control}
+                                render={({ field }) => (
+                                    <select
+                                        {...field}
+                                        className="rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none"
+                                    >
+                                        <option value="">-</option>
+                                        {Array.from(
+                                            englishToArabicNumbers.entries(),
+                                        ).map(([eng, ar], idx) => (
+                                            <option
+                                                key={`num-${idx}`}
+                                                value={eng}
+                                            >
+                                                {ar}
+                                            </option>
+                                        ))}
+                                    </select>
+                                )}
+                            />
                         ))}
-                        <div class="h-12 w-px bg-gray-300"></div>
-                        {formData.letters.map((val, i) => (
-                            <select
-                                key={i}
-                                value={val}
-                                onChange={(e) => handleChange(e, i, "letters")}
-                                className="rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none"
-                            >
-                                <option value="">-</option>
-                                {arabicLetters.map((ltr, idx) => (
-                                    <option key={idx} value={ltr}>
-                                        {ltr}
-                                    </option>
-                                ))}
-                            </select>
+                        <div className="h-12 w-px bg-gray-400"></div>
+                        {Array.from({ length: 3 }).map((_, i) => (
+                            <Controller
+                                key={`ltr-${i}`}
+                                name={`letters.${i}`}
+                                control={control}
+                                render={({ field }) => (
+                                    <select
+                                        {...field}
+                                        className="rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none"
+                                    >
+                                        <option value="">-</option>
+                                        {Array.from(
+                                            englishToArabicLetters.entries(),
+                                        ).map(([eng, ar], idx) => (
+                                            <option
+                                                key={`letter-${idx}`}
+                                                value={eng}
+                                            >
+                                                {ar}
+                                            </option>
+                                        ))}
+                                    </select>
+                                )}
+                            />
                         ))}
                     </div>
                 </div>
 
+                {/* Plate Preview */}
                 <div className="mt-4 flex flex-col items-center">
-                    <Plate
-                        numbers={formData.numbers}
-                        letters={formData.letters}
-                    />
+                    <Plate formLetters={letters} formNumbers={numbers} />
                     <p className="mt-1 text-xs text-slate-500">
                         This is how your plate should look like
                     </p>
                 </div>
 
-                <div className="space-y-2">
-                    <label className="flex items-center gap-2 text-sm text-slate-700">
+                {/* Confirmations */}
+                <div className="space-y">
+                    <label
+                        className={`flex items-center gap-2 text-sm text-slate-700 ${
+                            errors.confirmed
+                                ? "text-red-500 underline underline-offset-2"
+                                : ""
+                        }`}
+                    >
                         <input
                             type="checkbox"
-                            checked={formData.confirmed}
-                            onChange={() =>
-                                setFormData({
-                                    ...formData,
-                                    confirmed: !formData.confirmed,
-                                })
-                            }
+                            {...register("confirmed", { required: true })}
                         />
-                        I am sure that I provided accurate personal and car
+                        I confirm the accuracy of the provided personal and car
                         data.
-                    </label>
-                    <label className="flex items-center gap-2 text-sm text-slate-700">
-                        <input
-                            type="checkbox"
-                            checked={formData.agreed}
-                            onChange={() =>
-                                setFormData({
-                                    ...formData,
-                                    agreed: !formData.agreed,
-                                })
-                            }
-                        />
-                        By proceeding, you agree to the{" "}
-                        <a href="#" className="text-blue-600 hover:underline">
-                            Terms and Conditions
-                        </a>
-                        .
                     </label>
                 </div>
 
+                {/* Submit Button */}
                 <button
                     type="submit"
-                    disabled={
-                        isSubmitting || !formData.confirmed || !formData.agreed
-                    }
-                    className={`w-full rounded-md bg-[#0F2543] px-4 py-3 font-medium text-white transition-all duration-300 hover:bg-[#0c1e36] focus:ring-4 focus:ring-blue-200 ${
+                    disabled={isSubmitting}
+                    className={`w-full rounded-md bg-primary-700 px-4 py-3 font-medium text-white transition-all duration-300 hover:bg-primary-500 focus:ring-4 focus:ring-blue-200 ${
                         isSubmitting ? "animate-pulse" : ""
                     }`}
                 >

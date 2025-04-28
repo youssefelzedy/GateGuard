@@ -1,14 +1,13 @@
 import { useState } from "react";
+import { ArrowDownUp, SquareArrowLeft, SquareArrowRight } from "lucide-react";
 import { useAdmin } from "../auth/useAdmin";
 import { useUsers } from "./useUsers";
 import { convertArabicToEnglish } from "../../utils/helper";
 import Plate from "../../ui/Plate";
-import { ArrowDownUp } from "lucide-react";
 
 function UsersTable() {
     const { admin } = useAdmin();
     const { users } = useUsers(admin?.garage.id);
-
     const [currentPage, setCurrentPage] = useState(1);
     const [searchGeneral, setSearchGeneral] = useState("");
     const [searchPlate, setSearchPlate] = useState("");
@@ -88,16 +87,16 @@ function UsersTable() {
             <div className="mb-4 flex flex-col items-end gap-2 sm:flex-row sm:justify-end">
                 <input
                     type="text"
-                    placeholder="Search car plate..."
-                    value={searchPlate}
-                    onChange={handleSearchPlate}
+                    placeholder="Search users (name, email, phone, ID)..."
+                    value={searchGeneral}
+                    onChange={handleSearchGeneral}
                     className="grow rounded border border-primary-300 px-3 py-2 text-primary-900 placeholder:text-primary-400 focus:outline-none"
                 />
                 <input
                     type="text"
-                    placeholder="Search users (name, email, phone, ID)..."
-                    value={searchGeneral}
-                    onChange={handleSearchGeneral}
+                    placeholder="Search car plate..."
+                    value={searchPlate}
+                    onChange={handleSearchPlate}
                     className="rounded border border-primary-300 px-3 py-2 text-primary-900 placeholder:text-primary-400 focus:outline-none"
                 />
             </div>
@@ -187,9 +186,9 @@ function UsersTable() {
                     <button
                         onClick={handlePrevPage}
                         disabled={currentPage === 1}
-                        className="rounded bg-primary-700 px-4 py-2 text-white disabled:opacity-50"
+                        className="rounded bg-primary-700 p-2 text-white disabled:opacity-50"
                     >
-                        Previous
+                        <SquareArrowLeft />
                     </button>
                     <span className="font-semibold">
                         Page {currentPage} of {totalPages}
@@ -197,9 +196,9 @@ function UsersTable() {
                     <button
                         onClick={handleNextPage}
                         disabled={currentPage === totalPages}
-                        className="rounded bg-primary-700 px-4 py-2 text-white disabled:opacity-50"
+                        className="rounded bg-primary-700 p-2 text-white disabled:opacity-50"
                     >
-                        Next
+                        <SquareArrowRight />
                     </button>
                 </div>
             )}

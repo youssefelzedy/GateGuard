@@ -1,7 +1,10 @@
 import { convertEnglishToArabic } from "../utils/helper";
 
-function Plate({ carPlate }) {
-    const { numbers, letters } = convertEnglishToArabic(carPlate.split("-"));
+function Plate({ carPlate, formNumbers, formLetters }) {
+    if (!carPlate && formNumbers && formLetters) {
+        carPlate = [...formNumbers, ...formLetters].filter(Boolean).join("-");
+    }
+    const { numbers, letters } = convertEnglishToArabic(carPlate?.split("-"));
     return (
         <div className="flex h-20 w-40 flex-col border border-black text-lg">
             <div className="flex items-center justify-between bg-primary-700 px-2 font-bold text-white">
