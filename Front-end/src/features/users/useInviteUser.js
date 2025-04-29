@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import { InviteUser as inviteUserApi } from "../../services/apiUsers";
 import toast from "react-hot-toast";
+import { InviteUser as inviteUserApi } from "../../services/apiUsers";
 
 export function useInviteUser() {
     const { mutate: inviteUser } = useMutation({
@@ -10,8 +10,7 @@ export function useInviteUser() {
             toast.success(data.message);
         },
         onError: (error) => {
-            console.error("Login failed:", error);
-            toast.error("Login failed. Please try again.");
+            toast.error(error.message);
         },
     });
     return { inviteUser };

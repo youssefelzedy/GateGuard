@@ -10,11 +10,11 @@ export function useAdmin() {
         enabled: !!token,
     });
     const admin = data?.data?.user;
-
+    const isOwner = admin?.role === "owner";
     const logout = () => {
         localStorage.removeItem("token");
         queryClient.clear();
     };
 
-    return { admin, isLoading, isAuth: !!token, logout };
+    return { admin, isLoading, isAuth: !!token, logout, isOwner };
 }

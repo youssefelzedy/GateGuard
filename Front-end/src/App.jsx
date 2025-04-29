@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import Invite from "./pages/Invite";
 import RegisterAdmin from "./pages/RegisterAdmin";
+import Admins from "./pages/Admins";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -41,6 +42,7 @@ function App() {
                         <Route path="logs" element={<Logs />} />
                         <Route path="users" element={<Users />} />
                         <Route path="live-stream" element={<LiveStream />} />
+                        <Route path="admins" element={<Admins />} />
                     </Route>
                     <Route path="login" element={<Login />} />
                     <Route path="signup" element={<Registration />} />
