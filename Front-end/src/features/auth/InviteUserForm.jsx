@@ -1,10 +1,10 @@
+import toast from "react-hot-toast";
 import { useForm, Controller } from "react-hook-form";
 import Plate from "../../ui/Plate";
 import {
     englishToArabicLetters,
     englishToArabicNumbers,
 } from "../../utils/constants";
-import toast from "react-hot-toast";
 
 const defaultValues = {
     fullName: "",
@@ -16,7 +16,7 @@ const defaultValues = {
     confirmed: false,
 };
 
-function CarForm() {
+function InviteUserForm() {
     const {
         register,
         handleSubmit,
@@ -222,4 +222,4 @@ function CarForm() {
     );
 }
 
-export default CarForm;
+export default InviteUserForm;

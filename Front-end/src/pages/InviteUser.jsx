@@ -1,5 +1,4 @@
 import HeaderLogin from "../features/auth/HeaderLogin";
-import InviteForm from "../features/auth/InviteAdminForm";
 
 function InviteUser() {
     return (
