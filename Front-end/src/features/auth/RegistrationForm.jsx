@@ -117,24 +117,6 @@ function RegistrationStepper() {
         }
     };
 
-    const nextStep = async () => {
-        let valid = false;
-
-        if (activeIndex === 0) {
-            valid = await trigger(["email", "password", "confirmPassword"]);
-        } else if (activeIndex === 1) {
-            valid = await trigger(["fullName", "phone", "nationalId"]);
-        }
-
-        if (valid) {
-            setActiveIndex((prev) => prev + 1);
-        }
-    };
-
-    const prevStep = () => {
-        setActiveIndex((prev) => prev - 1);
-    };
-
     return (
         <div className="card mx-auto w-full max-w-xl rounded-md bg-white p-6 shadow-lg">
             <div className="relative mb-6 py-8">

@@ -44,8 +44,8 @@ function App() {
                         <Route path="admins" element={<Admins />} />
                     </Route>
                     <Route path="login" element={<Login />} />
-                    <Route path="invite/user" element={<InviteUser />} />
-                    <Route path="invite/admin" element={<InviteUser />} />
+                    <Route path="invite-user" element={<InviteUser />} />
+                    <Route path="invite-admin" element={<InviteUser />} />
                     <Route path="landingPage" element={<LandingPage />} />
                     <Route path="get-started" element={<RegisterAdmin />} />
                 </Routes>
