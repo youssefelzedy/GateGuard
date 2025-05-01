@@ -1,0 +1,78 @@
+import { motion } from "framer-motion";
+
+const ImageUpload = ({
+    register,
+    errors,
+    shouldShowError,
+    imagePreview,
+    setImagePreview,
+    itemVariants,
+}) => {
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreview(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    return (
+        <motion.div variants={itemVariants}>
+            <label className="mb-1 block text-sm font-medium text-gray-700">
+                Profile Image
+            </label>
+            <div className="flex items-center space-x-4">
+                <div
+                    className={`relative h-24 w-24 overflow-hidden rounded-full border-2 ${
+                        shouldShowError(errors.image)
+                            ? "border-red-500"
+                            : "border-primary-200"
+                    }`}
+                >
+                    {imagePreview ? (
+                        <img
+                            src={imagePreview}
+                            alt="Profile Preview"
+                            className="h-full w-full object-cover"
+                        />
+                    ) : (
+                        <div className="flex h-full w-full items-center justify-center bg-gray-100 text-gray-400">
+                            No Image
+                        </div>
+                    )}
+                </div>
+                <div className="flex-1">
+                    <input
+                        type="file"
+                        accept="image/*"
+                        id="image"
+                        className="hidden"
+                        {...register("image", {
+                            required: "Profile image is required",
+                        })}
+                        onChange={(e) => {
+                            handleImageChange(e);
+                            register("image").onChange(e);
+                        }}
+                    />
+                    <label
+                        htmlFor="image"
+                        className="inline-block cursor-pointer rounded-md bg-primary-700 px-4 py-2 text-sm font-medium text-white hover:bg-primary-800"
+                    >
+                        Choose Image
+                    </label>
+                    {shouldShowError(errors.image) && (
+                        <p className="mt-1 text-sm text-red-500">
+                            {errors.image.message}
+                        </p>
+                    )}
+                </div>
+            </div>
+        </motion.div>
+    );
+};
+
+export default ImageUpload;

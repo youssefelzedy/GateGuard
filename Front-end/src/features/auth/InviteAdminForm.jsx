@@ -1,15 +1,12 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
+import StepNavigation from "../../components/InviteAdminForm/StepNavigation";
+import FormButtons from "../../components/InviteAdminForm/FormButtons";
+import AdminInfoStep from "../../components/InviteAdminForm/AdminInfoStep";
+import AccountStep from "../../components/InviteAdminForm/AccountStep";
 
-// Import components
-import StepNavigation from "../../components/RegisterAdminForm/StepNavigation";
-import AccountStep from "../../components/RegisterAdminForm/AccountStep";
-import AdminInfoStep from "../../components/RegisterAdminForm/AdminInfoStep";
-import GarageInfoStep from "../../components/RegisterAdminForm/GarageInfoStep";
-import FormButtons from "../../components/RegisterAdminForm/FormButtons";
-
-function RegistrationStepper() {
+function InviteAdminForm() {
     const [activeIndex, setActiveIndex] = useState(0);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -21,7 +18,6 @@ function RegistrationStepper() {
         register,
         handleSubmit,
         watch,
-        control,
         trigger,
         formState: { errors, isSubmitting },
     } = useForm({
@@ -29,21 +25,16 @@ function RegistrationStepper() {
         shouldFocusError: true,
     });
 
-    const inputClass =
-        "w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200";
-
     const handleStepClick = async (itemIndex) => {
         setHasInteracted(true);
-
         let valid = true;
 
         if (activeIndex === 0) {
-            const email = watch("email");
             const password = watch("password");
             const confirmPassword = watch("confirmPassword");
-            valid = !!email && !!password && !!confirmPassword;
+            valid = !!password && !!confirmPassword;
             if (!valid) {
-                await trigger(["email", "password", "confirmPassword"], {
+                await trigger(["password", "confirmPassword"], {
                     shouldFocus: true,
                 });
             }
@@ -58,16 +49,6 @@ function RegistrationStepper() {
                     shouldFocus: true,
                 });
             }
-        } else if (activeIndex === 2) {
-            const garageName = watch("garageName");
-            const location = watch("location");
-            const agree = watch("agree");
-            valid = !!garageName && !!location && !!agree;
-            if (!valid) {
-                await trigger(["garageName", "location", "agree"], {
-                    shouldFocus: true,
-                });
-            }
         }
 
         if (valid) {
@@ -76,15 +57,23 @@ function RegistrationStepper() {
         }
     };
 
+    const inputClass =
+        "w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200";
+
     const onSubmit = async (data) => {
         setIsSubmitted(true);
         setHasInteracted(true);
-        const isStep3Valid = await trigger(["garageName", "location", "agree"]);
-        if (isStep3Valid) {
+        const isStep2Valid = await trigger([
+            "fullName",
+            "phone",
+            "nationalId",
+            "image",
+        ]);
+        if (isStep2Valid) {
             console.log(data);
             // Post data to backend here!
         } else {
-            console.log("Step 3 validation failed");
+            console.log("Step 2 validation failed");
         }
     };
 
@@ -140,10 +129,9 @@ function RegistrationStepper() {
                 handleStepClick={handleStepClick}
             />
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <AnimatePresence mode="wait">
-                    {/* Step 1: Email + Password */}
-                    {activeIndex === 0 && (
+                    {activeIndex === 0 ? (
                         <motion.div
                             key="step1"
                             variants={containerVariants}
@@ -159,14 +147,11 @@ function RegistrationStepper() {
                                 setShowPassword={setShowPassword}
                                 showConfirmPassword={showConfirmPassword}
                                 setShowConfirmPassword={setShowConfirmPassword}
-                                watch={watch}
+                                inputClass={inputClass}
                                 itemVariants={itemVariants}
                             />
                         </motion.div>
-                    )}
-
-                    {/* Step 2: Admin Info */}
-                    {activeIndex === 1 && (
+                    ) : (
                         <motion.div
                             key="step2"
                             variants={containerVariants}
@@ -185,31 +170,11 @@ function RegistrationStepper() {
                             />
                         </motion.div>
                     )}
-
-                    {/* Step 3: Garage Info */}
-                    {activeIndex === 2 && (
-                        <motion.div
-                            key="step3"
-                            variants={containerVariants}
-                            initial="hidden"
-                            animate="visible"
-                            exit="exit"
-                        >
-                            <GarageInfoStep
-                                register={register}
-                                control={control}
-                                errors={errors}
-                                shouldShowError={shouldShowError}
-                                itemVariants={itemVariants}
-                            />
-                        </motion.div>
-                    )}
                 </AnimatePresence>
 
                 <FormButtons
                     activeIndex={activeIndex}
                     setActiveIndex={setActiveIndex}
-                    setHasInteracted={setHasInteracted}
                     isSubmitting={isSubmitting}
                     buttonVariants={buttonVariants}
                 />
@@ -218,4 +183,4 @@ function RegistrationStepper() {
     );
 }
 
-export default RegistrationStepper;
+export default InviteAdminForm;

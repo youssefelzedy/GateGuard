@@ -38,7 +38,7 @@ function LandingHeader() {
                     Log in
                 </a>
                 <a
-                    href="/signup"
+                    href="/get-started"
                     className="rounded bg-primary-700 px-4 py-2 font-medium text-primary-50 transition-colors hover:bg-primary-400"
                 >
                     Get Started

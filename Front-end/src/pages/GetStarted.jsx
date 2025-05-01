@@ -1,13 +1,13 @@
 import HeaderLogin from "../features/auth/HeaderLogin";
-import InviteUserForm from "../features/auth/InviteUserForm";
+import RegistrationStepper from "../features/auth/RegistrationForm";
 
-function InviteUser() {
+function GetStarted() {
     return (
         <div className="flex h-screen flex-col items-center justify-center bg-primary-100">
             <HeaderLogin />
-            <InviteUserForm />
+            <RegistrationStepper />
         </div>
     );
 }
 
-export default InviteUser;
+export default GetStarted;
