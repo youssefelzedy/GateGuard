@@ -9,8 +9,7 @@ import Logs from "./pages/Logs";
 import Users from "./pages/Users";
 import LiveStream from "./pages/LiveStream";
 import Login from "./pages/Login";
-import Registration from "./pages/Registration";
-import Invite from "./pages/Invite";
+import InviteUser from "./pages/InviteUser";
 import RegisterAdmin from "./pages/RegisterAdmin";
 import Admins from "./pages/Admins";
 
@@ -45,8 +44,8 @@ function App() {
                         <Route path="admins" element={<Admins />} />
                     </Route>
                     <Route path="login" element={<Login />} />
-                    <Route path="signup" element={<Registration />} />
-                    <Route path="invite" element={<Invite />} />
+                    <Route path="invite/user" element={<InviteUser />} />
+                    <Route path="invite/admin" element={<InviteUser />} />
                     <Route path="landingPage" element={<LandingPage />} />
                     <Route path="get-started" element={<RegisterAdmin />} />
                 </Routes>

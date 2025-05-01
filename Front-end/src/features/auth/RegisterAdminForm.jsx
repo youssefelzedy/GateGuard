@@ -1,5 +1,5 @@
 function RegisterAdminForm() {
-    return <div>form</div>;
+    return <div></div>;
 }
 
 export default RegisterAdminForm;
