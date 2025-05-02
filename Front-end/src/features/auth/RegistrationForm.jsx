@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
 
 // Import components
@@ -13,9 +14,6 @@ function RegistrationStepper() {
     const [activeIndex, setActiveIndex] = useState(0);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [imagePreview, setImagePreview] = useState(null);
-    const [isSubmitted, setIsSubmitted] = useState(false);
-    const [hasInteracted, setHasInteracted] = useState(false);
 
     const {
         register,
@@ -33,9 +31,7 @@ function RegistrationStepper() {
         "w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200";
 
     const handleStepClick = async (itemIndex) => {
-        setHasInteracted(true);
-
-        let valid = true;
+        let valid = false;
 
         if (activeIndex === 0) {
             const email = watch("email");
@@ -72,13 +68,10 @@ function RegistrationStepper() {
 
         if (valid) {
             setActiveIndex(itemIndex);
-            setHasInteracted(false);
         }
     };
 
     const onSubmit = async (data) => {
-        setIsSubmitted(true);
-        setHasInteracted(true);
         const isStep3Valid = await trigger(["garageName", "location", "agree"]);
         if (isStep3Valid) {
             console.log(data);
@@ -87,11 +80,6 @@ function RegistrationStepper() {
             console.log("Step 3 validation failed");
         }
     };
-
-    const shouldShowError = (error) =>
-        (hasInteracted || isSubmitted) &&
-        (error?.type === "required" || isSubmitted) &&
-        error;
 
     // Animation variants
     const containerVariants = {
@@ -154,7 +142,6 @@ function RegistrationStepper() {
                             <AccountStep
                                 register={register}
                                 errors={errors}
-                                shouldShowError={shouldShowError}
                                 showPassword={showPassword}
                                 setShowPassword={setShowPassword}
                                 showConfirmPassword={showConfirmPassword}
@@ -177,9 +164,6 @@ function RegistrationStepper() {
                             <AdminInfoStep
                                 register={register}
                                 errors={errors}
-                                shouldShowError={shouldShowError}
-                                imagePreview={imagePreview}
-                                setImagePreview={setImagePreview}
                                 inputClass={inputClass}
                                 itemVariants={itemVariants}
                             />
@@ -199,7 +183,6 @@ function RegistrationStepper() {
                                 register={register}
                                 control={control}
                                 errors={errors}
-                                shouldShowError={shouldShowError}
                                 itemVariants={itemVariants}
                             />
                         </motion.div>
@@ -209,7 +192,6 @@ function RegistrationStepper() {
                 <FormButtons
                     activeIndex={activeIndex}
                     setActiveIndex={setActiveIndex}
-                    setHasInteracted={setHasInteracted}
                     isSubmitting={isSubmitting}
                     buttonVariants={buttonVariants}
                 />

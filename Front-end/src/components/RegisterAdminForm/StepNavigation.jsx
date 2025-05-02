@@ -3,27 +3,12 @@ import { AtSign, User, Warehouse } from "lucide-react";
 
 const StepNavigation = ({ activeIndex, handleStepClick }) => {
     const itemRenderer = (item, itemIndex) => {
-        const isActiveItem = activeIndex === itemIndex;
-        const backgroundColor = isActiveItem
-            ? "var(--primary-color)"
-            : "var(--surface-b)";
-        const textColor = isActiveItem
-            ? "var(--surface-b)"
-            : "var(--text-color-secondary)";
-
         return (
             <div
                 className="flex cursor-pointer flex-col items-center"
                 onClick={() => handleStepClick(itemIndex)}
             >
-                <span
-                    className="align-items-center justify-content-center align-items-center border-circle border-primary border-1 h-3rem w-3rem z-1 inline-flex cursor-pointer"
-                    style={{
-                        backgroundColor: backgroundColor,
-                        color: textColor,
-                        marginTop: "-25px",
-                    }}
-                >
+                <span className="align-items-center justify-content-center align-items-center border-circle border-primary border-1 h-3rem w-3rem z-1 mt-[-25px] inline-flex cursor-pointer">
                     {item.icon}
                 </span>
                 <small className="mt-2 text-sm text-primary-800">
@@ -90,12 +75,7 @@ const StepNavigation = ({ activeIndex, handleStepClick }) => {
                           : "left-1/3 w-[35%]"
                 }`}
             />
-            <Steps
-                model={steps}
-                activeIndex={activeIndex}
-                readOnly={false}
-                className="p-steps-custom"
-            />
+            <Steps model={steps} activeIndex={activeIndex} readOnly={false} />
         </div>
     );
 };

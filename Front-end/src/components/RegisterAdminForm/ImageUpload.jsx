@@ -1,13 +1,10 @@
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
+import { useState } from "react";
 
-const ImageUpload = ({
-    register,
-    errors,
-    shouldShowError,
-    imagePreview,
-    setImagePreview,
-    itemVariants,
-}) => {
+const ImageUpload = ({ register, errors, itemVariants }) => {
+    const [imagePreview, setImagePreview] = useState(null);
+
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -27,9 +24,7 @@ const ImageUpload = ({
             <div className="flex items-center space-x-4">
                 <div
                     className={`relative h-24 w-24 overflow-hidden rounded-full border-2 ${
-                        shouldShowError(errors.image)
-                            ? "border-red-500"
-                            : "border-primary-200"
+                        errors.image ? "border-red-500" : "border-primary-200"
                     }`}
                 >
                     {imagePreview ? (
@@ -64,7 +59,7 @@ const ImageUpload = ({
                     >
                         Choose Image
                     </label>
-                    {shouldShowError(errors.image) && (
+                    {errors.image && (
                         <p className="mt-1 text-sm text-red-500">
                             {errors.image.message}
                         </p>

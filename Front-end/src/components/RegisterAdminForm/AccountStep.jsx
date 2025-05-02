@@ -1,10 +1,10 @@
 import { Eye, EyeOff } from "lucide-react";
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 
 const AccountStep = ({
     register,
     errors,
-    shouldShowError,
     showPassword,
     setShowPassword,
     showConfirmPassword,
@@ -30,7 +30,7 @@ const AccountStep = ({
                         },
                     })}
                 />
-                {shouldShowError(errors.email) && (
+                {errors.email && (
                     <p className="mt-1 text-sm text-red-500">
                         {errors.email.message}
                     </p>
@@ -67,7 +67,7 @@ const AccountStep = ({
                         )}
                     </button>
                 </div>
-                {shouldShowError(errors.password) && (
+                {errors.password && (
                     <p className="mt-1 text-sm text-red-500">
                         {errors.password.message}
                     </p>
@@ -104,7 +104,7 @@ const AccountStep = ({
                         )}
                     </button>
                 </div>
-                {shouldShowError(errors.confirmPassword) && (
+                {errors.confirmPassword && (
                     <p className="mt-1 text-sm text-red-500">
                         {errors.confirmPassword.message}
                     </p>

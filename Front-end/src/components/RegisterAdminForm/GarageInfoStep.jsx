@@ -1,13 +1,8 @@
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { Controller } from "react-hook-form";
 
-const GarageInfoStep = ({
-    register,
-    control,
-    errors,
-    shouldShowError,
-    itemVariants,
-}) => {
+const GarageInfoStep = ({ register, control, errors, itemVariants }) => {
     return (
         <motion.div variants={itemVariants} className="space-y-4">
             <motion.div variants={itemVariants}>
@@ -22,7 +17,7 @@ const GarageInfoStep = ({
                     })}
                     className="w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                 />
-                {shouldShowError(errors.garageName) && (
+                {errors.garageName && (
                     <p className="mt-1 text-sm text-red-500">
                         {errors.garageName.message}
                     </p>
@@ -41,7 +36,7 @@ const GarageInfoStep = ({
                     })}
                     className="w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                 />
-                {shouldShowError(errors.location) && (
+                {errors.location && (
                     <p className="mt-1 text-sm text-red-500">
                         {errors.location.message}
                     </p>
@@ -74,7 +69,7 @@ const GarageInfoStep = ({
                         </div>
                     )}
                 />
-                {shouldShowError(errors.agree) && (
+                {errors.agree && (
                     <p className="mt-1 text-sm text-red-500">
                         {errors.agree.message}
                     </p>
