@@ -4,9 +4,13 @@ import authController from '../controllers/authController';
 
 const router = express.Router({ mergeParams: true });
 
-router.get('/', adminController.getAllAdmins);
-
 router.use(authController.protect);
+router.get(
+  '/',
+  authController.restrictTo('Owner'),
+  adminController.getAllAdmins,
+);
+
 router.get('/me', adminController.getMe, adminController.getAdmin);
 router.get('/:id', adminController.getAdmin);
 
