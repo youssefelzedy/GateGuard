@@ -1,4 +1,10 @@
-import { LayoutDashboard, FileText, Video, Users } from "lucide-react";
+import {
+    LayoutDashboard,
+    FileText,
+    Video,
+    Users,
+    ShieldUser,
+} from "lucide-react";
 import { NavLink } from "react-router";
 
 const sidebarItems = [
@@ -43,6 +49,13 @@ function Sidebar() {
                             label={item.label}
                         />
                     ))}
+                    {
+                        <NavItem
+                            to="/Admins"
+                            icon={<ShieldUser size={20} />}
+                            label="Admins"
+                        />
+                    }
                 </ul>
             </nav>
         </aside>

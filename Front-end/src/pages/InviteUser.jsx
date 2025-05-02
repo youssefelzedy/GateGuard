@@ -1,13 +1,13 @@
 import HeaderLogin from "../features/auth/HeaderLogin";
-import InviteForm from "../features/auth/InviteForm";
+import InviteUserForm from "../features/auth/InviteUserForm";
 
-function Invite() {
+function InviteUser() {
     return (
         <div className="flex h-screen flex-col items-center justify-center bg-primary-100">
-            {/* <HeaderLogin /> */}
-            <InviteForm />
+            <HeaderLogin />
+            <InviteUserForm />
         </div>
     );
 }
 
-export default Invite;
+export default InviteUser;

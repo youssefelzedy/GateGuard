@@ -9,9 +9,10 @@ import Logs from "./pages/Logs";
 import Users from "./pages/Users";
 import LiveStream from "./pages/LiveStream";
 import Login from "./pages/Login";
-import Registration from "./pages/Registration";
-import Invite from "./pages/Invite";
-import RegisterAdmin from "./pages/RegisterAdmin";
+import InviteUser from "./pages/InviteUser";
+import RegisterAdmin from "./pages/GetStarted";
+import Admins from "./pages/Admins";
+import InviteAdmin from "./pages/InviteAdmin";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -41,10 +42,11 @@ function App() {
                         <Route path="logs" element={<Logs />} />
                         <Route path="users" element={<Users />} />
                         <Route path="live-stream" element={<LiveStream />} />
+                        <Route path="admins" element={<Admins />} />
                     </Route>
                     <Route path="login" element={<Login />} />
-                    <Route path="signup" element={<Registration />} />
-                    <Route path="invite" element={<Invite />} />
+                    <Route path="invite-user" element={<InviteUser />} />
+                    <Route path="invite-admin" element={<InviteAdmin />} />
                     <Route path="landingPage" element={<LandingPage />} />
                     <Route path="get-started" element={<RegisterAdmin />} />
                 </Routes>
