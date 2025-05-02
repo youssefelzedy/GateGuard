@@ -1,13 +1,10 @@
 import { Steps } from "primereact/steps";
 import { AtSign, User, Warehouse } from "lucide-react";
 
-const StepNavigation = ({ activeIndex, handleStepClick }) => {
-    const itemRenderer = (item, itemIndex) => {
+const StepNavigation = ({ activeIndex }) => {
+    const itemRenderer = (item) => {
         return (
-            <div
-                className="flex cursor-pointer flex-col items-center"
-                onClick={() => handleStepClick(itemIndex)}
-            >
+            <div className="flex cursor-pointer flex-col items-center">
                 <span className="align-items-center justify-content-center align-items-center border-circle border-primary border-1 h-3rem w-3rem z-1 mt-[-25px] inline-flex cursor-pointer">
                     {item.icon}
                 </span>
@@ -75,7 +72,7 @@ const StepNavigation = ({ activeIndex, handleStepClick }) => {
                           : "left-1/3 w-[35%]"
                 }`}
             />
-            <Steps model={steps} activeIndex={activeIndex} readOnly={false} />
+            <Steps model={steps} activeIndex={activeIndex} readOnly />
         </div>
     );
 };

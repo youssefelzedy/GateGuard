@@ -10,7 +10,7 @@ const ImageUpload = ({ register, errors, itemVariants }) => {
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setImagePreview(reader.result);
+                setImagePreview(reader.result); // Update the preview state
             };
             reader.readAsDataURL(file);
         }
@@ -39,7 +39,7 @@ const ImageUpload = ({ register, errors, itemVariants }) => {
                         </div>
                     )}
                 </div>
-                <div className="flex-1">
+                <div className="flex flex-1 items-center gap-4">
                     <input
                         type="file"
                         accept="image/*"
@@ -47,11 +47,8 @@ const ImageUpload = ({ register, errors, itemVariants }) => {
                         className="hidden"
                         {...register("image", {
                             required: "Profile image is required",
+                            onChange: (e) => handleImageChange(e), // Ensure the preview is updated
                         })}
-                        onChange={(e) => {
-                            handleImageChange(e);
-                            register("image").onChange(e);
-                        }}
                     />
                     <label
                         htmlFor="image"

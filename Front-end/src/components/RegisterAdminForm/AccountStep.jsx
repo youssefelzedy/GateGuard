@@ -1,17 +1,12 @@
-import { Eye, EyeOff } from "lucide-react";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
-const AccountStep = ({
-    register,
-    errors,
-    showPassword,
-    setShowPassword,
-    showConfirmPassword,
-    setShowConfirmPassword,
-    watch,
-    itemVariants,
-}) => {
+const AccountStep = ({ register, errors, watch, itemVariants }) => {
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
     return (
         <motion.div variants={itemVariants} className="space-y-4">
             <motion.div variants={itemVariants}>

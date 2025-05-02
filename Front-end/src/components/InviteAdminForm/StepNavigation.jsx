@@ -76,12 +76,7 @@ function StepNavigation({ activeIndex, handleStepClick }) {
                           : "left-1/3 w-[35%]"
                 }`}
             />
-            <Steps
-                model={steps}
-                activeIndex={activeIndex}
-                readOnly={false}
-                className="steps-custom"
-            />
+            <Steps model={steps} activeIndex={activeIndex} readOnly />
         </div>
     );
 }
