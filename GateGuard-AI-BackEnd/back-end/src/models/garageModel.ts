@@ -11,11 +11,6 @@ const garageSchema = new mongoose.Schema(
       default: true,
       select: false,
     },
-    cameraLink: {
-      type: String,
-      required: true,
-      unique: true,
-    },
   },
   {
     toJSON: { virtuals: true },
