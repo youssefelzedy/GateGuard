@@ -12,8 +12,6 @@ import FormButtons from "../../components/RegisterAdminForm/FormButtons";
 
 function RegistrationStepper() {
     const [activeIndex, setActiveIndex] = useState(0);
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const {
         register,
@@ -21,58 +19,21 @@ function RegistrationStepper() {
         watch,
         control,
         trigger,
-        formState: { errors, isSubmitting },
+        formState: { errors },
     } = useForm({
         mode: "onSubmit",
         shouldFocusError: true,
     });
-
     const inputClass =
         "w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200";
 
-    const handleStepClick = async (itemIndex) => {
-        let valid = false;
-
-        if (activeIndex === 0) {
-            const email = watch("email");
-            const password = watch("password");
-            const confirmPassword = watch("confirmPassword");
-            valid = !!email && !!password && !!confirmPassword;
-            if (!valid) {
-                await trigger(["email", "password", "confirmPassword"], {
-                    shouldFocus: true,
-                });
-            }
-        } else if (activeIndex === 1) {
-            const fullName = watch("fullName");
-            const phone = watch("phone");
-            const nationalId = watch("nationalId");
-            const image = watch("image");
-            valid = !!fullName && !!phone && !!nationalId && !!image;
-            if (!valid) {
-                await trigger(["fullName", "phone", "nationalId", "image"], {
-                    shouldFocus: true,
-                });
-            }
-        } else if (activeIndex === 2) {
-            const garageName = watch("garageName");
-            const location = watch("location");
-            const agree = watch("agree");
-            valid = !!garageName && !!location && !!agree;
-            if (!valid) {
-                await trigger(["garageName", "location", "agree"], {
-                    shouldFocus: true,
-                });
-            }
-        }
-
-        if (valid) {
-            setActiveIndex(itemIndex);
-        }
-    };
-
     const onSubmit = async (data) => {
-        const isStep3Valid = await trigger(["garageName", "location", "agree"]);
+        const isStep3Valid =
+            (await trigger(["garageName", "location", "agree"])) &&
+            data.agree &&
+            data.garageName &&
+            data.location;
+
         if (isStep3Valid) {
             console.log(data);
             // Post data to backend here!
@@ -123,10 +84,7 @@ function RegistrationStepper() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
         >
-            <StepNavigation
-                activeIndex={activeIndex}
-                handleStepClick={handleStepClick}
-            />
+            <StepNavigation activeIndex={activeIndex} />
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <AnimatePresence mode="wait">
@@ -142,10 +100,6 @@ function RegistrationStepper() {
                             <AccountStep
                                 register={register}
                                 errors={errors}
-                                showPassword={showPassword}
-                                setShowPassword={setShowPassword}
-                                showConfirmPassword={showConfirmPassword}
-                                setShowConfirmPassword={setShowConfirmPassword}
                                 watch={watch}
                                 itemVariants={itemVariants}
                             />
@@ -192,8 +146,8 @@ function RegistrationStepper() {
                 <FormButtons
                     activeIndex={activeIndex}
                     setActiveIndex={setActiveIndex}
-                    isSubmitting={isSubmitting}
                     buttonVariants={buttonVariants}
+                    trigger={trigger}
                 />
             </form>
         </motion.div>

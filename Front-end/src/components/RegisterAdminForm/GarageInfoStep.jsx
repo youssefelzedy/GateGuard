@@ -55,25 +55,23 @@ const GarageInfoStep = ({ register, control, errors, itemVariants }) => {
                                 type="checkbox"
                                 id="agree"
                                 className="mt-1 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                                checked={field.value}
                                 onChange={(e) =>
                                     field.onChange(e.target.checked)
                                 }
                             />
                             <label
                                 htmlFor="agree"
-                                className="ml-2 block text-sm text-gray-700"
+                                className={`ml-2 block text-sm ${
+                                    errors.agree
+                                        ? "text-red-500"
+                                        : "text-gray-700"
+                                }`}
                             >
                                 I agree to the terms and conditions
                             </label>
                         </div>
                     )}
                 />
-                {errors.agree && (
-                    <p className="mt-1 text-sm text-red-500">
-                        {errors.agree.message}
-                    </p>
-                )}
             </motion.div>
         </motion.div>
     );
