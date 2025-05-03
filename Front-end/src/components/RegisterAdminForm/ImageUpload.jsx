@@ -46,7 +46,6 @@ const ImageUpload = ({ register, errors, itemVariants }) => {
                         id="image"
                         className="hidden"
                         {...register("image", {
-                            required: "Profile image is required",
                             onChange: (e) => handleImageChange(e), // Ensure the preview is updated
                         })}
                     />

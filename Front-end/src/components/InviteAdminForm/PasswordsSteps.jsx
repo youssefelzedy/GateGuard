@@ -1,18 +1,12 @@
 import { Eye, EyeOff } from "lucide-react";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
+import { useState } from "react";
 
-function AccountStep({
-    register,
-    errors,
-    shouldShowError,
-    showPassword,
-    setShowPassword,
-    showConfirmPassword,
-    setShowConfirmPassword,
-    inputClass,
-    itemVariants,
-}) {
+function PasswordsSteps({ register, errors, inputClass, itemVariants }) {
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
     return (
         <motion.div variants={itemVariants} className="space-y-4">
             <motion.div variants={itemVariants}>
@@ -31,7 +25,7 @@ function AccountStep({
                             },
                         })}
                         className={`${inputClass} ${
-                            shouldShowError(errors.password)
+                            errors.password
                                 ? "border-red-500 focus:border-red-500 focus:ring-red-200"
                                 : ""
                         }`}
@@ -49,7 +43,7 @@ function AccountStep({
                         )}
                     </button>
                 </div>
-                {shouldShowError(errors.password) && (
+                {errors.password && (
                     <p className="mt-1 text-sm text-red-500">
                         {errors.password.message}
                     </p>
@@ -70,7 +64,7 @@ function AccountStep({
                                 "Passwords do not match",
                         })}
                         className={`${inputClass} ${
-                            shouldShowError(errors.confirmPassword)
+                            errors.confirmPassword
                                 ? "border-red-500 focus:border-red-500 focus:ring-red-200"
                                 : ""
                         }`}
@@ -90,7 +84,7 @@ function AccountStep({
                         )}
                     </button>
                 </div>
-                {shouldShowError(errors.confirmPassword) && (
+                {errors.confirmPassword && (
                     <p className="mt-1 text-sm text-red-500">
                         {errors.confirmPassword.message}
                     </p>
@@ -100,4 +94,4 @@ function AccountStep({
     );
 }
 
-export default AccountStep;
+export default PasswordsSteps;

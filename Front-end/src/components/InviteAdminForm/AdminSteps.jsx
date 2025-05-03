@@ -1,7 +1,7 @@
 import { Steps } from "primereact/steps";
-import { AtSign, User, Warehouse } from "lucide-react";
+import { AtSign, User } from "lucide-react";
 
-const StepNavigation = ({ activeIndex }) => {
+function AdminSteps({ activeIndex }) {
     const itemRenderer = (item) => {
         return (
             <div className="flex cursor-pointer flex-col items-center">
@@ -44,37 +44,23 @@ const StepNavigation = ({ activeIndex }) => {
             label: "Admin Info",
             template: (item) => itemRenderer(item, 1),
         },
-        {
-            icon: (
-                <Warehouse
-                    size={48}
-                    className={`m-2 rounded-2xl ${
-                        activeIndex === 2
-                            ? "bg-primary-800 stroke-primary-50"
-                            : "bg-primary-50 stroke-primary-800/50"
-                    } p-2`}
-                />
-            ),
-            label: "Garage Info",
-            template: (item) => itemRenderer(item, 2),
-        },
     ];
 
     return (
         <div className="relative mb-6 py-8">
             <div className="absolute left-1/2 top-8 z-0 h-1 w-[55%] -translate-x-1/2 rounded-full bg-gray-300" />
             <div
-                className={`z-1 absolute top-8 h-1 translate-x-1/2 rounded-full bg-primary-700 transition-all duration-300 ${
+                className={`absolute top-8 z-0 h-1 translate-x-1/2 rounded-full bg-primary-700 transition-all duration-300 ${
                     activeIndex === 0
                         ? "hidden"
                         : activeIndex === 1
-                          ? "left-0 w-[35%]"
+                          ? "left-0 w-[47%]"
                           : "left-1/3 w-[35%]"
                 }`}
             />
             <Steps model={steps} activeIndex={activeIndex} readOnly />
         </div>
     );
-};
+}
 
-export default StepNavigation;
+export default AdminSteps;
