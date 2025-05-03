@@ -4,6 +4,7 @@ import garageController from '../controllers/garageController';
 import adminRouter from './adminRoutes';
 import userRouter from './userRoutes';
 import logsRouter from './logsRoutes';
+import cameraRouter from './cameraRoutes';
 
 const router = express.Router();
 
@@ -13,6 +14,7 @@ const router = express.Router();
 router.use('/:garageId/admins', adminRouter);
 router.use('/:garageId/users', userRouter);
 router.use('/:garageId/logs', logsRouter);
+router.use('/:garageId/cameras', cameraRouter);
 
 // Public routes
 router.get('/', garageController.getAllGarages);
