@@ -25,7 +25,7 @@ const userController = {
     const user: IUser | null = await User.findById(req.params.id);
     if (!user) {
       res.status(404);
-      throw new AppError('user not found');
+      throw new AppError('user not found',404);
     }
     res.status(200).json({
       status: 'success',

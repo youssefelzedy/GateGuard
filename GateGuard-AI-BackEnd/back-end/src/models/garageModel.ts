@@ -4,7 +4,7 @@ import IGarage from '../interfaces/intGarage';
 const garageSchema = new mongoose.Schema(
   {
     garageName: { type: String, required: true, unique: true },
-    location: { type: String, required: true, unique: true },
+    location: { type: String, required: true },
     currentOccupancy: { type: Number, default: 0, required: true },
     active: {
       type: Boolean,

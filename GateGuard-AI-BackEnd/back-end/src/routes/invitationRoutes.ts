@@ -4,13 +4,10 @@ import invitationController from '../controllers/invitationController';
 
 const router = express.Router();
 
-// Public route to accept invitation (doesn't require authentication)
 router.post('/accept/:token', invitationController.acceptInvitation);
 
-// Protected routes - only authenticated users
 router.use(authController.protect);
 
-// Routes for invitation management (requires authentication)
 router.post(
   '/sendAdmin',
   authController.restrictTo('Owner'),

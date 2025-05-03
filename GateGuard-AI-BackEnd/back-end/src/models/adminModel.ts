@@ -22,7 +22,7 @@ const adminSchema = new mongoose.Schema<IAdmin>({
     minlength: 8,
     select: false,
   },
-  image : {
+  image: {
     type: String,
     default: 'default.jpg',
   },

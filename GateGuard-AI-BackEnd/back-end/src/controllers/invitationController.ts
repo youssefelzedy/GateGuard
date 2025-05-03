@@ -42,11 +42,11 @@ const invitationController = {
         email,
         garage: garage._id,
         invitedBy: req.user!._id,
-        type: 'admin', // Add this line
+        type: 'admin',
       });
 
       // https://localhost:5173/inviteUser/:token
-      const invitationURL = `https://localhost:5173/inviteUser/${invitation.token}`;
+      const invitationURL = `https://localhost:5173/invite-admin/${invitation.token}`;
       const htmlMessage = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e1e1e1; border-radius: 5px;">
         <h2 style="color: #333; text-align: center;">GateGuard Invitation</h2>
@@ -120,7 +120,7 @@ const invitationController = {
         invitedBy: req.user!._id,
         type: 'user', // Add this line
       });
-      const invitationURL = `https://localhost:5173/inviteAdmin/${invitation.token}`;
+      const invitationURL = `https://localhost:5173/invite-user/${invitation.token}`;
       const htmlMessage = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e1e1e1; border-radius: 5px;">
         <h2 style="color: #333; text-align: center;">GateGuard Invitation</h2>

@@ -18,7 +18,7 @@ import userRouter from './routes/userRoutes';
 import logsRouter from './routes/logsRoutes';
 import authRouter from './routes/authRoutes';
 import invitationRouter from './routes/invitationRoutes';
-import cameraRouter from './routes/cameraRoutes'; // Add this import
+import cameraRouter from './routes/cameraRoutes';
 
 const app = express();
 

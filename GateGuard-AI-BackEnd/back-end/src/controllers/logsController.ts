@@ -29,7 +29,7 @@ const logsController = {
     const log: ILog | null = await Logs.findById(req.params.id);
     if (!log) {
       res.status(404);
-      throw new AppError('Log not found');
+      throw new AppError('Log not found', 404);
     }
     res.status(200).json({
       status: 'success',
