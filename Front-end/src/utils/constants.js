@@ -18,7 +18,6 @@ export const englishToArabicLetters = new Map([
     ["yaa", "ي"],
 ]);
 export const englishToArabicNumbers = new Map([
-    ["0", "٠"],
     ["1", "١"],
     ["2", "٢"],
     ["3", "٣"],

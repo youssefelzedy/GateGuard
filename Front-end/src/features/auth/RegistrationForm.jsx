@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Import components
-import StepNavigation from "../../components/RegisterAdminForm/StepNavigation";
+import OwnerSteps from "../../components/RegisterAdminForm/OwnerSteps";
 import AccountStep from "../../components/RegisterAdminForm/AccountStep";
 import AdminInfoStep from "../../components/RegisterAdminForm/AdminInfoStep";
 import GarageInfoStep from "../../components/RegisterAdminForm/GarageInfoStep";
@@ -35,8 +35,17 @@ function RegistrationStepper() {
             data.location;
 
         if (isStep3Valid) {
-            console.log(data);
-            // Post data to backend here!
+            const finalData = {
+                email: data.email,
+                password: data.password,
+                fullName: data.fullName,
+                phone: data.phone,
+                nationalId: data.nationalId,
+                image: data.image[0],
+                garageName: data.garageName,
+                location: data.location,
+            };
+            console.log(finalData);
         } else {
             console.log("Step 3 validation failed");
         }
@@ -84,7 +93,7 @@ function RegistrationStepper() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
         >
-            <StepNavigation activeIndex={activeIndex} />
+            <OwnerSteps activeIndex={activeIndex} />
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <AnimatePresence mode="wait">

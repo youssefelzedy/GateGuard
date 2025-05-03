@@ -1,74 +1,36 @@
+// eslint-disable-next-line no-unused-vars
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { motion, AnimatePresence } from "framer-motion";
-import StepNavigation from "../../components/InviteAdminForm/StepNavigation";
+
+import AdminSteps from "../../components/InviteAdminForm/AdminSteps";
+import PasswordsSteps from "../../components/InviteAdminForm/PasswordsSteps";
+import AdminInfoStep from "../../components/RegisterAdminForm/AdminInfoStep";
 import FormButtons from "../../components/InviteAdminForm/FormButtons";
-import AdminInfoStep from "../../components/InviteAdminForm/AdminInfoStep";
-import AccountStep from "../../components/InviteAdminForm/AccountStep";
 
 function InviteAdminForm() {
     const [activeIndex, setActiveIndex] = useState(0);
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [imagePreview, setImagePreview] = useState(null);
-    const [isSubmitted, setIsSubmitted] = useState(false);
-    const [hasInteracted, setHasInteracted] = useState(false);
 
     const {
         register,
         handleSubmit,
         watch,
         trigger,
-        formState: { errors, isSubmitting },
+        formState: { errors },
     } = useForm({
         mode: "onSubmit",
         shouldFocusError: true,
     });
 
-    const handleStepClick = async (itemIndex) => {
-        setHasInteracted(true);
-        let valid = true;
-
-        if (activeIndex === 0) {
-            const password = watch("password");
-            const confirmPassword = watch("confirmPassword");
-            valid = !!password && !!confirmPassword;
-            if (!valid) {
-                await trigger(["password", "confirmPassword"], {
-                    shouldFocus: true,
-                });
-            }
-        } else if (activeIndex === 1) {
-            const fullName = watch("fullName");
-            const phone = watch("phone");
-            const nationalId = watch("nationalId");
-            const image = watch("image");
-            valid = !!fullName && !!phone && !!nationalId && !!image;
-            if (!valid) {
-                await trigger(["fullName", "phone", "nationalId", "image"], {
-                    shouldFocus: true,
-                });
-            }
-        }
-
-        if (valid) {
-            setActiveIndex(itemIndex);
-            setHasInteracted(false);
-        }
-    };
-
     const inputClass =
         "w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200";
 
     const onSubmit = async (data) => {
-        setIsSubmitted(true);
-        setHasInteracted(true);
-        const isStep2Valid = await trigger([
-            "fullName",
-            "phone",
-            "nationalId",
-            "image",
-        ]);
+        const isStep2Valid =
+            (await trigger(["fullName", "phone", "nationalId", "image"])) &&
+            data.fullName &&
+            data.phone &&
+            data.nationalId;
         if (isStep2Valid) {
             console.log(data);
             // Post data to backend here!
@@ -76,11 +38,6 @@ function InviteAdminForm() {
             console.log("Step 2 validation failed");
         }
     };
-
-    const shouldShowError = (error) =>
-        (hasInteracted || isSubmitted) &&
-        (error?.type === "required" || isSubmitted) &&
-        error;
 
     // Animation variants
     const containerVariants = {
@@ -124,10 +81,7 @@ function InviteAdminForm() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
         >
-            <StepNavigation
-                activeIndex={activeIndex}
-                handleStepClick={handleStepClick}
-            />
+            <AdminSteps activeIndex={activeIndex} />
 
             <form onSubmit={handleSubmit(onSubmit)}>
                 <AnimatePresence mode="wait">
@@ -139,14 +93,10 @@ function InviteAdminForm() {
                             animate="visible"
                             exit="exit"
                         >
-                            <AccountStep
+                            <PasswordsSteps
+                                watch={watch}
                                 register={register}
                                 errors={errors}
-                                shouldShowError={shouldShowError}
-                                showPassword={showPassword}
-                                setShowPassword={setShowPassword}
-                                showConfirmPassword={showConfirmPassword}
-                                setShowConfirmPassword={setShowConfirmPassword}
                                 inputClass={inputClass}
                                 itemVariants={itemVariants}
                             />
@@ -162,9 +112,6 @@ function InviteAdminForm() {
                             <AdminInfoStep
                                 register={register}
                                 errors={errors}
-                                shouldShowError={shouldShowError}
-                                imagePreview={imagePreview}
-                                setImagePreview={setImagePreview}
                                 inputClass={inputClass}
                                 itemVariants={itemVariants}
                             />
@@ -175,7 +122,7 @@ function InviteAdminForm() {
                 <FormButtons
                     activeIndex={activeIndex}
                     setActiveIndex={setActiveIndex}
-                    isSubmitting={isSubmitting}
+                    trigger={trigger}
                     buttonVariants={buttonVariants}
                 />
             </form>
