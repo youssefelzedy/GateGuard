@@ -13,7 +13,7 @@ const FormButtons = ({
 
         // Trigger validation based on the current step
         if (activeIndex === 0) {
-            valid = await trigger(["email", "password", "confirmPassword"]);
+            valid = await trigger(["password", "passwordConfirm"]);
         } else if (activeIndex === 1) {
             valid = await trigger(["fullName", "phone", "nationalId", "image"]);
         } else {

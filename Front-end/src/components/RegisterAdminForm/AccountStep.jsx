@@ -77,7 +77,7 @@ const AccountStep = ({ register, errors, watch, itemVariants }) => {
                     <input
                         type={showConfirmPassword ? "text" : "password"}
                         placeholder="Confirm Password"
-                        {...register("confirmPassword", {
+                        {...register("passwordConfirm", {
                             required: "Please confirm your password",
                             validate: (value) =>
                                 value === watch("password") ||
@@ -99,9 +99,9 @@ const AccountStep = ({ register, errors, watch, itemVariants }) => {
                         )}
                     </button>
                 </div>
-                {errors.confirmPassword && (
+                {errors.passwordConfirm && (
                     <p className="mt-1 text-sm text-red-500">
-                        {errors.confirmPassword.message}
+                        {errors.passwordConfirm.message}
                     </p>
                 )}
             </motion.div>

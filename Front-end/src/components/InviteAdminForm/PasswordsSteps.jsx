@@ -57,14 +57,14 @@ function PasswordsSteps({ register, errors, inputClass, itemVariants }) {
                 <div className="relative">
                     <input
                         type={showConfirmPassword ? "text" : "password"}
-                        {...register("confirmPassword", {
+                        {...register("passwordConfirm", {
                             required: "Please confirm your password",
                             validate: (value, formValues) =>
                                 value === formValues.password ||
                                 "Passwords do not match",
                         })}
                         className={`${inputClass} ${
-                            errors.confirmPassword
+                            errors.passwordConfirm
                                 ? "border-red-500 focus:border-red-500 focus:ring-red-200"
                                 : ""
                         }`}
@@ -84,9 +84,9 @@ function PasswordsSteps({ register, errors, inputClass, itemVariants }) {
                         )}
                     </button>
                 </div>
-                {errors.confirmPassword && (
+                {errors.passwordConfirm && (
                     <p className="mt-1 text-sm text-red-500">
-                        {errors.confirmPassword.message}
+                        {errors.passwordConfirm.message}
                     </p>
                 )}
             </motion.div>

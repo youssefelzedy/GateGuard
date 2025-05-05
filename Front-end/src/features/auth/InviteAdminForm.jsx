@@ -7,10 +7,13 @@ import AdminSteps from "../../components/InviteAdminForm/AdminSteps";
 import PasswordsSteps from "../../components/InviteAdminForm/PasswordsSteps";
 import AdminInfoStep from "../../components/RegisterAdminForm/AdminInfoStep";
 import FormButtons from "../../components/InviteAdminForm/FormButtons";
+import { useParams } from "react-router";
+import { useInvitation } from "./useInvitation";
 
 function InviteAdminForm() {
     const [activeIndex, setActiveIndex] = useState(0);
-
+    const { token } = useParams();
+    const { acceptInvitation } = useInvitation();
     const {
         register,
         handleSubmit,
@@ -27,13 +30,17 @@ function InviteAdminForm() {
 
     const onSubmit = async (data) => {
         const isStep2Valid =
-            (await trigger(["fullName", "phone", "nationalId", "image"])) &&
-            data.fullName &&
-            data.phone &&
-            data.nationalId;
+            (await trigger([
+                "name",
+                "phoneNumber",
+                "nationalSecurityNumber",
+            ])) &&
+            data.name &&
+            data.phoneNumber &&
+            data.nationalSecurityNumber;
         if (isStep2Valid) {
             console.log(data);
-            // Post data to backend here!
+            acceptInvitation({ data, token });
         } else {
             console.log("Step 2 validation failed");
         }
