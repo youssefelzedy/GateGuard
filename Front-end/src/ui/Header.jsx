@@ -1,4 +1,4 @@
-import { BellRing, Mail } from "lucide-react";
+import { BellRing, Mail, LogOut } from "lucide-react";
 import { useAdmin } from "../features/auth/useAdmin";
 
 function Header() {
@@ -17,15 +17,6 @@ function Header() {
 
             <div className="flex items-center divide-x-2 divide-primary-200">
                 <div className="flex items-center gap-4 pr-3">
-                    <button className="relative rounded-full p-2 hover:bg-primary-50">
-                        <Mail size={20} className="text-primary-800" />
-                    </button>
-                    <button className="relative rounded-full p-2 hover:bg-primary-50">
-                        <BellRing size={20} className="text-primary-800" />
-                    </button>
-                </div>
-
-                <div className="flex items-center gap-3 pl-3">
                     <div className="h-10 w-10 overflow-hidden rounded-full bg-gray-200">
                         <img
                             src={admin?.image || "/default.jpg"}
