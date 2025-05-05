@@ -11,7 +11,7 @@ const AdminInfoStep = ({ register, errors, itemVariants, inputClass }) => {
                 </label>
                 <input
                     type="text"
-                    {...register("fullName", {
+                    {...register("name", {
                         required: "Full name is required",
                     })}
                     className="w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
@@ -30,7 +30,7 @@ const AdminInfoStep = ({ register, errors, itemVariants, inputClass }) => {
                 </label>
                 <input
                     type="tel"
-                    {...register("phone", {
+                    {...register("phoneNumber", {
                         required: "Phone number is required",
                         pattern: {
                             value: /^(010|011|012|015)[0-9]{8}$/,
@@ -54,7 +54,7 @@ const AdminInfoStep = ({ register, errors, itemVariants, inputClass }) => {
                 </label>
                 <input
                     type="text"
-                    {...register("nationalId", {
+                    {...register("nationalSecurityNumber", {
                         required: "National ID is required",
                     })}
                     className={`${inputClass} ${
@@ -71,11 +71,11 @@ const AdminInfoStep = ({ register, errors, itemVariants, inputClass }) => {
                 )}
             </motion.div>
 
-            <ImageUpload
+            {/* <ImageUpload
                 register={register}
                 errors={errors}
                 itemVariants={itemVariants}
-            />
+            /> */}
         </motion.div>
     );
 };

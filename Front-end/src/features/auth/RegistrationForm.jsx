@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
@@ -9,10 +9,13 @@ import AccountStep from "../../components/RegisterAdminForm/AccountStep";
 import AdminInfoStep from "../../components/RegisterAdminForm/AdminInfoStep";
 import GarageInfoStep from "../../components/RegisterAdminForm/GarageInfoStep";
 import FormButtons from "../../components/RegisterAdminForm/FormButtons";
+import { useSignup } from "./useSignup";
+import toast from "react-hot-toast";
 
 function RegistrationStepper() {
     const [activeIndex, setActiveIndex] = useState(0);
 
+    const { signup, error: backError } = useSignup();
     const {
         register,
         handleSubmit,
@@ -24,8 +27,29 @@ function RegistrationStepper() {
         mode: "onSubmit",
         shouldFocusError: true,
     });
+
     const inputClass =
         "w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200";
+
+    useEffect(() => {
+        if (backError) {
+            toast.error(backError.message);
+
+            if (backError?.field === "email") {
+                setActiveIndex(0);
+            } else if (
+                backError?.field === "phoneNumber" ||
+                backError?.field === "nationalSecurityNumber"
+            ) {
+                setActiveIndex(1);
+            } else if (
+                backError?.field === "garageName" ||
+                backError?.field === "location"
+            ) {
+                setActiveIndex(2);
+            }
+        }
+    }, [backError]);
 
     const onSubmit = async (data) => {
         const isStep3Valid =
@@ -38,14 +62,16 @@ function RegistrationStepper() {
             const finalData = {
                 email: data.email,
                 password: data.password,
-                fullName: data.fullName,
-                phone: data.phone,
-                nationalId: data.nationalId,
-                image: data.image[0],
+                passwordConfirm: data.confirmPassword,
+                name: data.fullName,
+                phoneNumber: data.phoneNumber,
+                nationalSecurityNumber: data.nationalSecurityNumber,
+                image: data.image[0] || "default.png",
                 garageName: data.garageName,
                 location: data.location,
             };
             console.log(finalData);
+            signup(finalData);
         } else {
             console.log("Step 3 validation failed");
         }

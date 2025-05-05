@@ -5,6 +5,8 @@ import {
     englishToArabicLetters,
     englishToArabicNumbers,
 } from "../../utils/constants";
+import { useParams } from "react-router";
+import { useAcceptUser } from "./useAcceptUser";
 
 const defaultValues = {
     fullName: "",
@@ -17,6 +19,8 @@ const defaultValues = {
 };
 
 function InviteUserForm() {
+    const { token } = useParams();
+    const { acceptInvitation } = useAcceptUser();
     const {
         register,
         handleSubmit,
@@ -47,8 +51,7 @@ function InviteUserForm() {
                 .join("-"),
         };
 
-        console.log("Submitted Data:", data);
-        console.log("Final Data:", finalData);
+        acceptInvitation({ data: finalData, token });
         reset();
     };
 
@@ -183,7 +186,11 @@ function InviteUserForm() {
 
                 {/* Plate Preview */}
                 <div className="mt-4 flex flex-col items-center">
-                    <Plate formLetters={letters} formNumbers={numbers} />
+                    <Plate
+                        carPlate={[...numbers, ...letters]
+                            .filter(Boolean)
+                            .join("-")}
+                    />
                     <p className="mt-1 text-xs text-slate-500">
                         This is how your plate should look like
                     </p>

@@ -7,7 +7,7 @@ export function useLogin({ email, password }) {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
     const { mutate: login, isPending } = useMutation({
-        mutationKey: ["user"],
+        mutationKey: ["login"],
         mutationFn: () => apiLogin({ email, password }),
         variables: { email, password },
         onMutate: () => {

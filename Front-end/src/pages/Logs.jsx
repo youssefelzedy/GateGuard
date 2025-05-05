@@ -1,5 +1,3 @@
-import LogsTable from "../features/logsPage/LogsTable";
-
 function Logs() {
     return (
         <div className="flex h-full flex-col gap-4 bg-primary-50 p-4">
@@ -11,9 +9,7 @@ function Logs() {
                     Here you can view and manage recent car entries.
                 </p>
             </header>
-            <div className="flex-1">
-                <LogsTable />
-            </div>
+            <div className="flex-1"></div>
         </div>
     );
 }
