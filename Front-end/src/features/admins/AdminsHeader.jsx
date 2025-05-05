@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useInviteAdmin } from "./useInviteAdmin";
-import InviteAdmin from "../../pages/InviteAdmin";
 
 function AdminsHeader() {
     const [email, setEmail] = useState("");
