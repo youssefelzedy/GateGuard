@@ -7,7 +7,7 @@ import logsController from './controllers/logsController';
 const IMAGE_PATH = path.join(__dirname, 'image.jpg');
 // Use the PORT from environment or default to 5174 (your server port)
 const WS_PORT = process.env.AIPORT || 8000;
-const WS_URL = `ws://10.182.241.56:${WS_PORT}/ws`;
+const WS_URL = `ws://10.182.240.27:${WS_PORT}/ws`;
 
 function getImageBase64(): string {
   try {
