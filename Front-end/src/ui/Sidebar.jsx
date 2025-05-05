@@ -4,6 +4,7 @@ import {
     Video,
     Users,
     ShieldUser,
+    LogOut,
 } from "lucide-react";
 import { NavLink } from "react-router";
 
@@ -29,7 +30,8 @@ const sidebarItems = [
         label: "Users",
     },
 ];
-function Sidebar() {
+
+function Sidebar({ onLogoutClick }) {
     return (
         <aside className="sticky top-0 flex h-screen w-60 flex-col justify-center bg-primary-50 transition-all duration-300">
             <div className="flex items-center justify-center p-10">
@@ -49,15 +51,22 @@ function Sidebar() {
                             label={item.label}
                         />
                     ))}
-                    {
-                        <NavItem
-                            to="/Admins"
-                            icon={<ShieldUser size={20} />}
-                            label="Admins"
-                        />
-                    }
+                    <NavItem
+                        to="/Admins"
+                        icon={<ShieldUser size={20} />}
+                        label="Admins"
+                    />
                 </ul>
             </nav>
+            <div className="flex items-center justify-center gap-4 p-4">
+                <button
+                    className="relative flex gap-2 rounded bg-primary-800 px-4 py-2 font-bold text-white"
+                    onClick={onLogoutClick}
+                >
+                    <span className="text-sm font-medium">Logout</span>
+                    <LogOut size={20} />
+                </button>
+            </div>
         </aside>
     );
 }
