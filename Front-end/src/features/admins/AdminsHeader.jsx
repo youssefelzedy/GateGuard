@@ -17,7 +17,7 @@ function AdminsHeader() {
         );
     };
     return (
-        <div className="flex items-center justify-between rounded">
+        <div className="flex items-center justify-between rounded-lg">
             <h1 className="text-4xl font-bold text-primary-900">Admins</h1>
             <button
                 className="group flex h-full w-[201px] cursor-pointer items-center justify-center gap-2 rounded-full bg-primary-600 px-3 py-2 transition-all duration-300 hover:bg-primary-400"

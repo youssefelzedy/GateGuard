@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { ArrowDownUp, SquareArrowLeft, SquareArrowRight } from "lucide-react";
+import {
+    ArrowDownUp,
+    SquareArrowLeft,
+    SquareArrowRight,
+    Pencil,
+    Trash2,
+} from "lucide-react";
 import { useAdmin } from "../auth/useAdmin";
 import { useUsers } from "./useUsers";
 import { convertArabicToEnglish } from "../../utils/helper";
@@ -105,7 +111,7 @@ function UsersTable() {
             <table className="w-full table-auto border-collapse text-left">
                 <thead>
                     <tr className="bg-primary-100 font-medium text-primary-900">
-                        <th className="p-3">
+                        <th className="p-5">
                             Plate Number
                             <button
                                 onClick={() => handleSort("carPlate")}
@@ -114,7 +120,7 @@ function UsersTable() {
                                 <ArrowDownUp size={12} />
                             </button>
                         </th>
-                        <th className="p-3">
+                        <th className="p-5">
                             User Name
                             <button
                                 onClick={() => handleSort("name")}
@@ -123,7 +129,7 @@ function UsersTable() {
                                 <ArrowDownUp size={12} />
                             </button>
                         </th>
-                        <th className="p-3">
+                        <th className="p-5">
                             Email
                             <button
                                 onClick={() => handleSort("email")}
@@ -132,7 +138,7 @@ function UsersTable() {
                                 <ArrowDownUp size={12} />
                             </button>
                         </th>
-                        <th className="p-3">
+                        <th className="p-5">
                             Phone Number
                             <button
                                 onClick={() => handleSort("phoneNumber")}
@@ -141,7 +147,7 @@ function UsersTable() {
                                 <ArrowDownUp size={12} />
                             </button>
                         </th>
-                        <th className="p-3">
+                        <th className="p-5">
                             National ID
                             <button
                                 onClick={() =>
@@ -152,6 +158,7 @@ function UsersTable() {
                                 <ArrowDownUp size={12} />
                             </button>
                         </th>
+                        <th className="p-5">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -174,6 +181,22 @@ function UsersTable() {
                             </td>
                             <td className="p-3 text-primary-900">
                                 {user.nationalSecurityNumber}
+                            </td>
+                            <td className="p-8">
+                                <div className="flex gap-4">
+                                    <button
+                                        className="rounded-full bg-primary-100 p-4 text-primary-700 transition hover:bg-primary-200"
+                                        title="Edit"
+                                    >
+                                        <Pencil size={16} />
+                                    </button>
+                                    <button
+                                        className="rounded-full bg-red-100 p-4 text-red-600 transition hover:bg-red-200"
+                                        title="Delete"
+                                    >
+                                        <Trash2 size={16} />
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     ))}

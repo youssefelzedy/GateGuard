@@ -41,7 +41,7 @@ function Sidebar({ onLogoutClick }) {
                     className="h-auto w-auto bg-transparent"
                 />
             </div>
-            <nav className="flex-1 py-8">
+            <nav className="flex flex-1 flex-col justify-between py-8">
                 <ul className="space-y-2 px-4">
                     {sidebarItems.map((item) => (
                         <NavItem
@@ -57,16 +57,16 @@ function Sidebar({ onLogoutClick }) {
                         label="Admins"
                     />
                 </ul>
+                <div className="flex items-center justify-center gap-4 p-4">
+                    <button
+                        className="relative flex gap-2 rounded bg-primary-800 px-4 py-2 font-bold text-white"
+                        onClick={onLogoutClick}
+                    >
+                        <span className="text-sm font-medium">Logout</span>
+                        <LogOut size={20} />
+                    </button>
+                </div>
             </nav>
-            <div className="flex items-center justify-center gap-4 p-4">
-                <button
-                    className="relative flex gap-2 rounded bg-primary-800 px-4 py-2 font-bold text-white"
-                    onClick={onLogoutClick}
-                >
-                    <span className="text-sm font-medium">Logout</span>
-                    <LogOut size={20} />
-                </button>
-            </div>
         </aside>
     );
 }

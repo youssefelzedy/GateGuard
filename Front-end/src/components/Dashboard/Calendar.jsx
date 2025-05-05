@@ -1,21 +1,35 @@
+// eslint-disable-next-line
+import { motion } from "framer-motion";
 import {
     CalendarIcon,
     EllipsisVerticalIcon,
 } from "@heroicons/react/24/outline";
+
+const dayVariants = {
+    hidden: { opacity: 0, y: 20, scale: 0.95 },
+    visible: (i) => ({
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        transition: {
+            delay: i * 0.02,
+            type: "spring",
+            stiffness: 120,
+            damping: 12,
+        },
+    }),
+};
 
 export default function Calendar() {
     const today = new Date();
     const year = today.getFullYear();
     const month = today.getMonth();
 
-    // Calculate the number of days in the current month
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-    // Determine the starting day of the month, adjusted for Monday start
-    const firstDayOfMonth = new Date(year, month, 1).getDay(); // 0 (Sun) to 6 (Sat)
-    const startingDay = (firstDayOfMonth + 6) % 7; // Makes Monday = 0, Sunday = 6
+    const firstDayOfMonth = new Date(year, month, 1).getDay();
+    const startingDay = (firstDayOfMonth + 6) % 7;
 
-    // Array of month names for dynamic display
     const monthNames = [
         "January",
         "February",
@@ -30,13 +44,12 @@ export default function Calendar() {
         "November",
         "December",
     ];
-    const currentMonthName = monthNames[month]; // "May"
+    const currentMonthName = monthNames[month];
 
-    // Generate calendar grid with 35 slots
     const gridSlots = Array.from({ length: 35 }, (_, i) => {
-        if (i < startingDay) return ""; // Empty slots before the first day
+        if (i < startingDay) return "";
         const day = i - startingDay + 1;
-        return day <= daysInMonth ? day : ""; // Days, then empty slots
+        return day <= daysInMonth ? day : "";
     });
 
     return (
@@ -61,16 +74,20 @@ export default function Calendar() {
                         </div>
                     ))}
                     {gridSlots.map((day, index) => (
-                        <div
+                        <motion.div
                             key={index}
-                            className={`flex h-8 items-center justify-center text-sm ${
+                            custom={index}
+                            initial="hidden"
+                            animate="visible"
+                            variants={dayVariants}
+                            className={`flex h-8 w-8 items-center justify-center rounded-full text-sm transition-all duration-300 ${
                                 day === today.getDate()
-                                    ? "rounded-full bg-blue-500 text-white"
-                                    : "text-[#1e293b]"
+                                    ? "bg-blue-500 text-white shadow-md"
+                                    : "text-[#1e293b] hover:bg-blue-100"
                             }`}
                         >
                             {day}
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
             </div>
