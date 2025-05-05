@@ -9,6 +9,7 @@
     html {
         font-family: "IBM Plex Sans", sans-serif;
     }
+
     * {
         scrollbar-width: none;
         -ms-overflow-style: none;
