@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 import { acceptInvitation as apiAcceptInvitation } from "../../services/apiAuth";
 
-export function useInvitation() {
+export function useAcceptAdmin() {
     const navigate = useNavigate();
     const { mutate: acceptInvitation, isPending } = useMutation({
         mutationKey: ["acceptInvitation"],
@@ -11,11 +11,9 @@ export function useInvitation() {
         onMutate: () => {
             toast.loading("Accepting invitation...");
         },
-        onSuccess: (data) => {
+        onSuccess: () => {
             toast.success("Invitation accepted successfully!");
-            data.invitation.invitationType === "admin"
-                ? navigate("/login")
-                : navigate("/");
+            navigate("/login");
         },
         onError: (error) => {
             toast.error(error.message);

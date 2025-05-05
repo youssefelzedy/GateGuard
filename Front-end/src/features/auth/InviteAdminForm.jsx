@@ -8,12 +8,12 @@ import PasswordsSteps from "../../components/InviteAdminForm/PasswordsSteps";
 import AdminInfoStep from "../../components/RegisterAdminForm/AdminInfoStep";
 import FormButtons from "../../components/InviteAdminForm/FormButtons";
 import { useParams } from "react-router";
-import { useInvitation } from "./useInvitation";
+import { useAcceptAdmin } from "./useAcceptAdmin";
 
 function InviteAdminForm() {
     const [activeIndex, setActiveIndex] = useState(0);
     const { token } = useParams();
-    const { acceptInvitation } = useInvitation();
+    const { acceptInvitation } = useAcceptAdmin();
     const {
         register,
         handleSubmit,
