@@ -6,6 +6,7 @@ import { handleLogCreation } from '../utils/handleLogCreation';
 import ILog from '../interfaces/intLog';
 import IUser from '../interfaces/intUser';
 import IGarage from '../interfaces/intGarage';
+import mongoose from 'mongoose';
 
 import { User } from '../models/userModel';
 import { Garage } from '../models/garageModel';
@@ -58,39 +59,50 @@ export const createLog = expressAsyncHandler(
 );
 
 export const checkTheAcceptedPlate = async (
-  plateList: [string, number[], number[][]],
-  garageId: string, // Change type to string since MongoDB IDs are strings
+  plateList: [string, number[], number[][]][],
+  garageId: string,
 ) => {
-  // Check if the garage exists
-  const garage: IGarage | null = await Garage.findById(garageId);
+  // Validate the garageId
+  if (!mongoose.Types.ObjectId.isValid(garageId)) {
+    throw new AppError('Invalid garage ID', 400);
+  }
 
+  // Check if the garage exists
+  const garage = await Garage.findById(garageId);
   if (!garage) {
+    console.error(`Garage not found for ID: ${garageId}`);
     throw new AppError('Garage not found', 404);
   }
 
-  // Extract the detected license plate text from the plateList
-  const detectedPlate = plateList[0];
+  // Find users associated with this garage
+  const users = await User.find({ garage: garageId });
 
-  // Find any users who have this plate and are authorized for this garage
-  const user = await User.findOne({
-    carPlate: detectedPlate,
-    garage: garageId,
-  });
+  for (const plate of plateList) {
+    const detectedPlate = plate[0].trim();
 
-  // Prepare the status response
-  const status = {
-    plateNumber: detectedPlate,
-    isAuthorized: !!user,
-    userData: user
-      ? {
-          name: user.name,
-          email: user.email,
+    for (const user of users) {
+      if (user.carPlate === plate[0]) {}
+        console.warn(`User ${user._id}  carPlate format`, user.carPlate);
+        console.log(typeof user.carPlate);
+        continue;
+      }
+
+      for (const userPlate of user.carPlate) {
+        const normalizedUserPlate = userPlate.trim();
+        console.log(`Comparing "${normalizedUserPlate}" with "${detectedPlate}"`);
+
+        if (normalizedUserPlate === detectedPlate) {
+          console.log('MATCH FOUND');
+          return user; // Early return on match
         }
-      : null,
-    timestamp: new Date(),
-  };
+      }
+    }
 
-  return status;
+    console.log('No match found for detected plate:', detectedPlate);
+  }
+
+  console.log('No matching user found for any plates in list.');
+  return null; // Or handle differently if needed
 };
 
 export default logsController;
