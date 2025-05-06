@@ -53,7 +53,7 @@ const startWsClient = () => {
 
         // Check in the database if the plate is already registered
         // Add await here and handle the result
-        const status = await checkTheAcceptedPlate(resultArray, garageId);
+        const status = await checkTheAcceptedPlate(resultArray, garageId); // [access, denied, accepted]
         console.log('Plate check status:', status);
 
         // Prepare the data to be create the log
