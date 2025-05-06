@@ -3,13 +3,10 @@ import ILog from '../interfaces/intLog';
 
 const logSchema = new mongoose.Schema({
   action: { type: String, enum: ['Denied', 'Accepted'], required: true },
-  screenshot: { type: String }, // Store image URL or base64
+  // Store image URL or base64
+  carDetection: { type: [[Number]], default: [] }, // Array of arrays of numbers
+  plateDetection: { type: [[Number]], default: [] }, // Array of arrays of numbers
   accessTime: { type: Date, default: Date.now, required: true },
-  user:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
   garage: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Garage',

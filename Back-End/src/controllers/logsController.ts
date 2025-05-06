@@ -5,6 +5,7 @@ import AppError from '../utils/appError';
 import { handleLogCreation } from '../utils/handleLogCreation';
 import ILog from '../interfaces/intLog';
 import IUser from '../interfaces/intUser';
+import { IGarage } from '../interfaces/intGarage';
 
 import { User } from '../models/userModel';
 import { Garage } from '../models/garageModel';
@@ -56,4 +57,17 @@ export const createLog = expressAsyncHandler(
   },
 );
 
+export const checkTheAcceptedPlate = async (plateList: [string, number[], number[][]], garageId: number) => {
+  const garage: IGarage = await Garage.findById(garageId).populate('users', 'userName');
+  if (!garage) {
+    throw new AppError('Garage not found', 404);
+  }
+
+  let statusPlate = [];
+  const users: IUser[] = garage.users as IUser[];
+
+
+
+  return status;
+};
 export default logsController;
