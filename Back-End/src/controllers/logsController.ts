@@ -5,7 +5,7 @@ import AppError from '../utils/appError';
 import { handleLogCreation } from '../utils/handleLogCreation';
 import ILog from '../interfaces/intLog';
 import IUser from '../interfaces/intUser';
-import { IGarage } from '../interfaces/intGarage';
+import IGarage from '../interfaces/intGarage';
 
 import { User } from '../models/userModel';
 import { Garage } from '../models/garageModel';
@@ -57,17 +57,40 @@ export const createLog = expressAsyncHandler(
   },
 );
 
-export const checkTheAcceptedPlate = async (plateList: [string, number[], number[][]], garageId: number) => {
-  const garage: IGarage = await Garage.findById(garageId).populate('users', 'userName');
+export const checkTheAcceptedPlate = async (
+  plateList: [string, number[], number[][]],
+  garageId: string, // Change type to string since MongoDB IDs are strings
+) => {
+  // Check if the garage exists
+  const garage: IGarage | null = await Garage.findById(garageId);
+
   if (!garage) {
     throw new AppError('Garage not found', 404);
   }
 
-  let statusPlate = [];
-  const users: IUser[] = garage.users as IUser[];
+  // Extract the detected license plate text from the plateList
+  const detectedPlate = plateList[0];
 
+  // Find any users who have this plate and are authorized for this garage
+  const user = await User.findOne({
+    carPlate: detectedPlate,
+    garage: garageId,
+  });
 
+  // Prepare the status response
+  const status = {
+    plateNumber: detectedPlate,
+    isAuthorized: !!user,
+    userData: user
+      ? {
+          name: user.name,
+          email: user.email,
+        }
+      : null,
+    timestamp: new Date(),
+  };
 
   return status;
 };
+
 export default logsController;

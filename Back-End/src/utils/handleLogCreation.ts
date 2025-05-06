@@ -50,3 +50,13 @@ export const handleLogCreation = async ({
     data: { log },
   };
 };
+
+export const prepareCarDetection = (resultArray: [string, number[], number[][]]) => {
+  // Extract car detection data - the second element in the resultArray
+  return resultArray[1] || [];
+};
+
+export const preparePlateDetection = (resultArray: [string, number[], number[][]]) => {
+  // Extract plate detection data - the third element in the resultArray
+  return resultArray[2] || [];
+};

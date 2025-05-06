@@ -41,20 +41,24 @@ const startWsClient = () => {
       }
     };
 
-    ws.on('message', (message: string) => {
+    ws.on('message', async (message: string) => {
       try {
         const resultArray = JSON.parse(message);
         console.log('Received result array:', resultArray);
 
         console.log(typeof(resultArray));
 
+        // Make sure the garageId is a string for MongoDB
+        const garageId = cameras[currentIndex].garage.toString();
+
         // Check in the database if the plate is already registered
-        const status = await checkTheAcceptedPlate(resultArray, cameras[currentIndex].garage); // array of the status plates
+        // Add await here and handle the result
+        const status = await checkTheAcceptedPlate(resultArray, garageId);
+        console.log('Plate check status:', status);
+
         // Prepare the data to be create the log
-        const carDetection = prepareCarDetection(resultArray); // array of the car detection
-        const plateDetection = preparePlateDetection(resultArray); // array of the plate detection
-
-
+        const carDetection = prepareCarDetection(resultArray);
+        const plateDetection = preparePlateDetection(resultArray);
 
         // Move to next camera after receiving response
         currentIndex = (currentIndex + 1) % cameras.length;
