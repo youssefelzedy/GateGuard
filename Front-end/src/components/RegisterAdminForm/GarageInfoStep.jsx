@@ -8,6 +8,7 @@ const GarageInfoStep = ({
     errors,
     itemVariants,
     backError,
+    inputClass,
 }) => {
     return (
         <motion.div variants={itemVariants} className="space-y-4">
@@ -16,12 +17,12 @@ const GarageInfoStep = ({
                     Garage Name
                 </label>
                 <input
+                    className={inputClass("garageName")}
                     type="text"
                     placeholder="Garage Name"
                     {...register("garageName", {
                         required: "Garage name is required",
                     })}
-                    className="w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                 />
                 {errors.garageName && (
                     <p className="mt-1 text-sm text-red-500">
@@ -45,7 +46,7 @@ const GarageInfoStep = ({
                     {...register("location", {
                         required: "Garage location is required",
                     })}
-                    className="w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                    className={inputClass("location")}
                 />
                 {errors.location && (
                     <p className="mt-1 text-sm text-red-500">

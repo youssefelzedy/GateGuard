@@ -25,10 +25,10 @@ function Header() {
                         />
                     </div>
                     <div className="hidden md:block">
-                        <p className="text-sm font-semibold text-[#112D4E]">
+                        <p className="text-sm font-semibold text-primary-900">
                             {admin?.name}
                         </p>
-                        <p className="text-xs text-[#112D4E80]">
+                        <p className="text-xs text-primary-900/50">
                             {admin?.role}
                         </p>
                     </div>

@@ -1,13 +1,22 @@
+import { Navigate } from "react-router";
 import AdminsHeader from "../features/admins/AdminsHeader";
 import AdminsTable from "../features/admins/AdminsTable";
+import { useAdmin } from "../features/auth/useAdmin";
+import toast from "react-hot-toast";
 
 function Admins() {
-    return (
-        <div className="flex h-full flex-col bg-primary-50 p-4">
-            <AdminsHeader />
-            <AdminsTable />
-        </div>
-    );
+    const { isOwner } = useAdmin();
+    if (isOwner) {
+        return (
+            <div className="flex h-full flex-col bg-primary-50 p-4">
+                <AdminsHeader />
+                <AdminsTable />
+            </div>
+        );
+    } else {
+        toast.error("You are not authorized to view this page.");
+        return <Navigate to="/dashboard" replace={true} />;
+    }
 }
 
 export default Admins;

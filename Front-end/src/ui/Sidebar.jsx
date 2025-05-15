@@ -7,6 +7,7 @@ import {
     LogOut,
 } from "lucide-react";
 import { NavLink } from "react-router";
+import { useAdmin } from "../features/auth/useAdmin";
 
 const sidebarItems = [
     {
@@ -32,6 +33,7 @@ const sidebarItems = [
 ];
 
 function Sidebar({ onLogoutClick }) {
+    const { isOwner } = useAdmin();
     return (
         <aside className="sticky top-0 flex h-screen w-60 flex-col justify-center bg-primary-50 transition-all duration-300">
             <div className="flex items-center justify-center p-10">
@@ -51,11 +53,13 @@ function Sidebar({ onLogoutClick }) {
                             label={item.label}
                         />
                     ))}
-                    <NavItem
-                        to="/Admins"
-                        icon={<ShieldUser size={20} />}
-                        label="Admins"
-                    />
+                    {isOwner && (
+                        <NavItem
+                            to="/Admins"
+                            icon={<ShieldUser size={20} />}
+                            label="Admins"
+                        />
+                    )}
                 </ul>
                 <div className="flex items-center justify-center gap-4 p-4">
                     <button

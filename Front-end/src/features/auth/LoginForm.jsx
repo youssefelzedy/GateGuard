@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useLogin } from "./useLogin";
+import { Link, Navigate } from "react-router";
 
 function LoginForm() {
     const [email, setEmail] = useState("");
@@ -14,6 +15,10 @@ function LoginForm() {
             {
                 onSuccess: () => {
                     setEmail("");
+                    setPassword("");
+                    setShowPassword(false);
+                },
+                onSettled: () => {
                     setPassword("");
                     setShowPassword(false);
                 },
@@ -83,7 +88,7 @@ function LoginForm() {
                 <button
                     type="submit"
                     disabled={isPending}
-                    className={`relative w-full animate-fadeSlideUp rounded-md bg-[#0F2543] px-4 py-3 font-medium text-white transition-all duration-300 hover:bg-[#0c1e36] focus:ring-4 focus:ring-blue-200 ${
+                    className={`relative w-full animate-fadeSlideUp rounded-md bg-primary-950 px-4 py-3 font-medium text-white transition-all duration-300 hover:bg-primary-950 focus:ring-4 focus:ring-blue-200 ${
                         isPending ? "animate-pulse" : ""
                     }`}
                     style={{ animationDelay: "400ms" }}
@@ -124,13 +129,13 @@ function LoginForm() {
             >
                 <p className="text-sm text-slate-600">
                     Don't have an account?
-                    <a
-                        href="#"
+                    <Link
+                        to={"/get-started"}
                         className="group relative ml-1 font-medium text-blue-600 transition-colors duration-200 hover:text-blue-800"
                     >
                         Register
                         <span className="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-                    </a>
+                    </Link>
                 </p>
             </div>
         </div>

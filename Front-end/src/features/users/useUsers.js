@@ -8,6 +8,5 @@ export function useUsers(garageId) {
         enabled: !!garageId,
     });
 
-    const users = data?.data?.users;
-    return { users, isLoading };
+    return { users: data?.data?.users, isLoading };
 }

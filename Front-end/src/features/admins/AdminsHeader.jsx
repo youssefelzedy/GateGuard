@@ -12,6 +12,7 @@ function AdminsHeader() {
             {
                 onSettled: () => {
                     setEmail("");
+                    setAddInvite(false);
                 },
             },
         );
@@ -40,7 +41,7 @@ function AdminsHeader() {
                             </h2>
                             <div className="mb-4">
                                 <label className="mb-2 block text-sm font-medium">
-                                    Admin E-mail
+                                    E-mail
                                 </label>
                                 <input
                                     className="w-full rounded border border-gray-300 p-2"
@@ -62,10 +63,7 @@ function AdminsHeader() {
                                 </button>
                                 <button
                                     className="rounded bg-primary-600 px-4 py-2 text-white hover:bg-primary-500"
-                                    onClick={() => {
-                                        handleSubmit();
-                                        setAddInvite(false);
-                                    }}
+                                    type="submit"
                                 >
                                     Send Invite
                                 </button>

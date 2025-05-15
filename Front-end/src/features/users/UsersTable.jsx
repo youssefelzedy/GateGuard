@@ -13,7 +13,8 @@ import Plate from "../../ui/Plate";
 
 function UsersTable() {
     const { admin } = useAdmin();
-    const { users } = useUsers(admin?.garage.id);
+    const garageId = admin?.garage?.id;
+    const { users } = useUsers(garageId);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchGeneral, setSearchGeneral] = useState("");
     const [searchPlate, setSearchPlate] = useState("");

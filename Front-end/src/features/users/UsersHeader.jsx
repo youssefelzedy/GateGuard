@@ -12,6 +12,7 @@ function UsersHeader() {
             {
                 onSettled: () => {
                     setEmail("");
+                    setInviteUserForm(false);
                 },
             },
         );
@@ -62,10 +63,7 @@ function UsersHeader() {
                                 </button>
                                 <button
                                     className="rounded bg-primary-600 px-4 py-2 text-white hover:bg-primary-500"
-                                    onClick={() => {
-                                        handleSubmit();
-                                        setInviteUserForm(false);
-                                    }}
+                                    type="submit"
                                 >
                                     Send Invite
                                 </button>

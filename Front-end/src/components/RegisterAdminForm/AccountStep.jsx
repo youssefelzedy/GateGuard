@@ -3,7 +3,14 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 
-const AccountStep = ({ register, errors, watch, itemVariants, backError }) => {
+const AccountStep = ({
+    register,
+    errors,
+    watch,
+    itemVariants,
+    backError,
+    inputClass,
+}) => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -14,7 +21,7 @@ const AccountStep = ({ register, errors, watch, itemVariants, backError }) => {
                     Email
                 </label>
                 <input
-                    className="w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                    className={inputClass("email")}
                     type="email"
                     placeholder="Email"
                     {...register("email", {
@@ -43,6 +50,7 @@ const AccountStep = ({ register, errors, watch, itemVariants, backError }) => {
                 </label>
                 <div className="relative">
                     <input
+                        className={inputClass("password")}
                         type={showPassword ? "text" : "password"}
                         placeholder="Password"
                         {...register("password", {
@@ -53,7 +61,6 @@ const AccountStep = ({ register, errors, watch, itemVariants, backError }) => {
                                     "Password must be at least 8 characters",
                             },
                         })}
-                        className="w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                     />
                     <button
                         type="button"
@@ -80,6 +87,7 @@ const AccountStep = ({ register, errors, watch, itemVariants, backError }) => {
                 </label>
                 <div className="relative">
                     <input
+                        className={inputClass("passwordConfirm")}
                         type={showConfirmPassword ? "text" : "password"}
                         placeholder="Confirm Password"
                         {...register("passwordConfirm", {
@@ -88,7 +96,6 @@ const AccountStep = ({ register, errors, watch, itemVariants, backError }) => {
                                 value === watch("password") ||
                                 "Passwords do not match",
                         })}
-                        className="w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                     />
                     <button
                         type="button"

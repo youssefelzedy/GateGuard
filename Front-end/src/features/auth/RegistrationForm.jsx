@@ -10,6 +10,7 @@ import AdminInfoStep from "../../components/RegisterAdminForm/AdminInfoStep";
 import GarageInfoStep from "../../components/RegisterAdminForm/GarageInfoStep";
 import FormButtons from "../../components/RegisterAdminForm/FormButtons";
 import { useSignup } from "./useSignup";
+import { Link } from "react-router";
 
 function RegistrationStepper() {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -26,8 +27,12 @@ function RegistrationStepper() {
         shouldFocusError: true,
     });
 
-    const inputClass =
-        "w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200";
+    const inputClass = (field) =>
+        `w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 ${
+            errors[field]
+                ? "border-red-500 focus:border-red-500 focus:ring-red-200"
+                : ""
+        }`;
 
     useEffect(() => {
         if (backError) {
@@ -65,7 +70,6 @@ function RegistrationStepper() {
                 garageName: data.garageName,
                 location: data.location,
             };
-            console.log(finalData);
             signup(finalData);
         } else {
             console.log("Step 3 validation failed");
@@ -131,6 +135,7 @@ function RegistrationStepper() {
                                 register={register}
                                 errors={errors}
                                 watch={watch}
+                                inputClass={inputClass}
                                 itemVariants={itemVariants}
                                 backError={backError}
                             />
@@ -169,6 +174,7 @@ function RegistrationStepper() {
                                 register={register}
                                 control={control}
                                 errors={errors}
+                                inputClass={inputClass}
                                 itemVariants={itemVariants}
                                 backError={backError}
                             />
@@ -183,6 +189,21 @@ function RegistrationStepper() {
                     trigger={trigger}
                 />
             </form>
+            <div
+                className="animate-in mt-6 text-center"
+                style={{ animationDelay: "500ms" }}
+            >
+                <p className="text-sm text-slate-600">
+                    Already have an account?
+                    <Link
+                        to={"/login"}
+                        className="group relative ml-1 font-medium text-blue-600 transition-colors duration-200 hover:text-blue-800"
+                    >
+                        Login
+                        <span className="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+                    </Link>
+                </p>
+            </div>
         </motion.div>
     );
 }

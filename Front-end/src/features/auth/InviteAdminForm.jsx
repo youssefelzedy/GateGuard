@@ -13,7 +13,7 @@ import { useAcceptAdmin } from "./useAcceptAdmin";
 function InviteAdminForm() {
     const [activeIndex, setActiveIndex] = useState(0);
     const { token } = useParams();
-    const { acceptInvitation } = useAcceptAdmin();
+    const { acceptInvitation, backError } = useAcceptAdmin();
     const {
         register,
         handleSubmit,
@@ -25,8 +25,12 @@ function InviteAdminForm() {
         shouldFocusError: true,
     });
 
-    const inputClass =
-        "w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200";
+    const inputClass = (field) =>
+        `w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 ${
+            errors[field]
+                ? "border-red-500 focus:border-red-500 focus:ring-red-200"
+                : ""
+        }`;
 
     const onSubmit = async (data) => {
         const isStep2Valid =
@@ -121,6 +125,7 @@ function InviteAdminForm() {
                                 errors={errors}
                                 inputClass={inputClass}
                                 itemVariants={itemVariants}
+                                backError={backError}
                             />
                         </motion.div>
                     )}

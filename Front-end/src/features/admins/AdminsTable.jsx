@@ -7,11 +7,12 @@ import {
     Trash2,
 } from "lucide-react";
 import { useAdmins } from "./useAdmins";
+import { useAdmin } from "../auth/useAdmin";
 
 function AdminsTable() {
-    const { admins } = useAdmins();
-    console.log(admins);
-
+    const { admin } = useAdmin();
+    const garageId = admin?.garage?.id;
+    const { admins } = useAdmins(garageId);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchGeneral, setSearchGeneral] = useState("");
     const [sortConfig, setSortConfig] = useState({

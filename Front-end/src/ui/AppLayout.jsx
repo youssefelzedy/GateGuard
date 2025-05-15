@@ -1,16 +1,14 @@
+import { useState } from "react";
 import { Navigate, Outlet } from "react-router";
+import { useAdmin } from "../features/auth/useAdmin";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
-import { useAdmin } from "../features/auth/useAdmin";
-import toast from "react-hot-toast";
-import { useState } from "react";
 
 function AppLayout() {
     const { isAuth, logout } = useAdmin();
     const [showLogoutModal, setShowLogoutModal] = useState(false);
 
     if (!isAuth) {
-        toast.error("You need to be logged in to access this page");
         return <Navigate to="/login" replace />;
     }
 

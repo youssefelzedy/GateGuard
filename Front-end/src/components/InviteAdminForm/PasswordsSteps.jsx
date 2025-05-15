@@ -15,6 +15,8 @@ function PasswordsSteps({ register, errors, inputClass, itemVariants }) {
                 </label>
                 <div className="relative">
                     <input
+                        className={inputClass("password")}
+                        placeholder="Create a password"
                         type={showPassword ? "text" : "password"}
                         {...register("password", {
                             required: "Password is required",
@@ -24,12 +26,6 @@ function PasswordsSteps({ register, errors, inputClass, itemVariants }) {
                                     "Password must be at least 8 characters",
                             },
                         })}
-                        className={`${inputClass} ${
-                            errors.password
-                                ? "border-red-500 focus:border-red-500 focus:ring-red-200"
-                                : ""
-                        }`}
-                        placeholder="Create a password"
                     />
                     <button
                         type="button"
@@ -56,6 +52,8 @@ function PasswordsSteps({ register, errors, inputClass, itemVariants }) {
                 </label>
                 <div className="relative">
                     <input
+                        className={inputClass("passwordConfirm")}
+                        placeholder="Confirm your password"
                         type={showConfirmPassword ? "text" : "password"}
                         {...register("passwordConfirm", {
                             required: "Please confirm your password",
@@ -63,12 +61,6 @@ function PasswordsSteps({ register, errors, inputClass, itemVariants }) {
                                 value === formValues.password ||
                                 "Passwords do not match",
                         })}
-                        className={`${inputClass} ${
-                            errors.passwordConfirm
-                                ? "border-red-500 focus:border-red-500 focus:ring-red-200"
-                                : ""
-                        }`}
-                        placeholder="Confirm your password"
                     />
                     <button
                         type="button"

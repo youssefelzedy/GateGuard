@@ -16,16 +16,16 @@ const AdminInfoStep = ({
                     Full Name
                 </label>
                 <input
+                    className={inputClass("name")}
+                    placeholder="Enter your full name"
                     type="text"
                     {...register("name", {
                         required: "Full name is required",
                     })}
-                    className="w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                    placeholder="Enter your full name"
                 />
                 {errors.name && (
                     <p className="mt-1 text-sm text-red-500">
-                        {errors.fullName.message}
+                        {errors.name.message}
                     </p>
                 )}
             </motion.div>
@@ -35,6 +35,8 @@ const AdminInfoStep = ({
                     Phone Number
                 </label>
                 <input
+                    className={inputClass("phoneNumber")}
+                    placeholder="Enter your phone number"
                     type="tel"
                     {...register("phoneNumber", {
                         required: "Phone number is required",
@@ -44,35 +46,33 @@ const AdminInfoStep = ({
                                 "Invalid phone number format (11 digits with 010/011/012/015)",
                         },
                     })}
-                    className="w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                    placeholder="Enter your phone number"
                 />
-                {errors.phone && (
+                {errors.phoneNumber && (
                     <p className="mt-1 text-sm text-red-500">
-                        {errors.phone.message}
+                        {errors.phoneNumber.message}
                     </p>
                 )}
             </motion.div>
 
             <motion.div variants={itemVariants}>
                 <label className="mb-1 block text-sm font-medium text-gray-700">
-                    National ID
+                    National Security Number
                 </label>
                 <input
+                    className={inputClass("nationalSecurityNumber")}
+                    placeholder="Enter your national ID"
                     type="text"
                     {...register("nationalSecurityNumber", {
-                        required: "National ID is required",
+                        required: "National Number is required",
+                        pattern: {
+                            value: /^[23][0-9]{13}$/,
+                            message: "National ID must start with 2 or 3 and be 14 digits",
+                        },
                     })}
-                    className={`${inputClass} ${
-                        errors.nationalId
-                            ? "border-red-500 focus:border-red-500 focus:ring-red-200"
-                            : ""
-                    }`}
-                    placeholder="Enter your national ID"
                 />
                 {errors.nationalSecurityNumber && (
                     <p className="mt-1 text-sm text-red-500">
-                        {errors.nationalId.message}
+                        {errors.nationalSecurityNumber.message}
                     </p>
                 )}
                 {backError?.field === "nationalSecurityNumber" && (

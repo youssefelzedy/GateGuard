@@ -5,7 +5,11 @@ import { acceptInvitation as apiAcceptInvitation } from "../../services/apiAuth"
 
 export function useAcceptAdmin() {
     const navigate = useNavigate();
-    const { mutate: acceptInvitation, isPending } = useMutation({
+    const {
+        mutate: acceptInvitation,
+        isPending,
+        error,
+    } = useMutation({
         mutationKey: ["acceptInvitation"],
         mutationFn: ({ data, token }) => apiAcceptInvitation({ data, token }),
         onMutate: () => {
@@ -21,5 +25,5 @@ export function useAcceptAdmin() {
         },
     });
 
-    return { acceptInvitation, isPending };
+    return { acceptInvitation, isPending, backError: error };
 }

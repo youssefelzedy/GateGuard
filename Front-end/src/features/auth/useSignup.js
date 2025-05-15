@@ -8,25 +8,27 @@ export function useSignup() {
     const { logout } = useAdmin();
     const queryClient = useQueryClient();
     const navigate = useNavigate();
+
     const {
         mutate: signup,
         isPending,
         error,
     } = useMutation({
         mutationKey: ["signup"],
-        mutationFn: (data) => apiSignup(data),
-        onMutate: () => {
-            toast.loading("Account creating...");
-        },
+        mutationFn: (data) =>
+            toast.promise(apiSignup(data), {
+                loading: "Creating account...",
+                success: "Account created successfully!",
+                error: (err) =>
+                    err?.message || "Signup failed. Please try again.",
+            }),
         onSuccess: () => {
-            navigate("/dashboard");
-            toast.success("Account created successfully!");
             logout();
             queryClient.clear();
+            navigate("/login");
         },
         onError: (error) => {
-            console.log("Signup failed:", error);
-            toast.error("Signup failed. Please fix the errors and try again.");
+            console.error("Signup failed:", error);
         },
     });
 
