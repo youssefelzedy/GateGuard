@@ -7,6 +7,7 @@ export interface IUser extends Document {
   phoneNumber: string;
   garage: mongoose.Types.ObjectId;
   carPlate: string;
+  status: 'active' | 'inactive';
 }
 
 export default IUser;

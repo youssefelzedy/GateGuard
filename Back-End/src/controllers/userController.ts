@@ -86,6 +86,22 @@ const userController = {
       },
     });
   }),
+
+  deleteUser: expressAsyncHandler(async (req: Request, res: Response) => {
+    let user: IUser | null = await User.findById(req.params.id);
+    if (!user) {
+      res.status(404);
+      throw new AppError('user not found', 404);
+    }
+    user.status = 'inactive';
+    await user.save();
+    res.status(200).json({
+      status: 'success',
+      data: {
+        user,
+      },
+    });
+  }),
 };
 
 export default userController;

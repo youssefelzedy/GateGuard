@@ -20,5 +20,8 @@ router.post(
   adminController.uploadAdminPhoto,
   adminController.uploadImage,
 );
+router.use(authController.restrictTo('Owner'));
+router.patch('/:id', adminController.editAdmin);
+// router.delete('/:id', adminController.deleteAdmin);
 
 export default router;

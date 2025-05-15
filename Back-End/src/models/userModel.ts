@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema<IUser>({
   email: { type: String, required: true },
   nationalSecurityNumber: { type: String, required: true, unique: true },
   phoneNumber: { type: String, required: true },
+  status: { type: String, enum: ['active', 'inactive'], default: 'active' },
   garage: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Garage',

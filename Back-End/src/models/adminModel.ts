@@ -43,6 +43,11 @@ const adminSchema = new mongoose.Schema<IAdmin>({
     enum: ['Owner', 'Observer'],
     required: true,
   },
+  status: {
+    type: String,
+    enum: ['active', 'inactive'],
+    default: 'active',
+  },
   registeredDate: { type: Date, default: Date.now },
   garage: {
     type: mongoose.Schema.Types.ObjectId,

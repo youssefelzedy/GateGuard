@@ -8,6 +8,7 @@ export interface IAdmin extends Document {
   phoneNumber: string;
   nationalSecurityNumber: string;
   role: 'Owner' | 'Observer';
+  status: 'active' | 'inactive';
   registeredDate: Date;
   garage: mongoose.Types.ObjectId;
   passwordChangedAt?: Date;
