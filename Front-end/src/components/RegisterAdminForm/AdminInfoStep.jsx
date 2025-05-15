@@ -2,7 +2,13 @@
 import { motion } from "framer-motion";
 import ImageUpload from "./ImageUpload";
 
-const AdminInfoStep = ({ register, errors, itemVariants, inputClass }) => {
+const AdminInfoStep = ({
+    register,
+    errors,
+    itemVariants,
+    inputClass,
+    backError,
+}) => {
     return (
         <motion.div variants={itemVariants} className="space-y-4">
             <motion.div variants={itemVariants}>
@@ -17,7 +23,7 @@ const AdminInfoStep = ({ register, errors, itemVariants, inputClass }) => {
                     className="w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none transition-all hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                     placeholder="Enter your full name"
                 />
-                {errors.fullName && (
+                {errors.name && (
                     <p className="mt-1 text-sm text-red-500">
                         {errors.fullName.message}
                     </p>
@@ -64,9 +70,14 @@ const AdminInfoStep = ({ register, errors, itemVariants, inputClass }) => {
                     }`}
                     placeholder="Enter your national ID"
                 />
-                {errors.nationalId && (
+                {errors.nationalSecurityNumber && (
                     <p className="mt-1 text-sm text-red-500">
                         {errors.nationalId.message}
+                    </p>
+                )}
+                {backError?.field === "nationalSecurityNumber" && (
+                    <p className="mt-1 text-sm text-red-500">
+                        {backError?.message}
                     </p>
                 )}
             </motion.div>

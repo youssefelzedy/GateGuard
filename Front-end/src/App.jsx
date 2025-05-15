@@ -71,12 +71,12 @@ function App() {
                             "bg-red-100 text-red-800 font-medium px-4 py-3 rounded-xl shadow-md",
                     },
                     loading: {
-                        duration: 1000,
+                        duration: 500,
                         className:
                             "bg-blue-100 text-blue-800 font-medium px-4 py-3 rounded-xl shadow-md",
                     },
                     className:
-                        "text-base max-w-md px-6 py-4 bg-white text-gray-700 rounded-lg shadow-md",
+                        "text-base max-w-lg px-6 py-4 bg-white text-gray-700 rounded-lg shadow-md",
                 }}
             />
         </QueryClientProvider>
