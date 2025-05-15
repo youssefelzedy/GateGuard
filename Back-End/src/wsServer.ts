@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 import Camera from './models/cameraModel';
-import { checkTheAcceptedPlate } from './controllers/logsController';
+// import { checkTheAcceptedPlate } from './controllers/logsController';
 import { prepareCarDetection, preparePlateDetection } from './utils/handleLogCreation';
 
 const imagePath = path.join(__dirname, 'image1.jpg'); // Static image path
@@ -53,7 +53,7 @@ const startWsClient = () => {
 
         // Check in the database if the plate is already registered
         // Add await here and handle the result
-        const status = await checkTheAcceptedPlate(resultArray, garageId); // [access, denied, accepted]
+        // const status = await checkTheAcceptedPlate(resultArray, garageId); // [access, denied, accepted]
         console.log('Plate check status:', status);
 
         // Prepare the data to be create the log

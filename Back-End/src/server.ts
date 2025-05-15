@@ -40,7 +40,7 @@ server.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
 
   // Only start the WS client if needed
-  startWsClient();
+  // startWsClient();
 });
 
 process.on('unhandledRejection', (err: Error) => {

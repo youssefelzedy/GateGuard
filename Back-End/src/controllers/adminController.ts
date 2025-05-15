@@ -39,6 +39,9 @@ const upload = multer({
 
 const adminController = {
   getAllAdmins: expressAsyncHandler(async (req: Request, res: Response) => {
+    // get all admins expect the owner of the garage itself
+    const userId = req.user!._id;
+
     let filter = {};
     if (req.params.garageId) filter = { garage: req.params.garageId };
     const admins: IAdmin[] = await Admin.find(filter).populate({

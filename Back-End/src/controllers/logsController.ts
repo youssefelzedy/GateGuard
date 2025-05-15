@@ -42,67 +42,67 @@ const logsController = {
   }),
 };
 
-export const createLog = expressAsyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { carPlate, location, screenshot } = req.body;
-      const result = await handleLogCreation({
-        carPlate,
-        location,
-        screenshot,
-      });
-      res.status(result.statusCode).json(result);
-    } catch (error) {
-      next(error);
-    }
-  },
-);
+// export const createLog = expressAsyncHandler(
+//   async (req: Request, res: Response, next: NextFunction) => {
+//     try {
+//       const { carPlate, location, screenshot } = req.body;
+//       const result = await handleLogCreation({
+//         carPlate,
+//         location,
+//         screenshot,
+//       });
+//       res.status(result.statusCode).json(result);
+//     } catch (error) {
+//       next(error);
+//     }
+//   },
+// );
 
-export const checkTheAcceptedPlate = async (
-  plateList: [string, number[], number[][]][],
-  garageId: string,
-) => {
-  // Validate the garageId
-  if (!mongoose.Types.ObjectId.isValid(garageId)) {
-    throw new AppError('Invalid garage ID', 400);
-  }
+// const checkTheAcceptedPlate = async (
+//   plateList: [string, number[], number[][]][],
+//   garageId: string,
+// ) => {
+//   // Validate the garageId
+//   if (!mongoose.Types.ObjectId.isValid(garageId)) {
+//     throw new AppError('Invalid garage ID', 400);
+//   }
 
-  // Check if the garage exists
-  const garage = await Garage.findById(garageId);
-  if (!garage) {
-    console.error(`Garage not found for ID: ${garageId}`);
-    throw new AppError('Garage not found', 404);
-  }
+//   // Check if the garage exists
+//   const garage = await Garage.findById(garageId);
+//   if (!garage) {
+//     console.error(`Garage not found for ID: ${garageId}`);
+//     throw new AppError('Garage not found', 404);
+//   }
 
-  // Find users associated with this garage
-  const users = await User.find({ garage: garageId });
+//   // Find users associated with this garage
+//   const users = await User.find({ garage: garageId });
 
-  for (const plate of plateList) {
-    const detectedPlate = plate[0].trim();
+//   for (const plate of plateList) {
+//     const detectedPlate = plate[0].trim();
 
-    for (const user of users) {
-      if (user.carPlate === plate[0]) {}
-        console.warn(`User ${user._id}  carPlate format`, user.carPlate);
-        console.log(typeof user.carPlate);
-        continue;
-      }
+//     for (const user of users) {
+//       if (user.carPlate === plate[0]) {}
+//         console.warn(`User ${user._id}  carPlate format`, user.carPlate);
+//         console.log(typeof user.carPlate);
+//         continue;
+//       }
 
-      for (const userPlate of user.carPlate) {
-        const normalizedUserPlate = userPlate.trim();
-        console.log(`Comparing "${normalizedUserPlate}" with "${detectedPlate}"`);
+//       for (const userPlate of user.carPlate) {
+//         const normalizedUserPlate = userPlate.trim();
+//         console.log(`Comparing "${normalizedUserPlate}" with "${detectedPlate}"`);
 
-        if (normalizedUserPlate === detectedPlate) {
-          console.log('MATCH FOUND');
-          return user; // Early return on match
-        }
-      }
-    }
+//         if (normalizedUserPlate === detectedPlate) {
+//           console.log('MATCH FOUND');
+//           return user; // Early return on match
+//         }
+//       }
+//     }
 
-    console.log('No match found for detected plate:', detectedPlate);
-  }
+//     console.log('No match found for detected plate:', detectedPlate);
+//   }
 
-  console.log('No matching user found for any plates in list.');
-  return null; // Or handle differently if needed
-};
+//   console.log('No matching user found for any plates in list.');
+//   return null; // Or handle differently if needed
+// };
 
 export default logsController;
