@@ -2,7 +2,13 @@
 import { motion } from "framer-motion";
 import { Controller } from "react-hook-form";
 
-const GarageInfoStep = ({ register, control, errors, itemVariants }) => {
+const GarageInfoStep = ({
+    register,
+    control,
+    errors,
+    itemVariants,
+    backError,
+}) => {
     return (
         <motion.div variants={itemVariants} className="space-y-4">
             <motion.div variants={itemVariants}>
@@ -22,6 +28,11 @@ const GarageInfoStep = ({ register, control, errors, itemVariants }) => {
                         {errors.garageName.message}
                     </p>
                 )}
+                {backError?.field === "garageName" && (
+                    <p className="mt-1 text-sm text-red-500">
+                        {backError?.message}
+                    </p>
+                )}
             </motion.div>
 
             <motion.div variants={itemVariants}>
@@ -39,6 +50,11 @@ const GarageInfoStep = ({ register, control, errors, itemVariants }) => {
                 {errors.location && (
                     <p className="mt-1 text-sm text-red-500">
                         {errors.location.message}
+                    </p>
+                )}
+                {backError?.field === "location" && (
+                    <p className="mt-1 text-sm text-red-500">
+                        {backError?.message}
                     </p>
                 )}
             </motion.div>

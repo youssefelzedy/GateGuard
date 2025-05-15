@@ -26,7 +26,7 @@ export function useSignup() {
         },
         onError: (error) => {
             console.log("Signup failed:", error);
-            toast.error("Signup failed. Please try again.");
+            toast.error("Signup failed. Please fix the errors and try again.");
         },
     });
 

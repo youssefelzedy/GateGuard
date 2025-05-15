@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
 // Import components
 import OwnerSteps from "../../components/RegisterAdminForm/OwnerSteps";
@@ -10,11 +10,9 @@ import AdminInfoStep from "../../components/RegisterAdminForm/AdminInfoStep";
 import GarageInfoStep from "../../components/RegisterAdminForm/GarageInfoStep";
 import FormButtons from "../../components/RegisterAdminForm/FormButtons";
 import { useSignup } from "./useSignup";
-import toast from "react-hot-toast";
 
 function RegistrationStepper() {
     const [activeIndex, setActiveIndex] = useState(0);
-
     const { signup, error: backError } = useSignup();
     const {
         register,
@@ -33,8 +31,6 @@ function RegistrationStepper() {
 
     useEffect(() => {
         if (backError) {
-            toast.error(backError.message);
-
             if (backError?.field === "email") {
                 setActiveIndex(0);
             } else if (
@@ -62,11 +58,10 @@ function RegistrationStepper() {
             const finalData = {
                 email: data.email,
                 password: data.password,
-                passwordConfirm: data.confirmPassword,
-                name: data.fullName,
+                passwordConfirm: data.passwordConfirm,
+                name: data.name,
                 phoneNumber: data.phoneNumber,
                 nationalSecurityNumber: data.nationalSecurityNumber,
-                image: data.image[0] || "default.png",
                 garageName: data.garageName,
                 location: data.location,
             };
@@ -137,6 +132,7 @@ function RegistrationStepper() {
                                 errors={errors}
                                 watch={watch}
                                 itemVariants={itemVariants}
+                                backError={backError}
                             />
                         </motion.div>
                     )}
@@ -155,6 +151,7 @@ function RegistrationStepper() {
                                 errors={errors}
                                 inputClass={inputClass}
                                 itemVariants={itemVariants}
+                                backError={backError}
                             />
                         </motion.div>
                     )}
@@ -173,6 +170,7 @@ function RegistrationStepper() {
                                 control={control}
                                 errors={errors}
                                 itemVariants={itemVariants}
+                                backError={backError}
                             />
                         </motion.div>
                     )}

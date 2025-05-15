@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 
-const AccountStep = ({ register, errors, watch, itemVariants }) => {
+const AccountStep = ({ register, errors, watch, itemVariants, backError }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -28,6 +28,11 @@ const AccountStep = ({ register, errors, watch, itemVariants }) => {
                 {errors.email && (
                     <p className="mt-1 text-sm text-red-500">
                         {errors.email.message}
+                    </p>
+                )}
+                {backError?.field === "email" && (
+                    <p className="mt-1 text-sm text-red-500">
+                        {backError?.message}
                     </p>
                 )}
             </motion.div>

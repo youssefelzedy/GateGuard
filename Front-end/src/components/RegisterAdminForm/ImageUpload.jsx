@@ -46,7 +46,7 @@ const ImageUpload = ({ register, errors, itemVariants }) => {
                         id="image"
                         className="hidden"
                         {...register("image", {
-                            onChange: (e) => handleImageChange(e), // Ensure the preview is updated
+                            onChange: (e) => handleImageChange(e),
                         })}
                     />
                     <label
