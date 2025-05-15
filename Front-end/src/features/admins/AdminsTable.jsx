@@ -6,54 +6,12 @@ import {
     Pencil,
     Trash2,
 } from "lucide-react";
-
-const dummyAdmins = [
-    {
-        name: "Ahmed Youssef",
-        email: "ahmed@example.com",
-        phoneNumber: "0123456789",
-        nationalId: "29811234567891",
-        avatar: "https://ui-avatars.com/api/?name=Ahmed+Youssef&background=random",
-    },
-    {
-        name: "Salma Ali",
-        email: "salma@example.com",
-        phoneNumber: "0109876543",
-        nationalId: "29912345678912",
-        avatar: "https://ui-avatars.com/api/?name=Ahmed+Youssef&background=random",
-    },
-    {
-        name: "Mohamed Ibrahim",
-        email: "mohamed@example.com",
-        phoneNumber: "01123456789",
-        nationalId: "30045678901234",
-        avatar: "https://ui-avatars.com/api/?name=Ahmed+Youssef&background=random",
-    },
-    {
-        name: "Nour Adel",
-        email: "nour@example.com",
-        phoneNumber: "01512345678",
-        nationalId: "30198765432109",
-        avatar: "https://ui-avatars.com/api/?name=Ahmed+Youssef&background=random",
-    },
-    {
-        name: "Yara Hossam",
-        email: "yara@example.com",
-        phoneNumber: "01012349876",
-        nationalId: "30212349876543",
-        avatar: "https://ui-avatars.com/api/?name=Ahmed+Youssef&background=random",
-    },
-    {
-        name: "Tarek Hassan",
-        email: "tarek@example.com",
-        phoneNumber: "01155551234",
-        nationalId: "30367891234567",
-        avatar: "https://ui-avatars.com/api/?name=Ahmed+Youssef&background=random",
-    },
-];
+import { useAdmins } from "./useAdmins";
 
 function AdminsTable() {
-    const admins = dummyAdmins;
+    const { admins } = useAdmins();
+    console.log(admins);
+
     const [currentPage, setCurrentPage] = useState(1);
     const [searchGeneral, setSearchGeneral] = useState("");
     const [sortConfig, setSortConfig] = useState({
@@ -175,15 +133,17 @@ function AdminsTable() {
                         >
                             <td className="flex items-center gap-4 p-8">
                                 <img
-                                    src={admin.avatar}
+                                    src={admin.image}
                                     alt={admin.name}
                                     className="h-12 w-12 rounded-full object-cover"
                                 />
-                                {admin.name}
+                                <span className="capitalize">{admin.name}</span>
                             </td>
                             <td className="p-8">{admin.email}</td>
                             <td className="p-8">{admin.phoneNumber}</td>
-                            <td className="p-8">{admin.nationalId}</td>
+                            <td className="p-8">
+                                {admin.nationalSecurityNumber}
+                            </td>
                             <td className="p-8">
                                 <div className="flex gap-4">
                                     <button

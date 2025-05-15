@@ -7,7 +7,7 @@ export function useAdmin() {
     const token = localStorage.getItem("token");
     const queryClient = useQueryClient();
     const { data, isLoading } = useQuery({
-        queryKey: ["user", token],
+        queryKey: ["admin", token],
         queryFn: getMyAccount,
         enabled: !!token,
     });

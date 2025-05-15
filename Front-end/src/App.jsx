@@ -34,24 +34,25 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route element={<AppLayout />}>
-                        <Route
-                            index
-                            element={<Navigate replace to="dashboard" />}
-                        />
                         <Route path="dashboard" element={<Dashboard />} />
                         <Route path="logs" element={<Logs />} />
                         <Route path="users" element={<Users />} />
                         <Route path="live-stream" element={<LiveStream />} />
                         <Route path="admins" element={<Admins />} />
+                        <Route path="profile" element={<Admins />} />
                     </Route>
+                    <Route
+                        index
+                        element={<Navigate replace to="landingPage" />}
+                    />
+                    <Route path="landingPage" element={<LandingPage />} />
                     <Route path="login" element={<Login />} />
+                    <Route path="get-started" element={<RegisterAdmin />} />
                     <Route
                         path="invite-admin/:token"
                         element={<InviteAdmin />}
                     />
                     <Route path="invite-user/:token" element={<InviteUser />} />
-                    <Route path="landingPage" element={<LandingPage />} />
-                    <Route path="get-started" element={<RegisterAdmin />} />
                 </Routes>
             </BrowserRouter>
             <Toaster

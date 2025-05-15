@@ -12,7 +12,7 @@ function LoginForm() {
         login(
             { email, password },
             {
-                onSettled: () => {
+                onSuccess: () => {
                     setEmail("");
                     setPassword("");
                     setShowPassword(false);

@@ -19,7 +19,7 @@ function Header() {
                 <div className="flex items-center gap-4 pr-3">
                     <div className="h-10 w-10 overflow-hidden rounded-full bg-gray-200">
                         <img
-                            src={admin?.image || "/default.jpg"}
+                            src={admin?.image || "default.jpg"}
                             alt="Profile"
                             className="h-full w-full object-cover"
                         />
