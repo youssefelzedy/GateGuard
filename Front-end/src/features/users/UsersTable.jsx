@@ -1,20 +1,19 @@
-import { useState } from "react";
-import {
-    ArrowDownUp,
-    SquareArrowLeft,
-    SquareArrowRight,
-    Pencil,
-    Trash2,
-} from "lucide-react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { useAdmin } from "../auth/useAdmin";
 import { useUsers } from "./useUsers";
+import { useDeleteUser } from "./useDeleteUser";
 import { convertArabicToEnglish } from "../../utils/helper";
-import Plate from "../../ui/Plate";
+import EditUserForm from "./EditUserForm";
+import DeleteModal from "../../components/Tables/DeleteModal";
+import UsersTableHeader from "./UsersTableHeader";
+import UserTableRow from "./UserTableRow";
+import TablePagination from "../../components/Tables/TablePagination";
 
 function UsersTable() {
     const { admin } = useAdmin();
     const garageId = admin?.garage?.id;
     const { users } = useUsers(garageId);
+    const { deleteUser, isPending } = useDeleteUser();
     const [currentPage, setCurrentPage] = useState(1);
     const [searchGeneral, setSearchGeneral] = useState("");
     const [searchPlate, setSearchPlate] = useState("");
@@ -22,6 +21,11 @@ function UsersTable() {
         key: null,
         direction: "asc",
     });
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [editUser, setEditUser] = useState(null);
+    const [deleteUserData, setDeleteUserData] = useState(null);
+    const modalRef = useRef(null);
 
     const itemsPerPage = 5;
 
@@ -38,7 +42,6 @@ function UsersTable() {
     const handleSort = (key) => {
         setSortConfig((prev) => {
             if (prev.key === key) {
-                // Toggle between ascending and descending
                 return {
                     key,
                     direction: prev.direction === "asc" ? "desc" : "asc",
@@ -48,37 +51,76 @@ function UsersTable() {
         });
     };
 
-    const filteredUsers = users?.filter((user) => {
-        const generalQuery = searchGeneral.trim().toLowerCase();
-        const plateQuery = convertArabicToEnglish(
-            searchPlate.trim(),
-        ).toLowerCase();
+    // Focus trap for edit modal
+    useEffect(() => {
+        if (!isEditModalOpen) return;
+        const focusableElements = modalRef.current?.querySelectorAll(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+        );
+        const firstElement = focusableElements?.[0];
+        const lastElement = focusableElements?.[focusableElements.length - 1];
+        function handleTab(e) {
+            if (e.key !== "Tab") return;
+            if (e.shiftKey) {
+                if (document.activeElement === firstElement) {
+                    e.preventDefault();
+                    lastElement.focus();
+                }
+            } else {
+                if (document.activeElement === lastElement) {
+                    e.preventDefault();
+                    firstElement.focus();
+                }
+            }
+        }
+        function handleEscape(e) {
+            if (e.key === "Escape") handleCloseModal();
+        }
+        document.addEventListener("keydown", handleTab);
+        document.addEventListener("keydown", handleEscape);
+        firstElement?.focus();
+        return () => {
+            document.removeEventListener("keydown", handleTab);
+            document.removeEventListener("keydown", handleEscape);
+        };
+    }, [isEditModalOpen]);
 
-        const matchesGeneral =
-            user?.name?.toLowerCase().includes(generalQuery) ||
-            user?.email?.toLowerCase().includes(generalQuery) ||
-            user?.phoneNumber?.includes(generalQuery) ||
-            user?.nationalSecurityNumber?.includes(generalQuery);
+    // Memoized filtered, sorted, and paginated users
+    const filteredUsers = useMemo(() => {
+        return users?.filter((user) => {
+            const generalQuery = searchGeneral.trim().toLowerCase();
+            const plateQuery = convertArabicToEnglish(
+                searchPlate.trim(),
+            ).toLowerCase();
+            const matchesGeneral =
+                user?.name?.toLowerCase().includes(generalQuery) ||
+                user?.email?.toLowerCase().includes(generalQuery) ||
+                user?.phoneNumber?.includes(generalQuery) ||
+                user?.nationalSecurityNumber?.includes(generalQuery);
+            const matchesPlate = user?.carPlate
+                ?.toLowerCase()
+                .includes(plateQuery);
+            return matchesGeneral && matchesPlate;
+        });
+    }, [users, searchGeneral, searchPlate]);
 
-        const matchesPlate = user?.carPlate?.toLowerCase().includes(plateQuery);
+    const sortedUsers = useMemo(() => {
+        return [...(filteredUsers || [])].sort((a, b) => {
+            if (!sortConfig.key) return 0;
+            const aValue = a[sortConfig.key]?.toString().toLowerCase() || "";
+            const bValue = b[sortConfig.key]?.toString().toLowerCase() || "";
+            if (aValue < bValue) return sortConfig.direction === "asc" ? -1 : 1;
+            if (aValue > bValue) return sortConfig.direction === "asc" ? 1 : -1;
+            return 0;
+        });
+    }, [filteredUsers, sortConfig]);
 
-        return matchesGeneral && matchesPlate;
-    });
-
-    const sortedUsers = [...(filteredUsers || [])].sort((a, b) => {
-        if (!sortConfig.key) return 0; // no sorting yet
-        const aValue = a[sortConfig.key]?.toString().toLowerCase() || "";
-        const bValue = b[sortConfig.key]?.toString().toLowerCase() || "";
-        if (aValue < bValue) return sortConfig.direction === "asc" ? -1 : 1;
-        if (aValue > bValue) return sortConfig.direction === "asc" ? 1 : -1;
-        return 0;
-    });
-
-    const totalPages = Math.ceil(sortedUsers.length / itemsPerPage);
-    const paginatedUsers = sortedUsers.slice(
-        (currentPage - 1) * itemsPerPage,
-        currentPage * itemsPerPage,
-    );
+    const paginatedUsers = useMemo(() => {
+        return sortedUsers.slice(
+            (currentPage - 1) * itemsPerPage,
+            currentPage * itemsPerPage,
+        );
+    }, [sortedUsers, currentPage, itemsPerPage]);
 
     const handlePrevPage = () => {
         setCurrentPage((prev) => Math.max(prev - 1, 1));
@@ -88,145 +130,128 @@ function UsersTable() {
         setCurrentPage((prev) => Math.min(prev + 1, totalPages));
     };
 
+    const handleEditClick = (user) => {
+        setEditUser(user);
+        setIsEditModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsEditModalOpen(false);
+        setEditUser(null);
+    };
+
+    const handleDeleteClick = (user) => {
+        setDeleteUserData(user);
+        setIsDeleteModalOpen(true);
+    };
+
+    const handleCloseDeleteModal = () => {
+        setIsDeleteModalOpen(false);
+        setDeleteUserData(null);
+    };
+
+    const handleConfirmDelete = () => {
+        if (deleteUserData) {
+            deleteUser(deleteUserData._id);
+            handleCloseDeleteModal();
+        }
+    };
+
+    const totalPages = Math.ceil(sortedUsers.length / itemsPerPage);
+
     return (
-        <div className="mt-6">
-            {/* Two Search Bars */}
-            <div className="mb-4 flex flex-col items-end gap-2 sm:flex-row sm:justify-end">
-                <input
-                    type="text"
-                    placeholder="Search users (name, email, phone, ID)..."
-                    value={searchGeneral}
-                    onChange={handleSearchGeneral}
-                    className="grow rounded border border-primary-300 px-3 py-2 text-primary-900 placeholder:text-primary-400 focus:outline-none"
-                />
-                <input
-                    type="text"
-                    placeholder="Search car plate..."
-                    value={searchPlate}
-                    onChange={handleSearchPlate}
-                    className="rounded border border-primary-300 px-3 py-2 text-primary-900 placeholder:text-primary-400 focus:outline-none"
-                />
-            </div>
-
-            {/* Table */}
-            <table className="w-full table-auto border-collapse text-left">
-                <thead>
-                    <tr className="bg-primary-100 font-medium text-primary-900">
-                        <th className="p-5">
-                            Plate Number
-                            <button
-                                onClick={() => handleSort("carPlate")}
-                                className="ml-1"
-                            >
-                                <ArrowDownUp size={12} />
-                            </button>
-                        </th>
-                        <th className="p-5">
-                            User Name
-                            <button
-                                onClick={() => handleSort("name")}
-                                className="ml-1"
-                            >
-                                <ArrowDownUp size={12} />
-                            </button>
-                        </th>
-                        <th className="p-5">
-                            Email
-                            <button
-                                onClick={() => handleSort("email")}
-                                className="ml-1"
-                            >
-                                <ArrowDownUp size={12} />
-                            </button>
-                        </th>
-                        <th className="p-5">
-                            Phone Number
-                            <button
-                                onClick={() => handleSort("phoneNumber")}
-                                className="ml-1"
-                            >
-                                <ArrowDownUp size={12} />
-                            </button>
-                        </th>
-                        <th className="p-5">
-                            National ID
-                            <button
-                                onClick={() =>
-                                    handleSort("nationalSecurityNumber")
-                                }
-                                className="ml-1"
-                            >
-                                <ArrowDownUp size={12} />
-                            </button>
-                        </th>
-                        <th className="p-5">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {paginatedUsers?.map((user, index) => (
-                        <tr
-                            key={index}
-                            className="border-b border-primary-200 transition hover:bg-primary-50"
+        <>
+            {/* Edit Modal */}
+            {isEditModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+                    <div
+                        ref={modalRef}
+                        className="relative w-full max-w-2xl animate-fadeSlideUp overflow-hidden rounded-lg bg-primary-50 p-8 shadow-lg transition-all duration-500"
+                        role="dialog"
+                        aria-modal="true"
+                    >
+                        <button
+                            onClick={handleCloseModal}
+                            className="absolute right-4 top-4 text-2xl text-primary-700 hover:text-primary-900"
+                            aria-label="Close edit modal"
                         >
-                            <td className="p-3 text-primary-900">
-                                <Plate carPlate={user.carPlate} />
-                            </td>
-                            <td className="p-3 text-primary-900">
-                                {user.name}
-                            </td>
-                            <td className="p-3 text-primary-900">
-                                {user.email}
-                            </td>
-                            <td className="p-3 text-primary-900">
-                                {user.phoneNumber}
-                            </td>
-                            <td className="p-3 text-primary-900">
-                                {user.nationalSecurityNumber}
-                            </td>
-                            <td className="p-8">
-                                <div className="flex gap-4">
-                                    <button
-                                        className="rounded-full bg-primary-100 p-4 text-primary-700 transition hover:bg-primary-200"
-                                        title="Edit"
-                                    >
-                                        <Pencil size={16} />
-                                    </button>
-                                    <button
-                                        className="rounded-full bg-red-100 p-4 text-red-600 transition hover:bg-red-200"
-                                        title="Delete"
-                                    >
-                                        <Trash2 size={16} />
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-
-            {/* Pagination Controls */}
-            {totalPages > 1 && (
-                <div className="mt-4 flex items-center justify-center gap-4">
-                    <button
-                        onClick={handlePrevPage}
-                        disabled={currentPage === 1}
-                        className="rounded bg-primary-700 p-2 text-white disabled:opacity-50"
-                    >
-                        <SquareArrowLeft />
-                    </button>
-                    <span className="font-semibold">
-                        Page {currentPage} of {totalPages}
-                    </span>
-                    <button
-                        onClick={handleNextPage}
-                        disabled={currentPage === totalPages}
-                        className="rounded bg-primary-700 p-2 text-white disabled:opacity-50"
-                    >
-                        <SquareArrowRight />
-                    </button>
+                            &times;
+                        </button>
+                        <EditUserForm
+                            user={editUser}
+                            onClose={handleCloseModal}
+                        />
+                    </div>
                 </div>
             )}
-        </div>
+
+            {/* Delete Modal */}
+            <DeleteModal
+                isOpen={isDeleteModalOpen}
+                onClose={handleCloseDeleteModal}
+                onConfirm={handleConfirmDelete}
+                item={deleteUserData}
+                isDeleting={isPending}
+                type="user"
+            />
+
+            <div className="mt-6">
+                {/* Two Search Bars */}
+                <div className="mb-4 flex flex-col items-end gap-2 sm:flex-row sm:justify-end">
+                    <input
+                        type="text"
+                        placeholder="Search users (name, email, phone, ID)..."
+                        value={searchGeneral}
+                        onChange={handleSearchGeneral}
+                        className="grow rounded border border-primary-300 px-3 py-2 text-primary-900 placeholder:text-primary-400 focus:outline-none"
+                    />
+                    <input
+                        type="text"
+                        placeholder="Search car plate..."
+                        value={searchPlate}
+                        onChange={handleSearchPlate}
+                        className="rounded border border-primary-300 px-3 py-2 text-primary-900 placeholder:text-primary-400 focus:outline-none"
+                    />
+                </div>
+
+                {/* Table */}
+                <table className="w-full table-auto border-collapse text-left">
+                    <UsersTableHeader
+                        onSort={handleSort}
+                        sortConfig={sortConfig}
+                    />
+                    <tbody>
+                        {paginatedUsers.length === 0 ? (
+                            <tr>
+                                <td
+                                    colSpan={6}
+                                    className="p-6 text-center text-primary-400"
+                                >
+                                    No users found.
+                                </td>
+                            </tr>
+                        ) : (
+                            paginatedUsers.map((user) => (
+                                <UserTableRow
+                                    key={user.nationalSecurityNumber}
+                                    user={user}
+                                    onEdit={handleEditClick}
+                                    onDelete={handleDeleteClick}
+                                />
+                            ))
+                        )}
+                    </tbody>
+                </table>
+
+                {/* Pagination */}
+                <TablePagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPrevPage={handlePrevPage}
+                    onNextPage={handleNextPage}
+                />
+            </div>
+        </>
     );
 }
 

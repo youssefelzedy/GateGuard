@@ -1,3 +1,4 @@
+//eslint-disable-next-line
 import { motion } from "framer-motion";
 
 function FeaturesSection() {

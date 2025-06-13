@@ -1,0 +1,29 @@
+import { SquareArrowLeft, SquareArrowRight } from "lucide-react";
+
+function TablePagination({ currentPage, totalPages, onPrevPage, onNextPage }) {
+    if (totalPages <= 1) return null;
+
+    return (
+        <div className="mt-4 flex items-center justify-center gap-4">
+            <button
+                onClick={onPrevPage}
+                disabled={currentPage === 1}
+                className="rounded bg-primary-700 p-2 text-white disabled:opacity-50"
+            >
+                <SquareArrowLeft />
+            </button>
+            <span className="font-semibold">
+                Page {currentPage} of {totalPages}
+            </span>
+            <button
+                onClick={onNextPage}
+                disabled={currentPage === totalPages}
+                className="rounded bg-primary-700 p-2 text-white disabled:opacity-50"
+            >
+                <SquareArrowRight />
+            </button>
+        </div>
+    );
+}
+
+export default TablePagination;

@@ -59,13 +59,13 @@ function Dashboard() {
                     <GateControl />
                 </motion.div>
                 <motion.div variants={itemVariants}>
+                    <NumberOfCars />
+                </motion.div>
+                <motion.div variants={itemVariants}>
                     <Time />
                 </motion.div>
                 <motion.div variants={itemVariants}>
                     <Calendar />
-                </motion.div>
-                <motion.div variants={itemVariants}>
-                    <NumberOfCars />
                 </motion.div>
             </motion.div>
         </div>

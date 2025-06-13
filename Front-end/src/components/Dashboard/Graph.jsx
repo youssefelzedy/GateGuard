@@ -32,8 +32,8 @@ function CustomTooltip({ active, payload }) {
 
 export default function Graph() {
     return (
-        <div className="flex items-center justify-center bg-[#f1f5f9]">
-            <div className="w-full max-w-full rounded-xl bg-white p-6 shadow-lg">
+        <div className="w-full">
+            <div className="w-full rounded-xl bg-white p-6 shadow-lg">
                 {/* Header */}
                 <div className="mb-6 flex items-center justify-between">
                     <h2 className="text-2xl font-bold text-slate-900">
@@ -54,7 +54,7 @@ export default function Graph() {
 
                 {/* Chart */}
                 <div className="rounded-xl bg-blue-50/50 p-5">
-                    <ResponsiveContainer width="100%" height={260}>
+                    <ResponsiveContainer width="100%" height={400}>
                         <LineChart data={data}>
                             <CartesianGrid
                                 strokeDasharray="4 4"

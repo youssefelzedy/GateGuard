@@ -28,29 +28,42 @@ export default function NumberOfCars() {
             animate="visible"
             variants={containerVariants}
         >
-            <div className="flex items-center justify-between rounded-t-lg bg-blue-50 px-4 py-3">
-                <h3 className="text-lg font-semibold text-[#1e293b]">
+            <div className="flex items-center justify-between rounded-t-lg bg-primary-50 px-4 py-3">
+                <h3 className="text-lg font-semibold text-primary-900">
                     Number of Cars
                 </h3>
-                <EllipsisVerticalIcon className="h-5 w-5 text-slate-500" />
+                <EllipsisVerticalIcon className="h-5 w-5 text-primary-500" />
             </div>
             <div className="p-4 text-center">
-                <div className="mb-2 flex items-center justify-center gap-3">
-                    <motion.div>
-                        <TruckIcon className="h-6 w-6 text-blue-500" />
+                <div className="mb-3 flex items-center justify-center gap-3">
+                    <motion.div
+                        animate={{ scale: [1, 1.1, 1] }}
+                        transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                        }}
+                    >
+                        <TruckIcon className="h-7 w-7 text-primary-500" />
                     </motion.div>
                     <motion.p
-                        className="items-center text-4xl font-bold text-[#1e293b]"
+                        className="text-4xl font-bold text-primary-900"
                         variants={countVariants}
                     >
                         20 cars
                     </motion.p>
                 </div>
                 <motion.div
-                    className="inline-flex items-center rounded-full bg-[#3b82f6] px-3 py-1.5 text-sm font-semibold text-white shadow-sm"
-                    animate="pulse"
+                    className="inline-flex items-center gap-1 rounded-full bg-primary-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm"
+                    animate={{ scale: [1, 1.02, 1] }}
+                    transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                    }}
                 >
-                    ↑ 25% from yesterday
+                    <span>↑</span>
+                    <span>25% from yesterday</span>
                 </motion.div>
             </div>
         </motion.div>

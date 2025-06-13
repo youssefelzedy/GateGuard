@@ -5,6 +5,7 @@ import {
     Users,
     ShieldUser,
     LogOut,
+    Settings,
 } from "lucide-react";
 import { NavLink } from "react-router";
 import { useAdmin } from "../features/auth/useAdmin";
@@ -61,14 +62,9 @@ function Sidebar({ onLogoutClick }) {
                         />
                     )}
                 </ul>
-                <div className="flex items-center justify-center gap-4 p-4">
-                    <button
-                        className="relative flex gap-2 rounded bg-primary-800 px-4 py-2 font-bold text-white"
-                        onClick={onLogoutClick}
-                    >
-                        <span className="text-sm font-medium">Logout</span>
-                        <LogOut size={20} />
-                    </button>
+                <div className="flex flex-col gap-4 px-4">
+                    <SettingsNavItem />
+                    <LogoutNavItem onLogoutClick={onLogoutClick} />
                 </div>
             </nav>
         </aside>
@@ -92,6 +88,41 @@ function NavItem({ to, icon, label }) {
                 <span>{label}</span>
             </NavLink>
         </li>
+    );
+}
+
+function SettingsNavItem() {
+    return (
+        <NavLink
+            to="/settings"
+            className={({ isActive }) =>
+                `flex items-center gap-4 rounded-3xl p-3 text-xl font-medium text-primary-900 transition-colors hover:bg-primary-400/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 ${
+                    isActive ? "bg-primary-400/40 text-primary-900" : ""
+                }`
+            }
+            tabIndex={0}
+        >
+            <span>
+                <Settings size={20} />
+            </span>
+            <span>Settings</span>
+        </NavLink>
+    );
+}
+
+function LogoutNavItem({ onLogoutClick }) {
+    return (
+        <button
+            onClick={onLogoutClick}
+            className="flex w-full items-center gap-4 rounded-xl bg-primary-900 p-3 text-xl font-medium text-white transition-colors hover:bg-primary-700/80 hover:text-primary-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-400"
+            type="button"
+            tabIndex={0}
+        >
+            <span>
+                <LogOut size={20} />
+            </span>
+            <span>Logout</span>
+        </button>
     );
 }
 

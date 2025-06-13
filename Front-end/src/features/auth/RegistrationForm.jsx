@@ -197,10 +197,10 @@ function RegistrationStepper() {
                     Already have an account?
                     <Link
                         to={"/login"}
-                        className="group relative ml-1 font-medium text-blue-600 transition-colors duration-200 hover:text-blue-800"
+                        className="group relative ml-1 font-medium text-primary-600 transition-colors duration-200 hover:text-primary-800"
                     >
                         Login
-                        <span className="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+                        <span className="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-primary-600 transition-all duration-300 group-hover:w-full"></span>
                     </Link>
                 </p>
             </div>

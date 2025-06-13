@@ -59,9 +59,13 @@ export default function GateControl() {
                 >
                     {isOpen ? "Open" : "Closed"}
                 </motion.p>
-                <div className="flex flex-row items-center justify-center gap-52">
+                <div className="flex flex-row items-center justify-center gap-8">
                     <motion.button
-                        className={`rounded-md border border-slate-200 ${isOpen ? "bg-slate-100 text-slate-400" : "bg-white text-primary-950"} px-4 py-2 text-sm font-medium shadow-sm`}
+                        className={`rounded-md border border-slate-200 px-6 py-2 text-sm font-medium shadow-sm transition-colors ${
+                            isOpen
+                                ? "cursor-not-allowed bg-slate-100 text-slate-400"
+                                : "bg-white text-primary-950 hover:bg-slate-50"
+                        }`}
                         onClick={() => handleClick("open")}
                         disabled={isOpen}
                         variants={buttonVariants}
@@ -71,7 +75,11 @@ export default function GateControl() {
                         Open
                     </motion.button>
                     <motion.button
-                        className={`rounded-md ${!isOpen ? "bg-slate-300" : "bg-primary-800"} px-4 py-2 text-sm font-medium text-white shadow-sm`}
+                        className={`rounded-md px-6 py-2 text-sm font-medium text-white shadow-sm transition-colors ${
+                            !isOpen
+                                ? "cursor-not-allowed bg-slate-300"
+                                : "bg-primary-800 hover:bg-primary-900"
+                        }`}
                         onClick={() => handleClick("close")}
                         disabled={!isOpen}
                         variants={buttonVariants}

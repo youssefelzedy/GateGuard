@@ -58,21 +58,21 @@ function InviteUserForm() {
     return (
         <div className="relative w-full max-w-2xl animate-fadeSlideUp overflow-hidden rounded-lg bg-primary-50 p-8 shadow-lg transition-all duration-500">
             <div className="mb-6 text-center">
-                <h1 className="inline-block bg-gradient-to-r from-blue-800 to-blue-500 bg-clip-text text-2xl font-bold capitalize text-primary-800">
-                    Submit your data
+                <h1 className="inline-block bg-gradient-to-r from-primary-800 to-primary-500 bg-clip-text text-2xl font-bold capitalize text-primary-800">
+                    Invite User
                 </h1>
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                <h2 className="mb-2 font-semibold text-slate-700">
-                    Personal Information
+                <h2 className="mb-2 font-semibold text-primary-700">
+                    User Information
                 </h2>
 
                 <div className="grid grid-cols-1 gap-4">
                     <div className="grid grid-cols-2 gap-4">
                         <div className="w-full">
                             <input
-                                className="w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3"
+                                className="w-full rounded-md border border-primary-200 bg-primary-50 px-4 py-3"
                                 placeholder="Full Name"
                                 type="text"
                                 {...register("fullName", {
@@ -87,7 +87,7 @@ function InviteUserForm() {
                         </div>
                         <div className="w-full">
                             <input
-                                className="w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3"
+                                className="w-full rounded-md border border-primary-200 bg-primary-50 px-4 py-3"
                                 placeholder="Phone Number"
                                 type="text"
                                 {...register("phoneNumber", {
@@ -107,7 +107,7 @@ function InviteUserForm() {
                     </div>
                     <div>
                         <input
-                            className="w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3"
+                            className="w-full rounded-md border border-primary-200 bg-primary-50 px-4 py-3"
                             placeholder="National/Corporate ID"
                             {...register("nationalId", {
                                 required: "National ID is required",
@@ -126,8 +126,8 @@ function InviteUserForm() {
                 </div>
 
                 <div>
-                    <h2 className="mb-2 font-semibold text-slate-700">
-                        Car Information
+                    <h2 className="mb-2 font-semibold text-primary-700">
+                        Vehicle Information
                     </h2>
                     <div className="flex flex-wrap gap-2">
                         {Array.from({ length: 4 }).map((_, i) => (
@@ -138,7 +138,7 @@ function InviteUserForm() {
                                 render={({ field }) => (
                                     <select
                                         {...field}
-                                        className="rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none"
+                                        className="rounded-md border border-primary-200 bg-primary-50 px-4 py-3 outline-none"
                                     >
                                         <option value="">-</option>
                                         {Array.from(
@@ -164,7 +164,7 @@ function InviteUserForm() {
                                 render={({ field }) => (
                                     <select
                                         {...field}
-                                        className="rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none"
+                                        className="rounded-md border border-primary-200 bg-primary-50 px-4 py-3 outline-none"
                                     >
                                         <option value="">-</option>
                                         {Array.from(

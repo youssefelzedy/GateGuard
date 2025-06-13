@@ -13,6 +13,8 @@ import InviteUser from "./pages/InviteUser";
 import RegisterAdmin from "./pages/GetStarted";
 import Admins from "./pages/Admins";
 import InviteAdmin from "./pages/InviteAdmin";
+import Settings from "./pages/Settings";
+import Profile from "./pages/Profile";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -36,10 +38,11 @@ function App() {
                     <Route element={<AppLayout />}>
                         <Route path="dashboard" element={<Dashboard />} />
                         <Route path="logs" element={<Logs />} />
-                        <Route path="users" element={<Users />} />
                         <Route path="live-stream" element={<LiveStream />} />
+                        <Route path="users" element={<Users />} />
                         <Route path="admins" element={<Admins />} />
-                        <Route path="profile" element={<Admins />} />
+                        <Route path="settings" element={<Settings />} />
+                        <Route path="profile" element={<Profile />} />
                     </Route>
                     <Route
                         index

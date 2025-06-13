@@ -22,13 +22,17 @@ function LogsTable() {
                     {[1, 2, 3, 4, 5].map((item, index) => (
                         <tr
                             key={item}
-                            className={`border-b border-primary-200 transition hover:bg-primary-100 ${index % 2 === 0 ? "bg-primary-50" : "bg-primary-200"}`}
+                            className={`border-b border-primary-200 transition hover:bg-primary-100 ${
+                                index % 2 === 0
+                                    ? "bg-primary-50"
+                                    : "bg-primary-100"
+                            }`}
                         >
                             <td className="p-3">
                                 <Plate />
                             </td>
                             <td className="p-3">2023-10-01</td>
-                            <td className={`p-3`}>In</td>
+                            <td className="p-3">In</td>
                             <td className="p-3">John Doe</td>
                         </tr>
                     ))}

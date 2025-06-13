@@ -30,3 +30,34 @@ export async function inviteAdmin(data) {
     }
     return res.json();
 }
+
+export async function editAdmin({ adminId, data }) {
+    const res = await fetch(`${VITE_API_URL}/admins/${adminId}`, {
+        method: "PATCH",
+        body: JSON.stringify(data),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+    });
+    if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error.message);
+    }
+    return res.json();
+}
+
+export async function deleteAdmin(adminId) {
+    const res = await fetch(`${VITE_API_URL}/admins/${adminId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+    });
+    if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error.message);
+    }
+    return res.json();
+}
