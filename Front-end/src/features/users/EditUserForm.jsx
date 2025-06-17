@@ -1,18 +1,19 @@
-import { useForm, Controller } from "react-hook-form";
 import { useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
 import { useEditUser } from "./useEditUser";
 import {
     englishToArabicNumbers,
     englishToArabicLetters,
 } from "../../utils/constants";
 import Plate from "../../ui/Plate";
+import toast from "react-hot-toast";
 
-function EditUserForm({ user, onClose }) {
-    const { editUser, error } = useEditUser();
+const processLicensePlate = (carPlate) => {
     let numbers = ["", "", "", ""];
     let letters = ["", "", ""];
-    if (user?.carPlate) {
-        const plateParts = user.carPlate.split("-");
+
+    if (carPlate) {
+        const plateParts = carPlate.split("-");
         const foundNumbers = plateParts.filter((part) =>
             englishToArabicNumbers.has(part),
         );
@@ -22,6 +23,14 @@ function EditUserForm({ user, onClose }) {
         numbers = [...foundNumbers, "", "", "", ""].slice(0, 4);
         letters = [...foundLetters, "", "", ""].slice(0, 3);
     }
+
+    return { numbers, letters };
+};
+
+function EditUserForm({ user, onClose }) {
+    const { editUser } = useEditUser();
+    const { numbers, letters } = processLicensePlate(user?.carPlate);
+
     const {
         register,
         handleSubmit,
@@ -33,7 +42,6 @@ function EditUserForm({ user, onClose }) {
         defaultValues: {
             fullName: user?.name || "",
             phoneNumber: user?.phoneNumber || "",
-            email: user?.email || "",
             nationalId: user?.nationalSecurityNumber || "",
             numbers,
             letters,
@@ -44,21 +52,27 @@ function EditUserForm({ user, onClose }) {
     const watchedLetters = watch("letters", letters);
 
     const onSubmit = (data) => {
-        // Compose carPlate from numbers and letters
+        const hasNumber = watchedNumbers.some((n) => n !== "");
+        const hasLetter = watchedLetters.some((l) => l !== "");
 
-        const carPlate = [...data.numbers, ...data.letters]
-            .filter(Boolean)
-            .join("-");
+        if (!hasNumber || !hasLetter) {
+            toast.error("Please select at least one number and one letter");
+            return;
+        }
+
+        const finalData = {
+            name: data.fullName,
+            phoneNumber: data.phoneNumber,
+            nationalSecurityNumber: data.nationalId,
+            carPlate: [...data.numbers, ...data.letters]
+                .filter(Boolean)
+                .join("-"),
+        };
+        console.log(finalData);
         editUser(
             {
                 userId: user._id,
-                data: {
-                    name: data.fullName,
-                    phoneNumber: data.phoneNumber,
-                    email: data.email,
-                    nationalSecurityNumber: data.nationalId,
-                    carPlate,
-                },
+                data: finalData,
             },
             {
                 onSuccess: () => {
@@ -66,27 +80,13 @@ function EditUserForm({ user, onClose }) {
                 },
             },
         );
-        console.log(data);
     };
 
     useEffect(() => {
-        let numbers = ["", "", "", ""];
-        let letters = ["", "", ""];
-        if (user?.carPlate) {
-            const plateParts = user.carPlate.split("-");
-            const foundNumbers = plateParts.filter((part) =>
-                englishToArabicNumbers.has(part),
-            );
-            const foundLetters = plateParts.filter((part) =>
-                englishToArabicLetters.has(part),
-            );
-            numbers = [...foundNumbers, "", "", "", ""].slice(0, 4);
-            letters = [...foundLetters, "", "", ""].slice(0, 3);
-        }
+        const { numbers, letters } = processLicensePlate(user?.carPlate);
         reset({
             fullName: user?.name || "",
             phoneNumber: user?.phoneNumber || "",
-            email: user?.email || "",
             nationalId: user?.nationalSecurityNumber || "",
             numbers,
             letters,
@@ -154,6 +154,7 @@ function EditUserForm({ user, onClose }) {
                     )}
                 </div>
             </div>
+
             <div>
                 <h2 className="mb-2 font-semibold text-slate-700">
                     Car Information
@@ -209,6 +210,7 @@ function EditUserForm({ user, onClose }) {
                     ))}
                 </div>
             </div>
+
             <div className="mt-4 flex flex-col items-center">
                 <Plate
                     carPlate={[...watchedNumbers, ...watchedLetters]
@@ -219,6 +221,7 @@ function EditUserForm({ user, onClose }) {
                     This is how the plate will look like
                 </p>
             </div>
+
             <button
                 type="submit"
                 disabled={isSubmitting}
@@ -228,21 +231,23 @@ function EditUserForm({ user, onClose }) {
             >
                 Save Changes
             </button>
+
             <div className="mt-2 flex gap-4">
                 <button
                     type="button"
                     className="flex-1 rounded-md border border-primary-300 bg-white px-4 py-3 font-medium text-primary-700 transition hover:bg-primary-100"
-                    onClick={() =>
+                    onClick={() => {
+                        const { numbers, letters } = processLicensePlate(
+                            user?.carPlate,
+                        );
                         reset({
                             fullName: user?.name || "",
                             phoneNumber: user?.phoneNumber || "",
-                            email: user?.email || "",
                             nationalId: user?.nationalSecurityNumber || "",
                             numbers,
                             letters,
-                            confirmed: false,
-                        })
-                    }
+                        });
+                    }}
                 >
                     Reset
                 </button>
