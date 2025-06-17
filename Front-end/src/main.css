@@ -8,6 +8,7 @@
 @layer base {
     html {
         font-family: "IBM Plex Sans", sans-serif;
+        scroll-behavior: smooth;
     }
 
     * {

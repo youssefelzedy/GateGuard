@@ -57,7 +57,7 @@ const Footer = () => {
                             whileInView="visible"
                             custom={0.2}
                             viewport={{ once: true }}
-                            className="mb-2 text-sm"
+                            className="mb-2 text-base sm:text-lg"
                         >
                             Made with <span className="text-red-500">❤</span>{" "}
                             by Computer and Control Students,
@@ -71,7 +71,7 @@ const Footer = () => {
                             whileInView="visible"
                             custom={0.3}
                             viewport={{ once: true }}
-                            className="text-sm text-gray-400"
+                            className="text-sm text-gray-400 sm:text-base"
                         >
                             All rights reserved.
                         </motion.p>
@@ -85,7 +85,7 @@ const Footer = () => {
                             whileInView="visible"
                             custom={0}
                             viewport={{ once: true }}
-                            className="mb-6 text-2xl font-bold"
+                            className="mb-8 text-xl font-bold sm:text-2xl"
                         >
                             Support
                         </motion.h3>
@@ -100,31 +100,31 @@ const Footer = () => {
                         >
                             <a
                                 href="/help"
-                                className="transition-colors hover:text-primary-300"
+                                className="text-base transition-colors hover:text-primary-300 sm:text-lg"
                             >
                                 Help center
                             </a>
                             <a
                                 href="/terms"
-                                className="transition-colors hover:text-primary-300"
+                                className="text-base transition-colors hover:text-primary-300 sm:text-lg"
                             >
                                 Terms of service
                             </a>
                             <a
                                 href="/legal"
-                                className="transition-colors hover:text-primary-300"
+                                className="text-base transition-colors hover:text-primary-300 sm:text-lg"
                             >
                                 Legal
                             </a>
                             <a
                                 href="/privacy"
-                                className="transition-colors hover:text-primary-300"
+                                className="text-base transition-colors hover:text-primary-300 sm:text-lg"
                             >
                                 Privacy policy
                             </a>
                             <a
                                 href="/status"
-                                className="transition-colors hover:text-primary-300"
+                                className="text-base transition-colors hover:text-primary-300 sm:text-lg"
                             >
                                 Status
                             </a>
@@ -139,7 +139,7 @@ const Footer = () => {
                             whileInView="visible"
                             custom={0}
                             viewport={{ once: true }}
-                            className="mb-6 text-2xl font-bold"
+                            className="mb-8 text-xl font-bold sm:text-2xl"
                         >
                             Want to know more about our solution?
                         </motion.h3>
@@ -150,7 +150,7 @@ const Footer = () => {
                             whileInView="visible"
                             custom={0.1}
                             viewport={{ once: true }}
-                            className="mb-4 text-sm"
+                            className="mb-4 text-base sm:text-lg"
                         >
                             Provide us your email and we will contact you.
                         </motion.p>
@@ -170,14 +170,14 @@ const Footer = () => {
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="Email"
                                 required
-                                className="rounded bg-gray-200 px-4 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                className="rounded-lg bg-gray-200 px-6 py-3 text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary-500 sm:text-lg"
                             />
                             <motion.button
                                 type="submit"
                                 variants={buttonVariants}
                                 whileHover="hover"
                                 whileTap="tap"
-                                className="rounded bg-primary-500 px-6 py-2 font-medium text-white transition-colors hover:bg-primary-600"
+                                className="rounded-lg bg-primary-500 px-8 py-3 text-base font-medium text-white transition-colors hover:bg-primary-600 sm:text-lg"
                             >
                                 Send
                             </motion.button>

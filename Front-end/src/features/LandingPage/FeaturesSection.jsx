@@ -14,7 +14,7 @@ function FeaturesSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
-                    className="mb-20 text-center text-5xl font-bold text-primary-500"
+                    className="mb-16 text-center text-4xl font-bold text-primary-500 sm:text-5xl"
                 >
                     Featu<span className="text-primary-800">res</span>
                 </motion.h2>
@@ -37,7 +37,7 @@ function FeaturesSection() {
                             viewport={{ once: true }}
                             className="relative max-w-md text-center md:text-left"
                         >
-                            <h3 className="flex flex-col text-6xl font-extrabold leading-snug text-primary-900">
+                            <h3 className="flex flex-col text-5xl font-extrabold leading-snug text-primary-900 sm:text-6xl">
                                 Stay{" "}
                                 <span className="italic text-primary-500">
                                     Informed
@@ -52,7 +52,7 @@ function FeaturesSection() {
                                 alt=""
                                 className="absolute -top-10 left-1/2 h-64 w-64 -translate-x-1/2 opacity-20 md:left-0 md:translate-x-0"
                             />
-                            <p className="mt-8 text-xl text-gray-600">
+                            <p className="mt-6 text-lg text-gray-600 sm:text-xl">
                                 Be aware of every vehicle that entered the
                                 garage, manage employee & visitor access
                                 efficiently.
@@ -76,7 +76,8 @@ function FeaturesSection() {
                                 }}
                                 src="/feature-1.png"
                                 alt="Feature 1 Screenshot"
-                                className="h-auto w-[650px] rounded-lg shadow-lg"
+                                className="h-auto w-full max-w-[650px] rounded-xl shadow-xl"
+                                loading="lazy"
                             />
                         </motion.div>
                     </motion.div>
@@ -97,7 +98,7 @@ function FeaturesSection() {
                             viewport={{ once: true }}
                             className="relative max-w-md text-center md:text-left"
                         >
-                            <h3 className="flex flex-col text-6xl font-extrabold leading-snug text-primary-900">
+                            <h3 className="flex flex-col text-5xl font-extrabold leading-snug text-primary-900 sm:text-6xl">
                                 Stay{" "}
                                 <span className="italic text-primary-500">
                                     In Control
@@ -112,7 +113,7 @@ function FeaturesSection() {
                                 alt=""
                                 className="absolute -top-10 left-1/2 h-64 w-64 -translate-x-1/2 opacity-20 md:left-0 md:translate-x-0"
                             />
-                            <p className="mt-8 text-xl text-gray-600">
+                            <p className="mt-6 text-lg text-gray-600 sm:text-xl">
                                 Control who has access to your garage, automate
                                 entry & reduce security risks.
                             </p>
@@ -135,7 +136,8 @@ function FeaturesSection() {
                                 }}
                                 src="/feature-2.png"
                                 alt="Feature 2 Screenshot"
-                                className="h-auto w-[650px] rounded-lg shadow-lg"
+                                className="h-auto w-full max-w-[650px] rounded-xl shadow-xl"
+                                loading="lazy"
                             />
                         </motion.div>
                     </motion.div>
@@ -156,7 +158,7 @@ function FeaturesSection() {
                             viewport={{ once: true }}
                             className="relative max-w-md text-center md:text-left"
                         >
-                            <h3 className="flex flex-col text-6xl font-extrabold leading-snug text-primary-900">
+                            <h3 className="flex flex-col text-5xl font-extrabold leading-snug text-primary-900 sm:text-6xl">
                                 Stay{" "}
                                 <span className="italic text-primary-500">
                                     Vigilant
@@ -171,7 +173,7 @@ function FeaturesSection() {
                                 alt=""
                                 className="absolute -top-10 left-1/2 h-32 w-32 -translate-x-1/2 opacity-20 md:left-0 md:translate-x-0"
                             />
-                            <p className="mt-8 text-xl text-gray-600">
+                            <p className="mt-6 text-lg text-gray-600 sm:text-xl">
                                 Using the live stream feature, keep an eye on
                                 the garage gate 24/7, with the ability to add
                                 other cameras.
@@ -195,7 +197,8 @@ function FeaturesSection() {
                                 }}
                                 src="/feature-3.png"
                                 alt="Feature 3 Screenshot"
-                                className="h-auto w-[650x] rounded-lg shadow-lg"
+                                className="h-auto w-full max-w-[650px] rounded-xl shadow-xl"
+                                loading="lazy"
                             />
                         </motion.div>
                     </motion.div>
