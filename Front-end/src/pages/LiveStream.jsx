@@ -1,199 +1,36 @@
 import { useState } from "react";
-import CameraStreamBox from "../features/StreamLive/CameraStreamBox";
+import { useAdmin } from "../features/auth/useAdmin";
+import { useCameras } from "../features/LiveStream/useCameras";
+import CameraStreamBox from "../features/LiveStream/CameraStreamBox";
+import AddCameraModal from "../features/LiveStream/AddCameraModal";
+import LiveStreamHeader from "../features/LiveStream/LiveStreamHeader";
 
 function LiveStream() {
-    const initialCameras = [
-        {
-            id: 1,
-            title: "Demo Cam 1: Street View",
-            src: "http://52.158.32.174:5000/video_feed",
-        },
-        {
-            id: 2,
-            title: "Demo Cam 2: MJPEG Stream",
-            src: "/public/WhatsApp Video 2025-04-22 at 10.43.40 AM.mp4",
-        },
-    ];
-
-    const [cameras, setCameras] = useState(initialCameras);
+    const { admin } = useAdmin();
+    const garageId = admin?.garage?.id;
+    const { cameras } = useCameras(garageId);
     const [AddCamera, setAddCamera] = useState(false);
-    const [newCamera, setNewCamera] = useState({
-        title: "",
-        src: "",
-    });
-
-    const getFormattedDate = (date) => {
-        const d = new Date(date);
-        const day = d.getDate();
-        const suffix =
-            day > 3 && day < 21
-                ? "th"
-                : ["st", "nd", "rd"][(day % 10) - 1] || "th";
-        return `${day}${suffix} ${d.toLocaleString("en-GB", { month: "long" })}, ${d.getFullYear()}`;
-    };
-
-    const formatted = getFormattedDate(Date.now());
-    const timeNow = new Date()
-        .toLocaleTimeString("en-US", {
-            hour: "numeric",
-            minute: "2-digit",
-            hour12: true,
-        })
-        .toLowerCase();
-
-    const handleAddCamera = () => {
-        setCameras([
-            ...cameras,
-            {
-                id: cameras.length + 1,
-                ...newCamera,
-            },
-        ]);
-        setNewCamera({ title: "", src: "", muted: false });
-        setAddCamera(false);
-    };
-
-    const handleInputChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setNewCamera({
-            ...newCamera,
-            [name]: type === "checkbox" ? checked : value,
-        });
-    };
 
     return (
-        <div className="flex h-full flex-col gap-4 bg-primary-50 p-10 transition-colors duration-300 dark:bg-gray-900">
-            <header className="flex flex-row justify-between">
-                <div>
-                    <h1 className="text-2xl font-bold capitalize text-primary-900 dark:text-primary-100">
-                        {formatted}
-                    </h1>
-                    <h1 className="text-2xl font-bold capitalize text-primary-900 dark:text-primary-100">
-                        {timeNow}
-                    </h1>
-                </div>
-
-                <button
-                    className="group flex h-10 w-[201px] cursor-pointer items-center justify-center gap-2 rounded-full bg-primary-600 px-3 py-2 transition-all duration-300 hover:bg-primary-400 dark:bg-primary-700 dark:hover:bg-primary-600"
-                    onClick={() => setAddCamera(true)}
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        className="group-hover:animate-[slope_1s_linear_infinite]"
-                    >
-                        <path
-                            d="M16 10L23 7V17L16 14"
-                            stroke="white"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        />
-                        <rect
-                            x="2"
-                            y="6"
-                            width="14"
-                            height="12"
-                            rx="2"
-                            stroke="white"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                        />
-                    </svg>
-                    <span className="font-sans text-[17px] leading-[22px] tracking-wider text-white">
-                        Add Camera
-                    </span>
-                </button>
-            </header>
-
-            <p className="text-base text-primary-900/50 dark:text-primary-100/60">
+        <div className="flex h-full flex-col bg-primary-50 p-10 transition-colors duration-300 dark:bg-gray-900">
+            <LiveStreamHeader onAddCamera={() => setAddCamera(true)} />
+            <p className="mb-2 text-base text-primary-900/50 dark:text-primary-100/60">
                 Here you can view and manage recent car entries.
             </p>
-
             <div className="grid grid-cols-2 gap-4">
-                {cameras.map((camera) => (
+                {cameras?.map((camera) => (
                     <CameraStreamBox
-                        key={camera.id}
-                        cameraTitle={camera.title}
-                        cameraSrc={camera.src}
-                        muted={camera.muted}
+                        key={camera._id}
+                        cameraIP={camera.cameraIP}
+                        cameraName={camera.cameraName}
                     />
                 ))}
             </div>
-
-            {AddCamera && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-                    <div className="w-96 rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
-                        <h2 className="mb-4 text-xl font-bold dark:text-primary-100">
-                            Add New Camera
-                        </h2>
-
-                        <div className="mb-4">
-                            <label className="mb-2 block text-sm font-medium dark:text-primary-100">
-                                Camera Title
-                            </label>
-                            <input
-                                type="text"
-                                name="title"
-                                className="w-full rounded border border-gray-300 p-2 dark:border-gray-700 dark:bg-gray-900 dark:text-primary-100"
-                                value={newCamera.title}
-                                onChange={handleInputChange}
-                                placeholder="e.g. Cam 3: Entrance"
-                            />
-                        </div>
-
-                        <div className="mb-4">
-                            <label className="mb-2 block text-sm font-medium dark:text-primary-100">
-                                Video Source
-                            </label>
-                            <input
-                                type="text"
-                                name="src"
-                                className="w-full rounded border border-gray-300 p-2 dark:border-gray-700 dark:bg-gray-900 dark:text-primary-100"
-                                value={newCamera.src}
-                                onChange={handleInputChange}
-                                placeholder="Path to video file"
-                            />
-                        </div>
-
-                        <div className="mb-4 flex items-center">
-                            <input
-                                type="checkbox"
-                                id="muted"
-                                name="muted"
-                                checked={newCamera.muted}
-                                onChange={handleInputChange}
-                                className="mr-2"
-                            />
-                            <label
-                                htmlFor="muted"
-                                className="text-sm font-medium dark:text-primary-100"
-                            >
-                                Muted
-                            </label>
-                        </div>
-
-                        <div className="flex justify-end gap-2">
-                            <button
-                                className="rounded bg-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-400 dark:bg-gray-600 dark:text-gray-100 dark:hover:bg-gray-700"
-                                onClick={() => setAddCamera(false)}
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                className="rounded bg-primary-600 px-4 py-2 text-white hover:bg-primary-500 dark:bg-primary-700 dark:hover:bg-primary-600"
-                                onClick={handleAddCamera}
-                                disabled={!newCamera.title || !newCamera.src}
-                            >
-                                Add Camera
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+            {/* Modal for adding a camera */}
+            <AddCameraModal
+                open={AddCamera}
+                onClose={() => setAddCamera(false)}
+            />
         </div>
     );
 }
