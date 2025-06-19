@@ -153,13 +153,13 @@ function AdminsTable() {
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
                     <div
                         ref={modalRef}
-                        className="relative w-full max-w-2xl animate-fadeSlideUp overflow-hidden rounded-lg bg-primary-50 p-8 shadow-lg transition-all duration-500"
+                        className="relative w-full max-w-2xl animate-fadeSlideUp overflow-hidden rounded-lg bg-primary-50 p-8 shadow-lg transition-all duration-500 dark:bg-gray-800"
                         role="dialog"
                         aria-modal="true"
                     >
                         <button
                             onClick={handleCloseEditModal}
-                            className="absolute right-4 top-4 text-2xl text-primary-700 hover:text-primary-900"
+                            className="absolute right-4 top-4 text-2xl text-primary-700 hover:text-primary-900 dark:text-primary-100 dark:hover:text-primary-300"
                             aria-label="Close edit modal"
                         >
                             &times;
@@ -189,11 +189,11 @@ function AdminsTable() {
                         placeholder="Search admins (name, email, phone, ID)..."
                         value={searchGeneral}
                         onChange={handleSearch}
-                        className="grow rounded border border-primary-300 px-3 py-2 text-primary-900 placeholder:text-primary-400 focus:outline-none"
+                        className="grow rounded border border-primary-300 px-3 py-2 text-primary-900 placeholder:text-primary-400 focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-primary-100 dark:placeholder:text-primary-200"
                     />
                 </div>
 
-                <table className="w-full table-auto border-collapse text-left shadow-md">
+                <table className="w-full table-auto border-collapse bg-white text-left shadow-md transition-colors duration-300 dark:bg-gray-800">
                     <AdminsTableHeader onSort={handleSort} />
                     <tbody>
                         {paginatedAdmins?.map((admin, index) => (

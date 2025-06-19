@@ -95,14 +95,14 @@ function EditUserForm({ user, onClose }) {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            <h2 className="mb-2 font-semibold text-slate-700">
+            <h2 className="mb-2 font-semibold text-slate-700 dark:text-primary-100">
                 Edit User Information
             </h2>
             <div className="grid grid-cols-1 gap-4">
                 <div className="grid grid-cols-2 gap-4">
                     <div className="w-full">
                         <input
-                            className="w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3"
+                            className="w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3 dark:border-gray-700 dark:bg-gray-800 dark:text-primary-100"
                             placeholder="Full Name"
                             type="text"
                             {...register("fullName", {
@@ -117,7 +117,7 @@ function EditUserForm({ user, onClose }) {
                     </div>
                     <div className="w-full">
                         <input
-                            className="w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3"
+                            className="w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3 dark:border-gray-700 dark:bg-gray-800 dark:text-primary-100"
                             placeholder="Phone Number"
                             type="text"
                             {...register("phoneNumber", {
@@ -137,7 +137,7 @@ function EditUserForm({ user, onClose }) {
                 </div>
                 <div>
                     <input
-                        className="w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3"
+                        className="w-full rounded-md border border-slate-200 bg-slate-100 px-4 py-3 dark:border-gray-700 dark:bg-gray-800 dark:text-primary-100"
                         placeholder="National/Corporate ID"
                         {...register("nationalId", {
                             required: "National ID is required",
@@ -156,7 +156,7 @@ function EditUserForm({ user, onClose }) {
             </div>
 
             <div>
-                <h2 className="mb-2 font-semibold text-slate-700">
+                <h2 className="mb-2 font-semibold text-slate-700 dark:text-primary-100">
                     Car Information
                 </h2>
                 <div className="flex flex-wrap gap-2">
@@ -168,7 +168,7 @@ function EditUserForm({ user, onClose }) {
                             render={({ field }) => (
                                 <select
                                     {...field}
-                                    className="rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none"
+                                    className="rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-primary-100"
                                 >
                                     <option value="">-</option>
                                     {Array.from(
@@ -182,7 +182,7 @@ function EditUserForm({ user, onClose }) {
                             )}
                         />
                     ))}
-                    <div className="h-12 w-px bg-gray-400"></div>
+                    <div className="h-12 w-px bg-gray-400 dark:bg-gray-700"></div>
                     {Array.from({ length: 3 }).map((_, i) => (
                         <Controller
                             key={`ltr-${i}`}
@@ -191,7 +191,7 @@ function EditUserForm({ user, onClose }) {
                             render={({ field }) => (
                                 <select
                                     {...field}
-                                    className="rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none"
+                                    className="rounded-md border border-slate-200 bg-slate-100 px-4 py-3 outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-primary-100"
                                 >
                                     <option value="">-</option>
                                     {Array.from(
@@ -217,7 +217,7 @@ function EditUserForm({ user, onClose }) {
                         .filter(Boolean)
                         .join("-")}
                 />
-                <p className="mt-1 text-xs text-slate-500">
+                <p className="mt-1 text-xs text-slate-500 dark:text-primary-200">
                     This is how the plate will look like
                 </p>
             </div>
@@ -225,7 +225,7 @@ function EditUserForm({ user, onClose }) {
             <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-full rounded-md bg-primary-700 px-4 py-3 font-medium text-white transition-all duration-300 hover:bg-primary-500 focus:ring-4 focus:ring-blue-200 ${
+                className={`w-full rounded-md bg-primary-700 px-4 py-3 font-medium text-white transition-all duration-300 hover:bg-primary-500 focus:ring-4 focus:ring-blue-200 dark:bg-primary-800 dark:text-primary-100 dark:hover:bg-primary-600 dark:focus:ring-primary-900 ${
                     isSubmitting ? "animate-pulse" : ""
                 }`}
             >
@@ -235,7 +235,7 @@ function EditUserForm({ user, onClose }) {
             <div className="mt-2 flex gap-4">
                 <button
                     type="button"
-                    className="flex-1 rounded-md border border-primary-300 bg-white px-4 py-3 font-medium text-primary-700 transition hover:bg-primary-100"
+                    className="flex-1 rounded-md border border-primary-300 bg-white px-4 py-3 font-medium text-primary-700 transition hover:bg-primary-100 dark:border-gray-700 dark:bg-gray-800 dark:text-primary-100 dark:hover:bg-primary-700"
                     onClick={() => {
                         const { numbers, letters } = processLicensePlate(
                             user?.carPlate,
@@ -253,7 +253,7 @@ function EditUserForm({ user, onClose }) {
                 </button>
                 <button
                     type="button"
-                    className="flex-1 rounded-md border border-red-300 bg-white px-4 py-3 font-medium text-red-700 transition hover:bg-red-100"
+                    className="flex-1 rounded-md border border-red-300 bg-white px-4 py-3 font-medium text-red-700 transition hover:bg-red-100 dark:border-gray-700 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-red-700"
                     onClick={onClose}
                 >
                     Close

@@ -3,7 +3,7 @@ import { ArrowDownUp } from "lucide-react";
 function UsersTableHeader({ onSort, sortConfig }) {
     return (
         <thead>
-            <tr className="bg-primary-100 font-medium text-primary-900">
+            <tr className="bg-primary-100 font-medium text-primary-900 dark:bg-gray-800 dark:text-primary-100">
                 <th className="px-3 py-5" scope="col">
                     Plate Number
                     <button

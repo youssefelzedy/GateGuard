@@ -23,16 +23,15 @@ const countVariants = {
 export default function NumberOfCars() {
     return (
         <motion.div
-            className="rounded-lg bg-white shadow-sm"
+            className="rounded-lg bg-white shadow-sm transition-colors duration-300 dark:bg-gray-800"
             initial="hidden"
             animate="visible"
             variants={containerVariants}
         >
-            <div className="flex items-center justify-between rounded-t-lg bg-primary-50 px-4 py-3">
-                <h3 className="text-lg font-semibold text-primary-900">
+            <div className="flex items-center justify-between rounded-t-lg bg-primary-50 px-4 py-3 dark:bg-primary-900">
+                <h3 className="text-lg font-semibold text-primary-900 dark:text-primary-100">
                     Number of Cars
                 </h3>
-                <EllipsisVerticalIcon className="h-5 w-5 text-primary-500" />
             </div>
             <div className="p-4 text-center">
                 <div className="mb-3 flex items-center justify-center gap-3">
@@ -47,7 +46,7 @@ export default function NumberOfCars() {
                         <TruckIcon className="h-7 w-7 text-primary-500" />
                     </motion.div>
                     <motion.p
-                        className="text-4xl font-bold text-primary-900"
+                        className="text-4xl font-bold text-primary-900 dark:text-primary-100"
                         variants={countVariants}
                     >
                         20 cars
