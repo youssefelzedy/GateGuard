@@ -8,17 +8,17 @@ function TablePagination({ currentPage, totalPages, onPrevPage, onNextPage }) {
             <button
                 onClick={onPrevPage}
                 disabled={currentPage === 1}
-                className="rounded bg-primary-700 p-2 text-white disabled:opacity-50"
+                className="rounded bg-primary-700 p-2 text-white disabled:opacity-50 dark:text-primary-100"
             >
                 <SquareArrowLeft />
             </button>
-            <span className="font-semibold">
+            <span className="font-semibold dark:text-primary-100">
                 Page {currentPage} of {totalPages}
             </span>
             <button
                 onClick={onNextPage}
                 disabled={currentPage === totalPages}
-                className="rounded bg-primary-700 p-2 text-white disabled:opacity-50"
+                className="rounded bg-primary-700 p-2 text-white disabled:opacity-50 dark:text-primary-100"
             >
                 <SquareArrowRight />
             </button>

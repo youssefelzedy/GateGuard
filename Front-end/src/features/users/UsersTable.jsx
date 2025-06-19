@@ -166,7 +166,7 @@ function UsersTable() {
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
                     <div
                         ref={modalRef}
-                        className="relative w-full max-w-2xl animate-fadeSlideUp overflow-hidden rounded-lg bg-primary-50 p-8 shadow-lg transition-all duration-500"
+                        className="relative w-full max-w-2xl animate-fadeSlideUp overflow-hidden rounded-lg bg-primary-50 p-8 shadow-lg transition-all duration-500 dark:bg-gray-900"
                         role="dialog"
                         aria-modal="true"
                     >
@@ -203,19 +203,19 @@ function UsersTable() {
                         placeholder="Search users (name, email, phone, ID)..."
                         value={searchGeneral}
                         onChange={handleSearchGeneral}
-                        className="grow rounded border border-primary-300 px-3 py-2 text-primary-900 placeholder:text-primary-400 focus:outline-none"
+                        className="grow rounded border border-primary-300 px-3 py-2 text-primary-900 placeholder:text-primary-400 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-primary-100 dark:placeholder:text-primary-200"
                     />
                     <input
                         type="text"
                         placeholder="Search car plate..."
                         value={searchPlate}
                         onChange={handleSearchPlate}
-                        className="rounded border border-primary-300 px-3 py-2 text-primary-900 placeholder:text-primary-400 focus:outline-none"
+                        className="rounded border border-primary-300 px-3 py-2 text-primary-900 placeholder:text-primary-400 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-primary-100 dark:placeholder:text-primary-200"
                     />
                 </div>
 
                 {/* Table */}
-                <table className="w-full table-auto border-collapse text-left">
+                <table className="w-full table-auto border-collapse bg-white text-left dark:bg-gray-800">
                     <UsersTableHeader
                         onSort={handleSort}
                         sortConfig={sortConfig}
@@ -225,7 +225,7 @@ function UsersTable() {
                             <tr>
                                 <td
                                     colSpan={6}
-                                    className="p-6 text-center text-primary-400"
+                                    className="p-6 text-center text-primary-400 dark:text-primary-500"
                                 >
                                     No users found.
                                 </td>
