@@ -11,7 +11,7 @@ const cameraController = {
   // Create a new camera
   createCamera: expressAsyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const { cameraIP } = req.body;
+      const { cameraIP, cameraName } = req.body;
 
       if (!cameraIP) {
         return next(new AppError('Camera IP is required', 400));
@@ -29,6 +29,7 @@ const cameraController = {
       // Create new camera
       const camera = await Camera.create({
         cameraIP,
+        cameraName,
         garage: garageId,
         cameraStatus: 'active',
       });
@@ -82,10 +83,7 @@ const cameraController = {
       }
 
       // Check if camera belongs to user's garage
-      if (
-        req.user &&
-        camera.garage.toString() !== req.user.garage.toString()
-      ) {
+      if (req.user && camera.garage.toString() !== req.user.garage.toString()) {
         return next(
           new AppError('You do not have permission to access this camera', 403),
         );
