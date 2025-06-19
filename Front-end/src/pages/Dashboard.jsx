@@ -34,7 +34,7 @@ const containerVariants = {
 
 function Dashboard() {
     return (
-        <div className="grid min-h-screen grid-cols-[3fr_1fr] gap-6 bg-[#f3f4f6] p-6">
+        <div className="grid min-h-screen grid-cols-[3fr_1fr] gap-6 bg-primary-100 p-6 transition-colors duration-300 dark:bg-gray-900">
             <motion.div
                 className="flex flex-col gap-6"
                 initial="hidden"

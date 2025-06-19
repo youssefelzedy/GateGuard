@@ -4,8 +4,6 @@ import { FullscreenIcon, Volume2Icon, VolumeXIcon } from "lucide-react";
 const CameraStreamBox = ({ cameraTitle, cameraSrc }) => {
     const videoRef = useRef(null);
     const containerRef = useRef(null);
-    const [isMuted, setIsMuted] = useState(true);
-    const [hasAudio, setHasAudio] = useState(false);
     const [streamType, setStreamType] = useState(null);
     const [error, setError] = useState(null);
     const [isFullscreen, setIsFullscreen] = useState(false);
@@ -87,22 +85,6 @@ const CameraStreamBox = ({ cameraTitle, cameraSrc }) => {
     }, [cameraSrc]);
 
     useEffect(() => {
-        if (streamType === "video" && videoRef.current) {
-            const videoElement = videoRef.current;
-            const checkAudio = () => {
-                setHasAudio(
-                    videoElement.mozHasAudio ||
-                        Boolean(videoElement.webkitAudioDecodedByteCount) ||
-                        false,
-                );
-            };
-            videoElement.addEventListener("loadedmetadata", checkAudio);
-            return () =>
-                videoElement.removeEventListener("loadedmetadata", checkAudio);
-        }
-    }, [streamType]);
-
-    useEffect(() => {
         const handleFullscreenChange = () => {
             setIsFullscreen(!!document.fullscreenElement);
         };
@@ -113,17 +95,6 @@ const CameraStreamBox = ({ cameraTitle, cameraSrc }) => {
                 handleFullscreenChange,
             );
     }, []);
-
-    const toggleMute = () => {
-        if (!videoRef.current || streamType !== "video") return;
-        try {
-            videoRef.current.muted = !videoRef.current.muted;
-            setIsMuted(videoRef.current.muted);
-        } catch (err) {
-            setError("Failed to toggle mute.");
-            console.error("Error toggling mute:", err);
-        }
-    };
 
     const toggleFullscreen = async () => {
         if (!containerRef.current) return;
@@ -153,8 +124,11 @@ const CameraStreamBox = ({ cameraTitle, cameraSrc }) => {
     );
 
     return (
-        <div className="font-poppins overflow-hidden rounded-xl border bg-white shadow-md">
-            <div ref={containerRef} className="relative h-64 w-full bg-black">
+        <div className="font-poppins overflow-hidden rounded-xl border bg-white shadow-md dark:border-gray-700 dark:bg-gray-800">
+            <div
+                ref={containerRef}
+                className="relative h-[400px] w-full bg-black dark:bg-gray-900"
+            >
                 {streamType === "video" && (
                     <video
                         ref={videoRef}
@@ -175,41 +149,21 @@ const CameraStreamBox = ({ cameraTitle, cameraSrc }) => {
                     />
                 )}
                 {(streamType === "unsupported" || error) && (
-                    <div className="flex h-full w-full items-center justify-center p-4 text-center text-white">
+                    <div className="flex h-full w-full items-center justify-center p-4 text-center text-white dark:text-primary-100">
                         <p>{error || "Stream not supported."}</p>
                     </div>
                 )}
                 {(streamType === "video" || streamType === "mjpeg") &&
                     !error && (
                         <div className="absolute bottom-3 right-3 flex gap-2">
-                            {streamType === "video" && (
-                                <VideoControlButton
-                                    onClick={toggleMute}
-                                    icon={
-                                        isMuted ? (
-                                            <VolumeXIcon className="h-5 w-5 text-gray-800" />
-                                        ) : (
-                                            <Volume2Icon className="h-5 w-5 text-gray-800" />
-                                        )
-                                    }
-                                    disabled={!hasAudio}
-                                    tooltip={
-                                        hasAudio
-                                            ? isMuted
-                                                ? "Unmute"
-                                                : "Mute"
-                                            : "No audio available"
-                                    }
-                                />
-                            )}
                             <VideoControlButton
                                 onClick={toggleFullscreen}
                                 icon={
                                     <FullscreenIcon
                                         className={`h-5 w-5 transition-colors ${
                                             isFullscreen
-                                                ? "text-blue-500"
-                                                : "text-gray-800"
+                                                ? "text-blue-500 dark:text-blue-400"
+                                                : "text-gray-800 dark:text-primary-100"
                                         }`}
                                     />
                                 }
@@ -222,7 +176,7 @@ const CameraStreamBox = ({ cameraTitle, cameraSrc }) => {
                         </div>
                     )}
             </div>
-            <div className="p-3 text-sm font-medium text-slate-800">
+            <div className="p-3 text-sm font-medium text-slate-800 dark:text-primary-100">
                 {cameraTitle}
             </div>
         </div>

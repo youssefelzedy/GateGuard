@@ -2,7 +2,20 @@ import { useState } from "react";
 import CameraStreamBox from "../features/StreamLive/CameraStreamBox";
 
 function LiveStream() {
-    const initialCameras = [];
+    const initialCameras = [
+        {
+            id: 1,
+            title: "Demo Cam 1: Street View",
+            src: "/public/WhatsApp Video 2025-04-22 at 10.52.00 AM.mp4",
+            muted: true,
+        },
+        {
+            id: 2,
+            title: "Demo Cam 2: MJPEG Stream",
+            src: "/public/WhatsApp Video 2025-04-22 at 10.43.40 AM.mp4",
+            muted: true,
+        },
+    ];
 
     const [cameras, setCameras] = useState(initialCameras);
     const [AddCamera, setAddCamera] = useState(false);
@@ -52,19 +65,19 @@ function LiveStream() {
     };
 
     return (
-        <div className="flex h-full flex-col gap-4 bg-primary-50 p-10">
+        <div className="flex h-full flex-col gap-4 bg-primary-50 p-10 transition-colors duration-300 dark:bg-gray-900">
             <header className="flex flex-row justify-between">
                 <div>
-                    <h1 className="text-2xl font-bold capitalize text-primary-900">
+                    <h1 className="text-2xl font-bold capitalize text-primary-900 dark:text-primary-100">
                         {formatted}
                     </h1>
-                    <h1 className="text-2xl font-bold capitalize text-primary-900">
+                    <h1 className="text-2xl font-bold capitalize text-primary-900 dark:text-primary-100">
                         {timeNow}
                     </h1>
                 </div>
 
                 <button
-                    className="group flex h-10 w-[201px] cursor-pointer items-center justify-center gap-2 rounded-full bg-primary-600 px-3 py-2 transition-all duration-300 hover:bg-primary-400"
+                    className="group flex h-10 w-[201px] cursor-pointer items-center justify-center gap-2 rounded-full bg-primary-600 px-3 py-2 transition-all duration-300 hover:bg-primary-400 dark:bg-primary-700 dark:hover:bg-primary-600"
                     onClick={() => setAddCamera(true)}
                 >
                     <svg
@@ -99,7 +112,7 @@ function LiveStream() {
                 </button>
             </header>
 
-            <p className="text-base text-primary-900/50">
+            <p className="text-base text-primary-900/50 dark:text-primary-100/60">
                 Here you can view and manage recent car entries.
             </p>
 
@@ -116,19 +129,19 @@ function LiveStream() {
 
             {AddCamera && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-                    <div className="w-96 rounded-lg bg-white p-6 shadow-lg">
-                        <h2 className="mb-4 text-xl font-bold">
+                    <div className="w-96 rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
+                        <h2 className="mb-4 text-xl font-bold dark:text-primary-100">
                             Add New Camera
                         </h2>
 
                         <div className="mb-4">
-                            <label className="mb-2 block text-sm font-medium">
+                            <label className="mb-2 block text-sm font-medium dark:text-primary-100">
                                 Camera Title
                             </label>
                             <input
                                 type="text"
                                 name="title"
-                                className="w-full rounded border border-gray-300 p-2"
+                                className="w-full rounded border border-gray-300 p-2 dark:border-gray-700 dark:bg-gray-900 dark:text-primary-100"
                                 value={newCamera.title}
                                 onChange={handleInputChange}
                                 placeholder="e.g. Cam 3: Entrance"
@@ -136,13 +149,13 @@ function LiveStream() {
                         </div>
 
                         <div className="mb-4">
-                            <label className="mb-2 block text-sm font-medium">
+                            <label className="mb-2 block text-sm font-medium dark:text-primary-100">
                                 Video Source
                             </label>
                             <input
                                 type="text"
                                 name="src"
-                                className="w-full rounded border border-gray-300 p-2"
+                                className="w-full rounded border border-gray-300 p-2 dark:border-gray-700 dark:bg-gray-900 dark:text-primary-100"
                                 value={newCamera.src}
                                 onChange={handleInputChange}
                                 placeholder="Path to video file"
@@ -160,7 +173,7 @@ function LiveStream() {
                             />
                             <label
                                 htmlFor="muted"
-                                className="text-sm font-medium"
+                                className="text-sm font-medium dark:text-primary-100"
                             >
                                 Muted
                             </label>
@@ -168,13 +181,13 @@ function LiveStream() {
 
                         <div className="flex justify-end gap-2">
                             <button
-                                className="rounded bg-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-400"
+                                className="rounded bg-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-400 dark:bg-gray-600 dark:text-gray-100 dark:hover:bg-gray-700"
                                 onClick={() => setAddCamera(false)}
                             >
                                 Cancel
                             </button>
                             <button
-                                className="rounded bg-primary-600 px-4 py-2 text-white hover:bg-primary-500"
+                                className="rounded bg-primary-600 px-4 py-2 text-white hover:bg-primary-500 dark:bg-primary-700 dark:hover:bg-primary-600"
                                 onClick={handleAddCamera}
                                 disabled={!newCamera.title || !newCamera.src}
                             >

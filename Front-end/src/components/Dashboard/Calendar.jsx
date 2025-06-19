@@ -53,11 +53,11 @@ export default function Calendar() {
     });
 
     return (
-        <div className="rounded-lg bg-white shadow-sm">
-            <div className="flex items-center justify-between rounded-t-lg bg-primary-50 px-4 py-3">
+        <div className="rounded-lg bg-white shadow-sm transition-colors duration-300 dark:bg-gray-800">
+            <div className="flex items-center justify-between rounded-t-lg bg-primary-50 px-4 py-3 dark:bg-primary-900">
                 <div className="flex items-center gap-2">
                     <CalendarIcon className="h-5 w-5 text-primary-500" />
-                    <h3 className="text-lg font-semibold text-primary-900">
+                    <h3 className="text-lg font-semibold text-primary-900 dark:text-primary-100">
                         {currentMonthName}
                     </h3>
                 </div>
@@ -68,7 +68,7 @@ export default function Calendar() {
                     {["M", "T", "W", "T", "F", "S", "S"].map((day, index) => (
                         <div
                             key={index}
-                            className="text-sm font-medium text-primary-600"
+                            className="text-sm font-medium text-primary-600 dark:text-primary-300"
                         >
                             {day}
                         </div>
@@ -82,9 +82,9 @@ export default function Calendar() {
                             variants={dayVariants}
                             className={`flex h-9 w-9 items-center justify-center rounded-full text-sm transition-all duration-300 ${
                                 day === today.getDate()
-                                    ? "bg-primary-600 text-white shadow-lg ring-2 ring-primary-200"
+                                    ? "bg-primary-600 text-white shadow-lg ring-2 ring-primary-200 dark:bg-primary-700 dark:ring-primary-700"
                                     : day
-                                      ? "text-primary-900 hover:bg-primary-50"
+                                      ? "text-primary-900 hover:bg-primary-50 dark:text-primary-100 dark:hover:bg-primary-900"
                                       : "text-transparent"
                             }`}
                         >

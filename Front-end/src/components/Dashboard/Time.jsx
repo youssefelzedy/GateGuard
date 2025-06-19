@@ -33,13 +33,13 @@ export default function Time() {
 
     return (
         <motion.div
-            className="rounded-lg bg-white shadow-md transition-shadow duration-500 hover:shadow-xl"
+            className="rounded-lg bg-white shadow-md transition-colors duration-300 hover:shadow-xl dark:bg-gray-800"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
         >
             <motion.div
-                className="flex items-center justify-between rounded-t-lg bg-primary-50 px-4 py-3"
+                className="flex items-center justify-between rounded-t-lg bg-primary-50 px-4 py-3 dark:bg-primary-900"
                 initial={{ y: -10, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
@@ -51,7 +51,7 @@ export default function Time() {
                     transition={{ duration: 0.3, ease: "easeOut" }}
                 >
                     <motion.h3
-                        className="text-lg font-semibold text-primary-900"
+                        className="text-lg font-semibold text-primary-900 dark:text-primary-100"
                         initial={{ x: -10, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ duration: 0.3, ease: "easeOut" }}
@@ -84,7 +84,7 @@ export default function Time() {
                     >
                         <ClockIcon className="h-6 w-6 text-primary-500" />
                         <motion.p
-                            className="text-4xl font-bold text-primary-900"
+                            className="text-4xl font-bold text-primary-900 dark:text-primary-100"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ duration: 0.3 }}
