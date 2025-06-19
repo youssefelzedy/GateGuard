@@ -113,7 +113,7 @@ adminSchema.methods.createPasswordResetToken = function (this: IAdmin): string {
 };
 
 adminSchema.pre(/^find/, function (next) {
-  this.populate({ path: 'garage', select: 'garageName' });
+  this.populate({ path: 'garage', select: 'garageName location' });
   next();
 });
 

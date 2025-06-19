@@ -62,13 +62,13 @@ const adminController = {
 
   getAdmin: expressAsyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const user: IAdmin | null = await Admin.findById(req.params.id);
-      if (!user) return next(new AppError('Admin not found', 404));
+      const admin: IAdmin | null = await Admin.findById(req.params.id);
+      if (!admin) return next(new AppError('Admin not found', 404));
 
       res.status(200).json({
         status: 'success',
         data: {
-          user,
+          admin,
         },
       });
     },
@@ -136,7 +136,7 @@ const adminController = {
       const user: IUser | null = await User.findById(req.params.id);
       if (!user) return next(new AppError('User not found', 404));
       // console.log(user.garage, req.user!.garage);
-      
+
       // if (user.garage.toString() !== req.user!.garage.toString()) {
       //   return next(
       //     new AppError('You can only delete users from your garage', 403),
