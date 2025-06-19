@@ -81,24 +81,24 @@ function Profile() {
 
     return (
         <motion.div
-            className="min-h-screen bg-primary-50 p-6"
+            className="min-h-screen bg-primary-50 p-6 transition-colors duration-300 dark:bg-gray-900"
             initial="hidden"
             animate="visible"
             variants={containerVariants}
         >
             <div className="mx-auto max-w-6xl">
                 <motion.div variants={itemVariants}>
-                    <h1 className="mb-8 text-3xl font-bold text-primary-900">
+                    <h1 className="mb-8 text-3xl font-bold text-primary-900 dark:text-primary-100">
                         Profile Settings
                     </h1>
                 </motion.div>
 
                 <motion.div
                     variants={itemVariants}
-                    className="rounded-xl bg-white p-6 shadow-sm"
+                    className="rounded-xl bg-white p-6 shadow-sm dark:bg-gray-800"
                 >
                     <div className="mb-6 flex items-center justify-between">
-                        <h2 className="text-xl font-semibold text-primary-900">
+                        <h2 className="text-xl font-semibold text-primary-900 dark:text-primary-100">
                             Personal Information
                         </h2>
                         <button
@@ -126,7 +126,7 @@ function Profile() {
                                     className="w-full"
                                     disabled={!isEditing}
                                 >
-                                    <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-primary-100">
+                                    <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-primary-100 dark:bg-gray-900">
                                         <img
                                             src={
                                                 formData.image || "default.jpg"
@@ -152,7 +152,7 @@ function Profile() {
                                 <div className="mt-4">
                                     <label
                                         htmlFor="image"
-                                        className="mb-2 block text-sm font-medium text-primary-700"
+                                        className="mb-2 block text-sm font-medium text-primary-700 dark:text-primary-200"
                                     >
                                         Profile Image URL
                                     </label>
@@ -162,7 +162,7 @@ function Profile() {
                                         name="image"
                                         value={formData.image}
                                         onChange={handleChange}
-                                        className="block w-full rounded-md border border-primary-200 px-3 py-2 text-primary-900 placeholder-primary-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
+                                        className="block w-full rounded-md border border-primary-200 px-3 py-2 text-primary-900 placeholder-primary-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-gray-700 dark:bg-gray-900 dark:text-primary-100 dark:placeholder-primary-400"
                                         placeholder="Enter image URL"
                                     />
                                 </div>
@@ -174,7 +174,7 @@ function Profile() {
                             <div>
                                 <label
                                     htmlFor="name"
-                                    className="mb-2 block text-sm font-medium text-primary-700"
+                                    className="mb-2 block text-sm font-medium text-primary-700 dark:text-primary-200"
                                 >
                                     Full Name
                                 </label>
@@ -189,7 +189,7 @@ function Profile() {
                                         value={formData.name}
                                         onChange={handleChange}
                                         disabled={!isEditing}
-                                        className="block w-full rounded-md border border-primary-200 py-2 pl-10 pr-3 text-primary-900 placeholder-primary-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:bg-primary-50 disabled:text-primary-500"
+                                        className="block w-full rounded-md border border-primary-200 py-2 pl-10 pr-3 text-primary-900 placeholder-primary-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:bg-primary-50 disabled:text-primary-500 dark:border-gray-700 dark:bg-gray-900 dark:text-primary-100 dark:placeholder-primary-400 dark:disabled:bg-gray-800 dark:disabled:text-primary-500"
                                         placeholder="Enter your name"
                                     />
                                 </div>
@@ -198,7 +198,7 @@ function Profile() {
                             <div>
                                 <label
                                     htmlFor="email"
-                                    className="mb-2 block text-sm font-medium text-primary-700"
+                                    className="mb-2 block text-sm font-medium text-primary-700 dark:text-primary-200"
                                 >
                                     Email Address
                                 </label>
@@ -213,7 +213,7 @@ function Profile() {
                                         value={formData.email}
                                         onChange={handleChange}
                                         disabled={!isEditing}
-                                        className="block w-full rounded-md border border-primary-200 py-2 pl-10 pr-3 text-primary-900 placeholder-primary-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:bg-primary-50 disabled:text-primary-500"
+                                        className="block w-full rounded-md border border-primary-200 py-2 pl-10 pr-3 text-primary-900 placeholder-primary-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:bg-primary-50 disabled:text-primary-500 dark:border-gray-700 dark:bg-gray-900 dark:text-primary-100 dark:placeholder-primary-400 dark:disabled:bg-gray-800 dark:disabled:text-primary-500"
                                         placeholder="Enter your email"
                                     />
                                 </div>
@@ -222,7 +222,7 @@ function Profile() {
                             <div>
                                 <label
                                     htmlFor="phoneNumber"
-                                    className="mb-2 block text-sm font-medium text-primary-700"
+                                    className="mb-2 block text-sm font-medium text-primary-700 dark:text-primary-200"
                                 >
                                     Phone Number
                                 </label>
@@ -237,7 +237,7 @@ function Profile() {
                                         value={formData.phoneNumber}
                                         onChange={handleChange}
                                         disabled={!isEditing}
-                                        className="block w-full rounded-md border border-primary-200 py-2 pl-10 pr-3 text-primary-900 placeholder-primary-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:bg-primary-50 disabled:text-primary-500"
+                                        className="block w-full rounded-md border border-primary-200 py-2 pl-10 pr-3 text-primary-900 placeholder-primary-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:bg-primary-50 disabled:text-primary-500 dark:border-gray-700 dark:bg-gray-900 dark:text-primary-100 dark:placeholder-primary-400 dark:disabled:bg-gray-800 dark:disabled:text-primary-500"
                                         placeholder="Enter your phone number"
                                     />
                                 </div>
@@ -246,7 +246,7 @@ function Profile() {
                             <div>
                                 <label
                                     htmlFor="nationalSecurityNumber"
-                                    className="mb-2 block text-sm font-medium text-primary-700"
+                                    className="mb-2 block text-sm font-medium text-primary-700 dark:text-primary-200"
                                 >
                                     National Security Number
                                 </label>
@@ -261,7 +261,7 @@ function Profile() {
                                         value={formData.nationalSecurityNumber}
                                         onChange={handleChange}
                                         disabled={!isEditing}
-                                        className="block w-full rounded-md border border-primary-200 py-2 pl-10 pr-3 text-primary-900 placeholder-primary-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:bg-primary-50 disabled:text-primary-500"
+                                        className="block w-full rounded-md border border-primary-200 py-2 pl-10 pr-3 text-primary-900 placeholder-primary-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:bg-primary-50 disabled:text-primary-500 dark:border-gray-700 dark:bg-gray-900 dark:text-primary-100 dark:placeholder-primary-400 dark:disabled:bg-gray-800 dark:disabled:text-primary-500"
                                         placeholder="Enter your national security number"
                                     />
                                 </div>

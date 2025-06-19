@@ -61,24 +61,24 @@ function Settings() {
 
     return (
         <motion.div
-            className="min-h-screen bg-primary-50 p-6"
+            className="min-h-screen bg-primary-50 p-6 transition-colors duration-300 dark:bg-gray-900"
             initial="hidden"
             animate="visible"
             variants={containerVariants}
         >
             <div className="mx-auto max-w-6xl">
                 <motion.div variants={itemVariants}>
-                    <h1 className="mb-8 text-3xl font-bold text-primary-900">
+                    <h1 className="mb-8 text-3xl font-bold text-primary-900 dark:text-primary-100">
                         Settings
                     </h1>
                 </motion.div>
 
                 <motion.div
                     variants={itemVariants}
-                    className="rounded-xl bg-white p-6 shadow-sm"
+                    className="rounded-xl bg-white p-6 shadow-sm dark:bg-gray-800"
                 >
                     <div className="mb-6 flex items-center justify-between">
-                        <h2 className="text-xl font-semibold text-primary-900">
+                        <h2 className="text-xl font-semibold text-primary-900 dark:text-primary-100">
                             Garage Information
                         </h2>
                         <button
@@ -91,14 +91,14 @@ function Settings() {
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div>
-                            <h3 className="text-lg font-medium text-primary-900">
+                            <h3 className="text-lg font-medium text-primary-900 dark:text-primary-100">
                                 Basic Information
                             </h3>
                             <div className="mt-4 space-y-4">
                                 <div>
                                     <label
                                         htmlFor="name"
-                                        className="mb-2 block text-sm font-medium text-primary-700"
+                                        className="mb-2 block text-sm font-medium text-primary-700 dark:text-primary-200"
                                     >
                                         Garage Name
                                     </label>
@@ -115,7 +115,7 @@ function Settings() {
                                                 setGarageName(e.target.value)
                                             }
                                             disabled={!isEditing}
-                                            className="block w-full rounded-md border border-primary-200 py-2 pl-10 pr-3 text-primary-900 placeholder-primary-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:bg-primary-50 disabled:text-primary-500"
+                                            className="block w-full rounded-md border border-primary-200 py-2 pl-10 pr-3 text-primary-900 placeholder-primary-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:bg-primary-50 disabled:text-primary-500 dark:border-gray-700 dark:bg-gray-900 dark:text-primary-100 dark:placeholder-primary-400 dark:disabled:bg-gray-800 dark:disabled:text-primary-500"
                                             placeholder="Enter garage name"
                                         />
                                     </div>
@@ -123,7 +123,7 @@ function Settings() {
                                 <div>
                                     <label
                                         htmlFor="location"
-                                        className="mb-2 block text-sm font-medium text-primary-700"
+                                        className="mb-2 block text-sm font-medium text-primary-700 dark:text-primary-200"
                                     >
                                         Location
                                     </label>
@@ -142,7 +142,7 @@ function Settings() {
                                                 )
                                             }
                                             disabled={!isEditing}
-                                            className="block w-full rounded-md border border-primary-200 py-2 pl-10 pr-3 text-primary-900 placeholder-primary-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:bg-primary-50 disabled:text-primary-500"
+                                            className="block w-full rounded-md border border-primary-200 py-2 pl-10 pr-3 text-primary-900 placeholder-primary-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:bg-primary-50 disabled:text-primary-500 dark:border-gray-700 dark:bg-gray-900 dark:text-primary-100 dark:placeholder-primary-400 dark:disabled:bg-gray-800 dark:disabled:text-primary-500"
                                             placeholder="Enter garage location"
                                         />
                                     </div>
