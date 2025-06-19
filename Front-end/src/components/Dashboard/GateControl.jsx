@@ -2,7 +2,6 @@
 import { motion } from "framer-motion";
 import {
     CogIcon,
-    EllipsisVerticalIcon,
     LockOpenIcon,
     LockClosedIcon,
 } from "@heroicons/react/24/outline";
@@ -53,7 +52,6 @@ export default function GateControl() {
                         Gate Control
                     </h3>
                 </div>
-                <EllipsisVerticalIcon className="h-5 w-5 text-slate-500 dark:text-slate-300" />
             </div>
             <div className="flex flex-col items-center p-4">
                 <motion.p

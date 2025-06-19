@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { FullscreenIcon, Volume2Icon, VolumeXIcon } from "lucide-react";
+import { FullscreenIcon } from "lucide-react";
 
 const CameraStreamBox = ({ cameraTitle, cameraSrc }) => {
     const videoRef = useRef(null);
@@ -162,8 +162,8 @@ const CameraStreamBox = ({ cameraTitle, cameraSrc }) => {
                                     <FullscreenIcon
                                         className={`h-5 w-5 transition-colors ${
                                             isFullscreen
-                                                ? "text-blue-500 dark:text-blue-400"
-                                                : "text-gray-800 dark:text-primary-100"
+                                                ? "text-primary-500 dark:text-primary-400"
+                                                : "text-gray-800"
                                         }`}
                                     />
                                 }

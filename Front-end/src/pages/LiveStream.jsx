@@ -6,14 +6,12 @@ function LiveStream() {
         {
             id: 1,
             title: "Demo Cam 1: Street View",
-            src: "/public/WhatsApp Video 2025-04-22 at 10.52.00 AM.mp4",
-            muted: true,
+            src: "http://52.158.32.174:5000/video_feed",
         },
         {
             id: 2,
             title: "Demo Cam 2: MJPEG Stream",
             src: "/public/WhatsApp Video 2025-04-22 at 10.43.40 AM.mp4",
-            muted: true,
         },
     ];
 
@@ -22,7 +20,6 @@ function LiveStream() {
     const [newCamera, setNewCamera] = useState({
         title: "",
         src: "",
-        muted: false,
     });
 
     const getFormattedDate = (date) => {

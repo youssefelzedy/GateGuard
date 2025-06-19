@@ -32,7 +32,6 @@ export default function NumberOfCars() {
                 <h3 className="text-lg font-semibold text-primary-900 dark:text-primary-100">
                     Number of Cars
                 </h3>
-                <EllipsisVerticalIcon className="h-5 w-5 text-primary-500" />
             </div>
             <div className="p-4 text-center">
                 <div className="mb-3 flex items-center justify-center gap-3">

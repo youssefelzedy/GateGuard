@@ -4,7 +4,6 @@ import { useAdmin } from "../../features/auth/useAdmin";
 import { useUsers } from "../../features/users/useUsers";
 import Plate from "../../ui/Plate";
 import { Clock } from "lucide-react";
-import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 
 // Enhanced row animation variants
 const rowVariants = {
@@ -44,7 +43,6 @@ function RecentEntries() {
                         Recent Entries
                     </h3>
                 </div>
-                <EllipsisVerticalIcon className="h-5 w-5 text-primary-500" />
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full">

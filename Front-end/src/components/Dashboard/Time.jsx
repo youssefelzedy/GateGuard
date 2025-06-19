@@ -1,7 +1,7 @@
 //eslint-disable-next-line
 import { motion } from "framer-motion";
-import { ClockIcon, EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
+import { ClockIcon } from "@heroicons/react/24/outline";
 
 export default function Time() {
     const [timeNow, setTimeNow] = useState(
@@ -59,7 +59,6 @@ export default function Time() {
                         Current Time
                     </motion.h3>
                 </motion.div>
-                <EllipsisVerticalIcon className="h-5 w-5 text-primary-500" />
             </motion.div>
             <motion.div
                 className="p-6"

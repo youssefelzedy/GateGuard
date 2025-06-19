@@ -1,9 +1,6 @@
 // eslint-disable-next-line
 import { motion } from "framer-motion";
-import {
-    CalendarIcon,
-    EllipsisVerticalIcon,
-} from "@heroicons/react/24/outline";
+import { CalendarIcon } from "@heroicons/react/24/outline";
 
 const dayVariants = {
     hidden: { opacity: 0, y: 20, scale: 0.95 },
@@ -61,7 +58,6 @@ export default function Calendar() {
                         {currentMonthName}
                     </h3>
                 </div>
-                <EllipsisVerticalIcon className="h-5 w-5 text-primary-500" />
             </div>
             <div className="p-4">
                 <div className="grid grid-cols-7 gap-3 text-center">
