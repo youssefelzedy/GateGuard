@@ -8,7 +8,7 @@ function Admins() {
     const { isOwner } = useAdmin();
     if (isOwner) {
         return (
-            <div className="flex h-full flex-col bg-primary-50 p-4">
+            <div className="flex h-full flex-col bg-primary-50 p-4 transition-colors duration-300 dark:bg-gray-900">
                 <AdminsHeader />
                 <AdminsTable />
             </div>

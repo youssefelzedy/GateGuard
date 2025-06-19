@@ -29,14 +29,14 @@ function EditAdminForm({ admin, onClose }) {
     const inputClass = (fieldName) =>
         `w-full rounded-md border ${
             errors[fieldName]
-                ? "border-red-300 focus:border-red-500 focus:ring-red-500"
-                : "border-gray-300 focus:border-primary-500 focus:ring-primary-500"
-        } px-3 py-2 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2`;
+                ? "border-red-300 focus:border-red-500 focus:ring-red-500 dark:border-red-700 dark:focus:border-red-400 dark:focus:ring-red-400"
+                : "border-gray-300 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-700 dark:focus:border-primary-400 dark:focus:ring-primary-400"
+        } px-3 py-2 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 dark:bg-gray-900 dark:text-primary-100 dark:placeholder:text-primary-300`;
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">
+                <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-primary-100">
                     Full Name
                 </label>
                 <input
@@ -55,7 +55,7 @@ function EditAdminForm({ admin, onClose }) {
             </div>
 
             <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">
+                <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-primary-100">
                     Phone Number
                 </label>
                 <input
@@ -79,7 +79,7 @@ function EditAdminForm({ admin, onClose }) {
             </div>
 
             <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">
+                <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-primary-100">
                     National Security Number
                 </label>
                 <input
@@ -106,14 +106,14 @@ function EditAdminForm({ admin, onClose }) {
                 <button
                     type="button"
                     onClick={onClose}
-                    className="rounded-md bg-gray-200 px-4 py-2 text-gray-700 transition hover:bg-gray-300"
+                    className="rounded-md bg-gray-200 px-4 py-2 text-gray-700 transition hover:bg-gray-300 dark:bg-gray-700 dark:text-primary-100 dark:hover:bg-gray-600"
                     disabled={isPending}
                 >
                     Cancel
                 </button>
                 <button
                     type="submit"
-                    className="rounded-md bg-primary-600 px-4 py-2 text-white transition hover:bg-primary-700 disabled:opacity-50"
+                    className="rounded-md bg-primary-600 px-4 py-2 text-white transition hover:bg-primary-700 disabled:opacity-50 dark:bg-primary-700 dark:hover:bg-primary-600"
                     disabled={isPending}
                 >
                     {isPending ? "Saving..." : "Save Changes"}
