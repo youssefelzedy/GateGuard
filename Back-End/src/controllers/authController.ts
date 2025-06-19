@@ -1,5 +1,3 @@
-import crypto from 'crypto';
-import { promisify } from 'util';
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import { Request, Response, NextFunction } from 'express';
@@ -7,7 +5,6 @@ import { Request, Response, NextFunction } from 'express';
 import { Admin } from '../models/adminModel';
 import IAdmin from '../interfaces/intAdmin';
 import { Garage } from '../models/garageModel';
-import IGarage from '../interfaces/intGarage';
 import expressAsyncHandler from 'express-async-handler';
 import AppError from '../utils/appError';
 

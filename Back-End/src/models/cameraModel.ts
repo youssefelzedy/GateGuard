@@ -8,6 +8,10 @@ const cameraSchema = new mongoose.Schema<ICamera>(
       required: true,
       unique: true,
     },
+    cameraName: {
+      type: String,
+      required: true,
+    },
     garage: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Garage',
