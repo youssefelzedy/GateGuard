@@ -46,7 +46,7 @@ export default function GateControl() {
             animate="visible"
             variants={componentVariants}
         >
-            <div className="flex items-center justify-between rounded-t-lg bg-blue-50 px-4 py-3 dark:bg-blue-900">
+            <div className="flex items-center justify-between rounded-t-lg bg-blue-50 px-4 py-3 dark:bg-primary-900">
                 <div className="flex items-center gap-2">
                     <CogIcon className="h-5 w-5 text-primary-500" />
                     <h3 className="text-lg font-semibold text-primary-950 dark:text-primary-100">
