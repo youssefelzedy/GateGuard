@@ -4,6 +4,7 @@ dist
 
 *.mp4
 *.mkv
+.env
 
 *.jpg
 
