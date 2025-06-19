@@ -1,6 +1,8 @@
 import { Admin } from '../models/adminModel';
+import { User } from '../models/userModel';
 import { Request, Response, NextFunction } from 'express';
 import { IAdmin } from '../interfaces/intAdmin';
+import { IUser } from '../interfaces/intUser';
 import expressAsyncHandler from 'express-async-handler';
 import AppError from '../utils/appError';
 import multer from 'multer';
@@ -111,6 +113,42 @@ const adminController = {
       });
     },
   ),
-};
 
+  deleteAdmin: expressAsyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const admin: IAdmin | null = await Admin.findById(req.params.id);
+      if (!admin) return next(new AppError('Admin not found', 404));
+
+      if (admin.role === 'Owner') {
+        return next(new AppError('Cannot delete the owner of the garage', 403));
+      }
+      admin.status = 'inactive';
+      await admin.save({ validateModifiedOnly: true });
+      res.status(200).json({
+        status: 'success',
+        message: 'Admin set to inactive successfully',
+      });
+    },
+  ),
+
+  deleteUser: expressAsyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const user: IUser | null = await User.findById(req.params.id);
+      if (!user) return next(new AppError('User not found', 404));
+      // console.log(user.garage, req.user!.garage);
+      
+      // if (user.garage.toString() !== req.user!.garage.toString()) {
+      //   return next(
+      //     new AppError('You can only delete users from your garage', 403),
+      //   );
+      // }
+      user.status = 'inactive';
+      await user.save({ validateModifiedOnly: true });
+      res.status(200).json({
+        status: 'success',
+        message: 'User set to inactive successfully',
+      });
+    },
+  ),
+};
 export default adminController;

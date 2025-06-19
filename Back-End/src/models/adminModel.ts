@@ -26,6 +26,11 @@ const adminSchema = new mongoose.Schema<IAdmin>({
     type: String,
     default: 'default.jpg',
   },
+  status: {
+    type: String,
+    enum: ['active', 'inactive'],
+    default: 'active',
+  },
   passwordConfirm: {
     type: String,
     required: [true, 'Please confirm your password'],

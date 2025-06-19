@@ -4,6 +4,11 @@ import IUser from '../interfaces/intUser';
 const userSchema = new mongoose.Schema<IUser>({
   name: { type: String, required: true },
   email: { type: String, required: true },
+  status:{
+    type: String,
+    enum: ['active', 'inactive'],
+    default: 'active',
+  },
   nationalSecurityNumber: { type: String, required: true, unique: true },
   phoneNumber: { type: String, required: true },
   garage: {

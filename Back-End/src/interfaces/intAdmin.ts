@@ -1,6 +1,7 @@
 import mongoose, { Document } from 'mongoose';
 
 export interface IAdmin extends Document {
+  status:'active' | 'inactive';
   name: string;
   email: string;
   password: string;
