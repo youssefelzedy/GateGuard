@@ -2,7 +2,7 @@ import { Pencil, Trash2 } from "lucide-react";
 
 function AdminTableRow({ admin, onEdit, onDelete }) {
     return (
-        <tr className="border-b border-primary-200 hover:bg-primary-50 dark:border-gray-900 dark:bg-gray-900 dark:hover:bg-gray-700">
+        <tr className="border-b border-primary-200 hover:bg-primary-100 hover:shadow-md dark:border-gray-900 dark:bg-gray-900 dark:hover:bg-gray-700">
             <td className="flex items-center gap-4 p-5">
                 <img
                     src={admin.image}
