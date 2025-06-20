@@ -14,7 +14,7 @@ export function useAdmin() {
         cacheTime: 10 * 60 * 1000,
         retry: false,
     });
-    const admin = data?.data?.user;
+    const admin = data?.data?.admin;
     const isOwner = admin?.role === "Owner";
     const logout = () => {
         navigate("/login");

@@ -1,10 +1,10 @@
 function HeaderLogin() {
     return (
-        <header className="rflex w-fit items-center gap-6 rounded-lg bg-transparent px-6 py-4">
+        <header className="flex w-fit items-center gap-6 rounded-lg bg-transparent px-6 py-4">
             <img
-                src="/Logo_shield.svg"
+                src="/public/Logo_dark.svg"
                 alt="Logo"
-                className="h-auto w-auto bg-transparent"
+                className="h-40 w-80 bg-transparent"
             />
         </header>
     );

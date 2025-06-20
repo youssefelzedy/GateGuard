@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { FullscreenIcon } from "lucide-react";
 
-const CameraStreamBox = ({ cameraTitle, cameraSrc }) => {
+const CameraStreamBox = ({ cameraIP, cameraName }) => {
     const videoRef = useRef(null);
     const containerRef = useRef(null);
     const [streamType, setStreamType] = useState(null);
@@ -11,7 +11,7 @@ const CameraStreamBox = ({ cameraTitle, cameraSrc }) => {
     useEffect(() => {
         const determineStreamType = async () => {
             try {
-                const urlLower = cameraSrc.toLowerCase();
+                const urlLower = cameraIP.toLowerCase();
                 if (
                     urlLower.endsWith(".mp4") ||
                     urlLower.endsWith(".webm") ||
@@ -38,7 +38,7 @@ const CameraStreamBox = ({ cameraTitle, cameraSrc }) => {
                 }
 
                 try {
-                    const response = await fetch(cameraSrc, {
+                    const response = await fetch(cameraIP, {
                         method: "HEAD",
                         mode: "cors",
                     });
@@ -82,7 +82,7 @@ const CameraStreamBox = ({ cameraTitle, cameraSrc }) => {
         };
 
         determineStreamType();
-    }, [cameraSrc]);
+    }, [cameraIP]);
 
     useEffect(() => {
         const handleFullscreenChange = () => {
@@ -132,7 +132,7 @@ const CameraStreamBox = ({ cameraTitle, cameraSrc }) => {
                 {streamType === "video" && (
                     <video
                         ref={videoRef}
-                        src={cameraSrc}
+                        src={cameraIP}
                         className="h-full w-full object-cover"
                         autoPlay
                         muted
@@ -142,7 +142,7 @@ const CameraStreamBox = ({ cameraTitle, cameraSrc }) => {
                 )}
                 {streamType === "mjpeg" && (
                     <img
-                        src={cameraSrc}
+                        src={cameraIP}
                         alt="MJPEG Stream"
                         className="h-full w-full object-cover"
                         onError={() => setError("Failed to load MJPEG stream.")}
@@ -177,7 +177,7 @@ const CameraStreamBox = ({ cameraTitle, cameraSrc }) => {
                     )}
             </div>
             <div className="p-3 text-sm font-medium text-slate-800 dark:text-primary-100">
-                {cameraTitle}
+                {cameraName}
             </div>
         </div>
     );
