@@ -115,38 +115,26 @@ const adminController = {
   ),
 
   deleteAdmin: expressAsyncHandler(
+    // delete for me using findByIdAndDelete
     async (req: Request, res: Response, next: NextFunction) => {
-      const admin: IAdmin | null = await Admin.findById(req.params.id);
-      if (!admin) return next(new AppError('Admin not found', 404));
+      const admin: IAdmin | null = await Admin.findByIdAndDelete(req.user!._id);
+      if (!admin) return next(new AppError('Admin not found', 404) as any);
 
-      if (admin.role === 'Owner') {
-        return next(new AppError('Cannot delete the owner of the garage', 403));
-      }
-      admin.status = 'inactive';
-      await admin.save({ validateModifiedOnly: true });
-      res.status(200).json({
+      res.status(204).json({
         status: 'success',
-        message: 'Admin set to inactive successfully',
+        message: 'Admin deleted successfully',
       });
     },
   ),
 
   deleteUser: expressAsyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const user: IUser | null = await User.findById(req.params.id);
-      if (!user) return next(new AppError('User not found', 404));
-      // console.log(user.garage, req.user!.garage);
+      const user: IUser | null = await User.findByIdAndDelete(req.params.id);
+      if (!user) return next(new AppError('User not found', 404) as any);
 
-      // if (user.garage.toString() !== req.user!.garage.toString()) {
-      //   return next(
-      //     new AppError('You can only delete users from your garage', 403),
-      //   );
-      // }
-      user.status = 'inactive';
-      await user.save({ validateModifiedOnly: true });
-      res.status(200).json({
+      res.status(204).json({
         status: 'success',
-        message: 'User set to inactive successfully',
+        message: 'User deleted successfully',
       });
     },
   ),
