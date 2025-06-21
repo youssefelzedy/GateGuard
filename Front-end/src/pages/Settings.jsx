@@ -37,10 +37,15 @@ const itemVariants = {
 function Settings() {
     const { admin } = useAdmin();
     const { updateGarage, isPending } = useUpdateGarage();
-    const [garageName, setGarageName] = useState(admin?.garage?.name || "");
+    const [garageName, setGarageName] = useState(
+        admin?.garage?.garageName || "",
+    );
     const [garageLocation, setGarageLocation] = useState(
         admin?.garage?.location || "",
     );
+
+    console.log(garageName);
+    console.log(garageLocation);
 
     const [isEditing, setIsEditing] = useState(false);
 
