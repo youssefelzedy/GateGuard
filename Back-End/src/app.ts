@@ -30,7 +30,10 @@ if (!fs.existsSync(uploadDir)) {
 
 // 1) GLOBAL MIDDLEWARES
 // Enable CORS for all routes
-const allowedOrigins: string[] = ['http://localhost:5173'];
+const allowedOrigins: string[] = [
+  'http://localhost:5173',
+  'http://127.0.0.1/5173',
+];
 
 // Configure CORS options
 const corsOptions: CorsOptions = {

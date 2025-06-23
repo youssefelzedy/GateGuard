@@ -62,6 +62,12 @@ function Settings() {
         );
     };
 
+    const resetForm = () => {
+        setGarageName(admin?.garage?.garageName || "");
+        setGarageLocation(admin?.garage?.location || "");
+        setIsEditing(!isEditing);
+    };
+
     return (
         <motion.div
             className="min-h-screen bg-primary-50 p-6 transition-colors duration-300 dark:bg-gray-900"
@@ -85,7 +91,7 @@ function Settings() {
                             Garage Information
                         </h2>
                         <button
-                            onClick={() => setIsEditing(!isEditing)}
+                            onClick={() => resetForm()}
                             className="rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
                         >
                             {isEditing ? "Cancel" : "Edit"}

@@ -28,9 +28,8 @@ const processLicensePlate = (carPlate) => {
 };
 
 function EditUserForm({ user, onClose }) {
-    const { editUser, error: backError } = useEditUser();
+    const { editUser } = useEditUser();
     const { numbers, letters } = processLicensePlate(user?.carPlate);
-    console.log(backError);
     const {
         register,
         handleSubmit,
