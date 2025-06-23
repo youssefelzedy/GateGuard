@@ -1,10 +1,10 @@
 //eslint-disable-next-line
 import { motion } from "framer-motion";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { User, Phone, IdCard, Camera } from "lucide-react";
 import { useAdmin } from "../features/auth/useAdmin";
 import { useUpdateAdmin } from "../features/auth/useUpdateAdmin";
-import { User, Mail, Phone, IdCard, Camera } from "lucide-react";
-import { uploadAdminImage } from "../services/apiAdmins";
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -34,34 +34,50 @@ function Profile() {
     const { updateAdmin, isPending } = useUpdateAdmin();
     const [isEditing, setIsEditing] = useState(false);
     const fileInputRef = useRef(null);
-    const [formData, setFormData] = useState({
-        name: admin?.name || "",
-        phoneNumber: admin?.phoneNumber || "",
-        nationalSecurityNumber: admin?.nationalSecurityNumber || "",
-        image: admin?.image || "",
-    });
-    const [selectedFile, setSelectedFile] = useState(null);
+    const [previewImage, setPreviewImage] = useState(null);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (selectedFile) {
-            // Call the new upload API
-            await uploadAdminImage(selectedFile);
-        }
-        updateAdmin(formData, {
-            onSuccess: () => {
-                setIsEditing(false);
-                setSelectedFile(null);
-            },
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+    } = useForm({
+        defaultValues: {
+            name: admin?.name || "",
+            phoneNumber: admin?.phoneNumber || "",
+            nationalSecurityNumber: admin?.nationalSecurityNumber || "",
+        },
+    });
+
+    useEffect(() => {
+        reset({
+            name: admin?.name || "",
+            phoneNumber: admin?.phoneNumber || "",
+            nationalSecurityNumber: admin?.nationalSecurityNumber || "",
         });
+        setPreviewImage(null);
+    }, [admin, reset]);
+
+    const handleIsEditing = () => {
+        if (isEditing) {
+            reset({
+                name: admin?.name || "",
+                phoneNumber: admin?.phoneNumber || "",
+                nationalSecurityNumber: admin?.nationalSecurityNumber || "",
+            });
+            setPreviewImage(null);
+            if (fileInputRef.current) {
+                fileInputRef.current.value = "";
+            }
+        }
+        setIsEditing(!isEditing);
     };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
+    const handleFileChange = (e) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setPreviewImage(file);
+        }
     };
 
     const handleImageClick = (e) => {
@@ -71,19 +87,17 @@ function Profile() {
         }
     };
 
-    const handleFileChange = (e) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            setSelectedFile(file);
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setFormData((prev) => ({
-                    ...prev,
-                    image: reader.result,
-                }));
-            };
-            reader.readAsDataURL(file);
-        }
+    const onSubmit = async (data) => {
+        updateAdmin({
+            adminId: admin?._id,
+            data: {
+                name: data.name,
+                phoneNumber: data.phoneNumber,
+                nationalSecurityNumber: data.nationalSecurityNumber,
+            },
+            ...(previewImage && { imageFile: previewImage }),
+        });
+        setIsEditing(false);
     };
 
     return (
@@ -109,14 +123,17 @@ function Profile() {
                             Personal Information
                         </h2>
                         <button
-                            onClick={() => setIsEditing(!isEditing)}
+                            onClick={handleIsEditing}
                             className="rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
                         >
                             {isEditing ? "Cancel" : "Edit"}
                         </button>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="flex gap-8">
+                    <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        className="flex gap-8"
+                    >
                         {/* Left side - Image */}
                         <div className="w-1/3">
                             <div className="relative">
@@ -136,7 +153,12 @@ function Profile() {
                                     <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-primary-100 dark:bg-gray-900">
                                         <img
                                             src={
-                                                formData.image || "default.jpg"
+                                                previewImage
+                                                    ? URL.createObjectURL(
+                                                          previewImage,
+                                                      )
+                                                    : admin?.image ||
+                                                      "/default.jpg"
                                             }
                                             alt="Profile"
                                             className="h-full w-full object-cover"
@@ -145,7 +167,6 @@ function Profile() {
                                             <div className="absolute inset-0 flex items-center justify-center rounded-2xl bg-primary-900/50 opacity-0 transition-opacity hover:opacity-100">
                                                 <div className="flex flex-col items-center gap-2 text-white">
                                                     <Camera className="h-8 w-8" />
-
                                                     <span className="text-sm font-medium">
                                                         Change Photo
                                                     </span>
@@ -173,14 +194,21 @@ function Profile() {
                                     <input
                                         type="text"
                                         id="name"
-                                        name="name"
-                                        value={formData.name}
-                                        onChange={handleChange}
+                                        {...register("name", {
+                                            required: "Full name is required",
+                                        })}
                                         disabled={!isEditing}
-                                        className="block w-full rounded-md border border-primary-200 py-2 pl-10 pr-3 text-primary-900 placeholder-primary-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:bg-primary-50 disabled:text-primary-500 dark:border-gray-700 dark:bg-gray-900 dark:text-primary-100 dark:placeholder-primary-400 dark:disabled:bg-gray-800 dark:disabled:text-primary-500"
+                                        className={`block w-full rounded-md border border-primary-200 py-2 pl-10 pr-3 text-primary-900 placeholder-primary-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:bg-primary-50 disabled:text-primary-500 dark:border-gray-700 dark:bg-gray-900 dark:text-primary-100 dark:placeholder-primary-400 dark:disabled:bg-gray-800 dark:disabled:text-primary-500 ${
+                                            errors.name ? "border-red-500" : ""
+                                        }`}
                                         placeholder="Enter your name"
                                     />
                                 </div>
+                                {errors.name && (
+                                    <p className="mt-1 text-sm text-red-500">
+                                        {errors.name.message}
+                                    </p>
+                                )}
                             </div>
 
                             <div>
@@ -197,14 +225,29 @@ function Profile() {
                                     <input
                                         type="tel"
                                         id="phoneNumber"
-                                        name="phoneNumber"
-                                        value={formData.phoneNumber}
-                                        onChange={handleChange}
+                                        {...register("phoneNumber", {
+                                            required:
+                                                "Phone number is required",
+                                            pattern: {
+                                                value: /^(010|011|012|015)[0-9]{8}$/,
+                                                message:
+                                                    "Invalid phone number format (11 digits with 010/011/012/015)",
+                                            },
+                                        })}
                                         disabled={!isEditing}
-                                        className="block w-full rounded-md border border-primary-200 py-2 pl-10 pr-3 text-primary-900 placeholder-primary-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:bg-primary-50 disabled:text-primary-500 dark:border-gray-700 dark:bg-gray-900 dark:text-primary-100 dark:placeholder-primary-400 dark:disabled:bg-gray-800 dark:disabled:text-primary-500"
+                                        className={`block w-full rounded-md border border-primary-200 py-2 pl-10 pr-3 text-primary-900 placeholder-primary-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:bg-primary-50 disabled:text-primary-500 dark:border-gray-700 dark:bg-gray-900 dark:text-primary-100 dark:placeholder-primary-400 dark:disabled:bg-gray-800 dark:disabled:text-primary-500 ${
+                                            errors.phoneNumber
+                                                ? "border-red-500"
+                                                : ""
+                                        }`}
                                         placeholder="Enter your phone number"
                                     />
                                 </div>
+                                {errors.phoneNumber && (
+                                    <p className="mt-1 text-sm text-red-500">
+                                        {errors.phoneNumber.message}
+                                    </p>
+                                )}
                             </div>
 
                             <div>
@@ -221,14 +264,29 @@ function Profile() {
                                     <input
                                         type="text"
                                         id="nationalSecurityNumber"
-                                        name="nationalSecurityNumber"
-                                        value={formData.nationalSecurityNumber}
-                                        onChange={handleChange}
+                                        {...register("nationalSecurityNumber", {
+                                            required:
+                                                "National Number is required",
+                                            pattern: {
+                                                value: /^[23][0-9]{13}$/,
+                                                message:
+                                                    "National ID must start with 2 or 3 and be 14 digits",
+                                            },
+                                        })}
                                         disabled={!isEditing}
-                                        className="block w-full rounded-md border border-primary-200 py-2 pl-10 pr-3 text-primary-900 placeholder-primary-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:bg-primary-50 disabled:text-primary-500 dark:border-gray-700 dark:bg-gray-900 dark:text-primary-100 dark:placeholder-primary-400 dark:disabled:bg-gray-800 dark:disabled:text-primary-500"
+                                        className={`block w-full rounded-md border border-primary-200 py-2 pl-10 pr-3 text-primary-900 placeholder-primary-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:bg-primary-50 disabled:text-primary-500 dark:border-gray-700 dark:bg-gray-900 dark:text-primary-100 dark:placeholder-primary-400 dark:disabled:bg-gray-800 dark:disabled:text-primary-500 ${
+                                            errors.nationalSecurityNumber
+                                                ? "border-red-500"
+                                                : ""
+                                        }`}
                                         placeholder="Enter your national security number"
                                     />
                                 </div>
+                                {errors.nationalSecurityNumber && (
+                                    <p className="mt-1 text-sm text-red-500">
+                                        {errors.nationalSecurityNumber.message}
+                                    </p>
+                                )}
                             </div>
 
                             {isEditing && (

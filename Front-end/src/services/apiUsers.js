@@ -59,5 +59,4 @@ export async function deleteUser(userId) {
         const error = await res.json();
         throw new Error(error.message);
     }
-    return res.json();
 }

@@ -152,8 +152,12 @@ function UsersTable() {
 
     const handleConfirmDelete = () => {
         if (deleteUserData) {
-            deleteUser(deleteUserData._id);
-            handleCloseDeleteModal();
+            deleteUser(deleteUserData._id, {
+                onSuccess: () => {
+                    handleCloseDeleteModal();
+                    setDeleteUserData(null);
+                },
+            });
         }
     };
 

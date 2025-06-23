@@ -28,9 +28,9 @@ const processLicensePlate = (carPlate) => {
 };
 
 function EditUserForm({ user, onClose }) {
-    const { editUser } = useEditUser();
+    const { editUser, error: backError } = useEditUser();
     const { numbers, letters } = processLicensePlate(user?.carPlate);
-
+    console.log(backError);
     const {
         register,
         handleSubmit,
@@ -68,7 +68,6 @@ function EditUserForm({ user, onClose }) {
                 .filter(Boolean)
                 .join("-"),
         };
-        console.log(finalData);
         editUser(
             {
                 userId: user._id,

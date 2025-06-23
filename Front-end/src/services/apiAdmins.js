@@ -31,9 +31,7 @@ export async function inviteAdmin(data) {
     return res.json();
 }
 
-export async function editAdmin({ adminId, data }) {
-    console.log(data);
-    console.log(adminId);
+export async function updateAdmin({ adminId, data }) {
     const res = await fetch(`${VITE_API_URL}/admins/${adminId}`, {
         method: "PATCH",
         body: JSON.stringify(data),
@@ -61,7 +59,6 @@ export async function deleteAdmin(adminId) {
         const error = await res.json();
         throw new Error(error.message);
     }
-    return res.json();
 }
 
 export async function uploadAdminImage(file) {

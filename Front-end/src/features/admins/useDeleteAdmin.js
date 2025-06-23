@@ -9,15 +9,14 @@ export function useDeleteAdmin() {
         mutationFn: (adminId) =>
             toast.promise(deleteAdminApi(adminId), {
                 loading: "Deleting admin...",
-                success: (data) =>
-                    data.message || "Admin deleted successfully!",
-                error: (err) => err?.message || "Failed to delete admin.",
+                success: "Admin deleted successfully!",
+                error: "Failed to delete admin.",
             }),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["admins"] });
         },
-        onError: (error) => {
-            console.error("Error deleting admin:", error);
+        onError: () => {
+            console.error("Failed to delete admin.");
         },
     });
 
