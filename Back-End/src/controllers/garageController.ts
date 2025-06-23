@@ -45,10 +45,6 @@ const garageController = {
       res.status(404);
       throw new Error('Garage not found');
     }
-    if (req.user!.garage.toString() !== garage._id.toString()) {
-      res.status(403);
-      throw new Error('You do not have permission to edit this garage');
-    }
     res.status(200).json({
       status: 'success',
       data: {

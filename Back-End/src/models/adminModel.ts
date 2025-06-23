@@ -41,7 +41,7 @@ const adminSchema = new mongoose.Schema<IAdmin>({
       message: 'Passwords are not the same',
     },
   },
-  phoneNumber: { type: String, required: true },
+  phoneNumber: { type: String, required: true,unique: true },
   nationalSecurityNumber: { type: String, required: true, unique: true },
   role: {
     type: String,
