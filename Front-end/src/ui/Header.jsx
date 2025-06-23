@@ -23,10 +23,14 @@ function Header() {
                 <div className="flex items-center gap-4 pr-3">
                     <button
                         onClick={() => navigate("/profile")}
-                        className="h-10 w-10 overflow-hidden rounded-full bg-gray-200 transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                        className="h-10 w-10 overflow-hidden rounded-full bg-gray-200 transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-blue-400"
                     >
                         <img
-                            src={admin?.image || "default.jpg"}
+                            src={
+                                admin?.image
+                                    ? `http://localhost:5174/public/images/admins/${admin.image}`
+                                    : "default.jpg"
+                            }
                             alt="Profile"
                             className="h-full w-full object-cover"
                         />

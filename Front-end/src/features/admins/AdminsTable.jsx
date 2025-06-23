@@ -84,7 +84,6 @@ function AdminsTable() {
     };
 
     const handleConfirmDelete = () => {
-        console.log(deleteAdminData);
         if (deleteAdminData) {
             deleteAdmin(deleteAdminData._id, {
                 onSuccess: () => {

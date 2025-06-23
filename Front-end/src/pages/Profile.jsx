@@ -157,8 +157,9 @@ function Profile() {
                                                     ? URL.createObjectURL(
                                                           previewImage,
                                                       )
-                                                    : admin?.image ||
-                                                      "/default.jpg"
+                                                    : admin?.image
+                                                      ? `http://localhost:5174/public/images/admins/${admin.image}`
+                                                      : "/default.jpg"
                                             }
                                             alt="Profile"
                                             className="h-full w-full object-cover"
