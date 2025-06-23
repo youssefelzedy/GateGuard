@@ -19,6 +19,8 @@ router.delete(
   adminController.deleteAdmin,
 );
 
+router.patch('/:id', adminController.editAdmin);
+
 // Image upload route - need both middleware functions
 router.post(
   '/uploadImage',
