@@ -6,7 +6,7 @@ import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
 import xssClean from 'xss-clean';
-import cors, { corsOptions } from 'cors';
+import cors, { CorsOptions } from 'cors';
 import fs from 'fs';
 import path from 'path';
 
@@ -30,13 +30,29 @@ if (!fs.existsSync(uploadDir)) {
 
 // 1) GLOBAL MIDDLEWARES
 // Enable CORS for all routes
-app.use(
-  cors({
-    origin: '*', // Allows all origins
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
-  }),
-);
+const allowedOrigins: string[] = ['http://localhost:5173'];
+
+// Configure CORS options
+const corsOptions: CorsOptions = {
+  origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) {
+      return callback(null, true);
+    }
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'], // Add any other headers your frontend sends
+  credentials: true, // Set to true if you need to handle cookies or Authorization headers
+  optionsSuccessStatus: 200 // For legacy browser support
+};
+
+// Enable CORS with the specified options
+app.use(cors(corsOptions));
 
 // Handle preflight requests
 app.options('*', cors());
