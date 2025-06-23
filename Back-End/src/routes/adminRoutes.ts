@@ -13,7 +13,11 @@ router.get(
 
 router.get('/me', adminController.getMe, adminController.getAdmin);
 router.get('/:id', adminController.getAdmin);
-router.delete('/:id', adminController.deleteAdmin);
+router.delete(
+  '/:id',
+  authController.restrictTo('Owner'),
+  adminController.deleteAdmin,
+);
 
 // Image upload route - need both middleware functions
 router.post(

@@ -32,6 +32,35 @@ const garageController = {
     });
   }),
 
+  editGarage: expressAsyncHandler(async (req: Request, res: Response) => {
+    const garage: IGarage | null = await Garage.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
+    if (!garage) {
+      res.status(404);
+      throw new Error('Garage not found');
+    }
+    if (!garage.active) {
+      res.status(400);
+      throw new Error('Cannot edit an inactive garage');
+    }
+    if (req.user!.garage.toString() !== garage._id.toString()) {
+      res.status(403);
+      throw new Error('You do not have permission to edit this garage');
+    }
+    res.status(200).json({
+      status: 'success',
+      data: {
+        garage,
+      },
+    });
+  }),
+
   deleteGarage: expressAsyncHandler(async (req: Request, res: Response) => {
     const garage: IGarage | null = await Garage.findByIdAndUpdate(
       req.params.id,

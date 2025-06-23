@@ -114,10 +114,33 @@ const adminController = {
     },
   ),
 
+  editAdmin: expressAsyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const admin: IAdmin | null = await Admin.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        {
+          new: true,
+          runValidators: true,
+        },
+      );
+      if (!admin) return next(new AppError('Admin not found', 404) as any);
+      res.status(200).json({
+        status: 'success',
+        data: {
+          admin,
+        },
+      });
+    },
+  ),
+
   deleteAdmin: expressAsyncHandler(
     // delete for me using findByIdAndDelete
     async (req: Request, res: Response, next: NextFunction) => {
       const admin: IAdmin | null = await Admin.findByIdAndDelete(req.user!._id);
+      if (admin?.id == req.params.id) {
+        return next(new AppError('You cannot delete yourself', 400) as any);
+      }
       if (!admin) return next(new AppError('Admin not found', 404) as any);
 
       res.status(204).json({
