@@ -1,8 +1,8 @@
+import toast from "react-hot-toast";
 import { Navigate } from "react-router";
 import AdminsHeader from "../features/admins/AdminsHeader";
 import AdminsTable from "../features/admins/AdminsTable";
 import { useAdmin } from "../features/auth/useAdmin";
-import toast from "react-hot-toast";
 
 function Admins() {
     const { isOwner } = useAdmin();

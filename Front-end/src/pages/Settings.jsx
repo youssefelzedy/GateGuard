@@ -1,15 +1,11 @@
 //eslint-disable-next-line
 import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 import { useState } from "react";
 import { useAdmin } from "../features/auth/useAdmin";
 import { useUpdateGarage } from "../features/garages/useUpdateGarage";
-import {
-    MapPinIcon,
-    BuildingOfficeIcon,
-    BellIcon,
-    ShieldCheckIcon,
-    LinkIcon,
-} from "@heroicons/react/24/outline";
+import { MapPinIcon, BuildingOfficeIcon } from "@heroicons/react/24/outline";
+import { Navigate } from "react-router";
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -35,7 +31,7 @@ const itemVariants = {
 };
 
 function Settings() {
-    const { admin } = useAdmin();
+    const { admin, isOwner } = useAdmin();
     const { updateGarage, isPending } = useUpdateGarage();
     const [garageName, setGarageName] = useState(
         admin?.garage?.garageName || "",
@@ -67,6 +63,11 @@ function Settings() {
         setGarageLocation(admin?.garage?.location || "");
         setIsEditing(!isEditing);
     };
+
+    if (!isOwner) {
+        toast.error("You are not authorized to view this page.");
+        return <Navigate to="/dashboard" replace={true} />;
+    }
 
     return (
         <motion.div
