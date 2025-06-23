@@ -68,12 +68,27 @@ const userController = {
       res.status(403);
       throw new AppError('You are not authorized to edit this user', 403);
     }
-
+    // check if user is editing with existing phone number or car plate or national security number
+    const existingUser = await User.findOne({
+      $or: [
+        { phoneNumber: req.body.phoneNumber },
+        { carPlate: req.body.carPlate },
+        { nationalSecurityNumber: req.body.nationalSecurityNumber },
+      ],
+      _id: { $ne: req.params.id }, // Exclude the current user
+    });
+    if (existingUser) {
+      res.status(400);
+      throw new AppError(
+        'Phone number, car plate or national security number already exists',
+        400,
+      );
+    }
     const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
     });
-    
+
     if (!updatedUser) {
       res.status(404);
       throw new AppError('user not found', 404);
