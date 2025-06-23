@@ -32,10 +32,10 @@ if (!fs.existsSync(uploadDir)) {
 // Enable CORS for all routes
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || '*', // Allow specified origin or all origins
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true, // Allow cookies to be sent with requests
+    origin: '*',
+    methods: '*',
+    allowedHeaders: '*',
+    credentials: false,
   }),
 );
 

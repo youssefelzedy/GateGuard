@@ -125,6 +125,16 @@ const adminController = {
         },
       );
       if (!admin) return next(new AppError('Admin not found', 404) as any);
+      if (req.body.email || req.body.role || req.body.garage || req.body.password ) {
+        {
+          return next(
+            new AppError(
+              'You can only edit your phoneNumber, national security and name',
+              400,
+            ) as any,
+          );
+        }
+      }
       res.status(200).json({
         status: 'success',
         data: {
@@ -132,7 +142,7 @@ const adminController = {
         },
       });
     },
-  ),
+  ),  
 
   deleteAdmin: expressAsyncHandler(
     // delete for me using findByIdAndDelete
