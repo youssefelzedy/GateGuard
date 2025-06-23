@@ -34,26 +34,14 @@ const allowedOrigins: string[] = ['http://localhost:5173'];
 
 // Configure CORS options
 const corsOptions: CorsOptions = {
-  origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) {
-      return callback(null, true);
-    }
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'], // Add any other headers your frontend sends
-  credentials: true, // Set to true if you need to handle cookies or Authorization headers
-  optionsSuccessStatus: 200 // For legacy browser support
+  origin: allowedOrigins,
+  methods: ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
 };
 
 // Enable CORS with the specified options
 app.use(cors(corsOptions));
-
 // Handle preflight requests
 // app.options('*', cors());
 
