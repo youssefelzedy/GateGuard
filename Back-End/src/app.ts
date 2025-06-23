@@ -6,7 +6,7 @@ import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
 import xssClean from 'xss-clean';
-import cors from 'cors';
+import cors, { corsOptions } from 'cors';
 import fs from 'fs';
 import path from 'path';
 
@@ -32,10 +32,9 @@ if (!fs.existsSync(uploadDir)) {
 // Enable CORS for all routes
 app.use(
   cors({
-    origin: '*',
-    methods: '*',
-    allowedHeaders: '*',
-    credentials: false,
+    origin: '*', // Allows all origins
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
   }),
 );
 
