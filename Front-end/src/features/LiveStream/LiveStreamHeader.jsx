@@ -1,6 +1,9 @@
 import { Calendar, Clock, Video } from "lucide-react";
+import { useAdmin } from "../auth/useAdmin";
 
 function LiveStreamHeader({ onAddCamera }) {
+    const { isOwner } = useAdmin();
+
     const getFormattedDate = (date) => {
         const d = new Date(date);
         const day = d.getDate();
@@ -42,15 +45,17 @@ function LiveStreamHeader({ onAddCamera }) {
                     </span>
                 </div>
             </div>
-            <button
-                className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-primary-600 to-primary-400 px-5 py-2 shadow-lg transition-all duration-300 hover:from-primary-700 hover:to-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-400 dark:from-primary-700 dark:to-primary-600 dark:hover:from-primary-800 dark:hover:to-primary-700"
-                onClick={onAddCamera}
-            >
-                <Video className="h-5 w-5 text-white transition-transform group-hover:scale-110" />
-                <span className="font-sans text-base font-semibold tracking-wide text-white">
-                    Add Camera
-                </span>
-            </button>
+            {isOwner && (
+                <button
+                    className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-primary-600 to-primary-400 px-5 py-2 shadow-lg transition-all duration-300 hover:from-primary-700 hover:to-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-400 dark:from-primary-700 dark:to-primary-600 dark:hover:from-primary-800 dark:hover:to-primary-700"
+                    onClick={onAddCamera}
+                >
+                    <Video className="h-5 w-5 text-white transition-transform group-hover:scale-110" />
+                    <span className="font-sans text-base font-semibold tracking-wide text-white">
+                        Add Camera
+                    </span>
+                </button>
+            )}
         </header>
     );
 }

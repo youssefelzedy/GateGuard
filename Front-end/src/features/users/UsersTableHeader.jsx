@@ -1,6 +1,8 @@
 import { ArrowDownUp } from "lucide-react";
+import { useAdmin } from "../auth/useAdmin";
 
 function UsersTableHeader({ onSort, sortConfig }) {
+    const { isOwner } = useAdmin();
     return (
         <thead>
             <tr className="bg-primary-100 font-medium text-primary-900 dark:bg-gray-800 dark:text-primary-100">
@@ -99,9 +101,11 @@ function UsersTableHeader({ onSort, sortConfig }) {
                         />
                     </button>
                 </th>
-                <th className="px-3 py-5" scope="col">
-                    Actions
-                </th>
+                {isOwner && (
+                    <th className="px-3 py-5" scope="col">
+                        Actions
+                    </th>
+                )}
             </tr>
         </thead>
     );
