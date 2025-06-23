@@ -73,7 +73,7 @@ const userController = {
       new: true,
       runValidators: true,
     });
-
+    
     if (!updatedUser) {
       res.status(404);
       throw new AppError('user not found', 404);
