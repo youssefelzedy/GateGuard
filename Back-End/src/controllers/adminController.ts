@@ -125,7 +125,12 @@ const adminController = {
         },
       );
       if (!admin) return next(new AppError('Admin not found', 404) as any);
-      if (req.body.email || req.body.role || req.body.garage || req.body.password ) {
+      if (
+        req.body.email ||
+        req.body.role ||
+        req.body.garage ||
+        req.body.password
+      ) {
         {
           return next(
             new AppError(
@@ -142,13 +147,12 @@ const adminController = {
         },
       });
     },
-  ),  
+  ),
 
   deleteAdmin: expressAsyncHandler(
-    // delete for me using findByIdAndDelete
     async (req: Request, res: Response, next: NextFunction) => {
-      const admin: IAdmin | null = await Admin.findByIdAndDelete(req.user!._id);
-      if (admin?.id == req.params.id) {
+      const admin: IAdmin | null = await Admin.findByIdAndDelete(req.params.id);
+      if (admin?.id == req.user?._id) {
         return next(new AppError('You cannot delete yourself', 400) as any);
       }
       if (!admin) return next(new AppError('Admin not found', 404) as any);
