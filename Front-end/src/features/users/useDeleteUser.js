@@ -9,14 +9,14 @@ export function useDeleteUser() {
         mutationFn: (userId) =>
             toast.promise(deleteUserApi(userId), {
                 loading: "Deleting user...",
-                success: (data) => data.message || "User deleted successfully!",
-                error: (err) => err?.message || "Failed to delete user.",
+                success: "User deleted successfully!",
+                error: "Failed to delete user.",
             }),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["users"] });
         },
-        onError: (error) => {
-            console.error("Error deleting user:", error);
+        onError: () => {
+            console.error("Failed to delete user.");
         },
     });
 
