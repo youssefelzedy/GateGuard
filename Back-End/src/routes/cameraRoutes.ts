@@ -5,7 +5,7 @@ import authController from '../controllers/authController';
 const router = express.Router({ mergeParams: true });
 
 // All camera routes require authentication
-router.use(authController.protect);
+// router.use(authController.protect);
 
 // Routes for camera management
 router.post('/', cameraController.createCamera);
