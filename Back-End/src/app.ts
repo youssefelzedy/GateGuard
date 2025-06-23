@@ -55,7 +55,7 @@ const corsOptions: CorsOptions = {
 app.use(cors(corsOptions));
 
 // Handle preflight requests
-app.options('*', cors());
+// app.options('*', cors());
 
 //Set Security - HTTP Headers
 app.use(
