@@ -44,17 +44,15 @@ function Settings() {
         admin?.garage?.location || "",
     );
 
-    console.log(garageName);
-    console.log(garageLocation);
-
     const [isEditing, setIsEditing] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         updateGarage(
             {
-                name: garageName,
-                location: garageLocation,
+                id: admin?.garage?.id,
+                garageName,
+                garageLocation,
             },
             {
                 onSuccess: () => {

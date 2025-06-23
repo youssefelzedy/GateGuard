@@ -1,8 +1,10 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { editUser as editUserApi } from "../../services/apiUsers";
 
 export function useEditUser() {
+    const queryClient = useQueryClient();
+
     const { mutate: editUser, error } = useMutation({
         mutationKey: ["editUser"],
         mutationFn: ({ userId, data }) =>
@@ -11,6 +13,9 @@ export function useEditUser() {
                 success: (data) => data.message || "User updated successfully!",
                 error: (err) => err?.message || "Failed to update user.",
             }),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["users"] });
+        },
         onError: (error) => {
             console.error("Error updating user:", error);
         },

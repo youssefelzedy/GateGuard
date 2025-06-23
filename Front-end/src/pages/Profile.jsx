@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import { useAdmin } from "../features/auth/useAdmin";
 import { useUpdateAdmin } from "../features/auth/useUpdateAdmin";
 import { User, Mail, Phone, IdCard, Camera } from "lucide-react";
+import { uploadAdminImage } from "../services/apiAdmins";
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -35,17 +36,22 @@ function Profile() {
     const fileInputRef = useRef(null);
     const [formData, setFormData] = useState({
         name: admin?.name || "",
-        email: admin?.email || "",
         phoneNumber: admin?.phoneNumber || "",
         nationalSecurityNumber: admin?.nationalSecurityNumber || "",
         image: admin?.image || "",
     });
+    const [selectedFile, setSelectedFile] = useState(null);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        if (selectedFile) {
+            // Call the new upload API
+            await uploadAdminImage(selectedFile);
+        }
         updateAdmin(formData, {
             onSuccess: () => {
                 setIsEditing(false);
+                setSelectedFile(null);
             },
         });
     };
@@ -68,6 +74,7 @@ function Profile() {
     const handleFileChange = (e) => {
         const file = e.target.files?.[0];
         if (file) {
+            setSelectedFile(file);
             const reader = new FileReader();
             reader.onloadend = () => {
                 setFormData((prev) => ({
@@ -86,7 +93,7 @@ function Profile() {
             animate="visible"
             variants={containerVariants}
         >
-            <div className="mx-auto max-w-6xl">
+            <div className="mx-auto max-w-5xl">
                 <motion.div variants={itemVariants}>
                     <h1 className="mb-8 text-3xl font-bold text-primary-900 dark:text-primary-100">
                         Profile Settings
@@ -148,25 +155,6 @@ function Profile() {
                                     </div>
                                 </button>
                             </div>
-                            {isEditing && (
-                                <div className="mt-4">
-                                    <label
-                                        htmlFor="image"
-                                        className="mb-2 block text-sm font-medium text-primary-700 dark:text-primary-200"
-                                    >
-                                        Profile Image URL
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="image"
-                                        name="image"
-                                        value={formData.image}
-                                        onChange={handleChange}
-                                        className="block w-full rounded-md border border-primary-200 px-3 py-2 text-primary-900 placeholder-primary-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-gray-700 dark:bg-gray-900 dark:text-primary-100 dark:placeholder-primary-400"
-                                        placeholder="Enter image URL"
-                                    />
-                                </div>
-                            )}
                         </div>
 
                         {/* Right side - Form */}
@@ -191,30 +179,6 @@ function Profile() {
                                         disabled={!isEditing}
                                         className="block w-full rounded-md border border-primary-200 py-2 pl-10 pr-3 text-primary-900 placeholder-primary-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:bg-primary-50 disabled:text-primary-500 dark:border-gray-700 dark:bg-gray-900 dark:text-primary-100 dark:placeholder-primary-400 dark:disabled:bg-gray-800 dark:disabled:text-primary-500"
                                         placeholder="Enter your name"
-                                    />
-                                </div>
-                            </div>
-
-                            <div>
-                                <label
-                                    htmlFor="email"
-                                    className="mb-2 block text-sm font-medium text-primary-700 dark:text-primary-200"
-                                >
-                                    Email Address
-                                </label>
-                                <div className="relative">
-                                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                        <Mail className="h-5 w-5 text-primary-400" />
-                                    </div>
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                        disabled={!isEditing}
-                                        className="block w-full rounded-md border border-primary-200 py-2 pl-10 pr-3 text-primary-900 placeholder-primary-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:bg-primary-50 disabled:text-primary-500 dark:border-gray-700 dark:bg-gray-900 dark:text-primary-100 dark:placeholder-primary-400 dark:disabled:bg-gray-800 dark:disabled:text-primary-500"
-                                        placeholder="Enter your email"
                                     />
                                 </div>
                             </div>

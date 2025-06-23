@@ -1,6 +1,6 @@
+import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateAdmin as updateAdminApi } from "../../services/apiAuth";
-import toast from "react-hot-toast";
 
 export function useUpdateAdmin() {
     const queryClient = useQueryClient();
