@@ -27,12 +27,14 @@ const uploadDir = path.join(__dirname, '../public/images/admins');
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
+app.use(express.static(path.join(__dirname, '../public')));
 
 // 1) GLOBAL MIDDLEWARES
 // Enable CORS for all routes
 const allowedOrigins: string[] = [
   'http://localhost:5173',
   'http://127.0.0.1/5173',
+  'https://gateguard.me',
 ];
 
 // Configure CORS options
