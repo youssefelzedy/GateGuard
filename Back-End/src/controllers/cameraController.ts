@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 import expressAsyncHandler from 'express-async-handler';
-import mongoose from 'mongoose';
 
 import Camera from '../models/cameraModel';
 import { Garage } from '../models/garageModel';
