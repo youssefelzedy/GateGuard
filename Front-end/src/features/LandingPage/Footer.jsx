@@ -42,7 +42,7 @@ const Footer = () => {
                         >
                             <a href="#" className="flex items-center">
                                 <img
-                                    src="/Logo.svg"
+                                    src="/Logo_light.svg"
                                     alt="GateGuard Logo"
                                     width={150}
                                     height={150}
