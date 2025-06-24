@@ -11,7 +11,7 @@ const router = express.Router();
 // GET /garages/234fad4/admins
 // GET /garages/234fad4/admins/56fd12s
 
-router.use('/:garageId/admins', adminRouter);
+router.use('/:garageId/admins', adminRouter); // garages/:garageId/logs 
 router.use('/:garageId/users', userRouter);
 router.use('/:garageId/logs', logsRouter);
 router.use('/:garageId/cameras', cameraRouter);

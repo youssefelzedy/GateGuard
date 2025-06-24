@@ -10,14 +10,15 @@ import mongoose from 'mongoose';
 
 import { User } from '../models/userModel';
 import { Garage } from '../models/garageModel';
+import path from 'path';
 
 const logsController = {
   getAllLogs: expressAsyncHandler(async (req: Request, res: Response) => {
     let filter = {};
     if (req.params.garageId) filter = { garage: req.params.garageId };
     const logs: ILog[] = await Logs.find(filter).populate({
-      path: 'garage',
-      select: 'garageName',
+      path: 'user',
+      select: 'phoneNumber carPlate garage',
     });
     res.status(200).json({
       status: 'success',
@@ -28,7 +29,10 @@ const logsController = {
     });
   }),
   getLog: expressAsyncHandler(async (req: Request, res: Response) => {
-    const log: ILog | null = await Logs.findById(req.params.id);
+    const log: ILog | null = await Logs.findById(req.params.id).populate({
+      path: 'user',
+      select: 'phoneNumber carPlate garage',
+    });
     if (!log) {
       res.status(404);
       throw new AppError('Log not found', 404);
