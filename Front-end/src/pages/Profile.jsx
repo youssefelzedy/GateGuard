@@ -158,7 +158,7 @@ function Profile() {
                                                           previewImage,
                                                       )
                                                     : admin?.image
-                                                      ? `http://localhost:5174/public/images/admins/${admin.image}`
+                                                      ? `https://gateguard.me:5174/public/images/admins/${admin.image}`
                                                       : "/default.jpg"
                                             }
                                             alt="Profile"
