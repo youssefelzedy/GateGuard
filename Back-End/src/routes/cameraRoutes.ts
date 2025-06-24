@@ -12,6 +12,8 @@ router.post('/', cameraController.createCamera);
 router.get('/', cameraController.getAllCameras);
 router.get('/:id', cameraController.getCamera);
 router.patch('/:id/status', cameraController.updateCameraStatus);
+router.delete('/:id', cameraController.deleteCamera);
+
 // router.delete(
 //   '/:id',
 //   authController.restrictTo('Owner'),
