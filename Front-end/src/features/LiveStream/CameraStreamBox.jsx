@@ -1,13 +1,16 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { FullscreenIcon, Trash2Icon } from "lucide-react";
+import { useDeleteCamera } from "./useDeleteCamera";
 
-const CameraStreamBox = ({ cameraIP, cameraName, onRemove }) => {
+const CameraStreamBox = ({ camera }) => {
+    const { cameraIP, cameraName, _id: cameraId } = camera;
     const videoRef = useRef(null);
     const containerRef = useRef(null);
     const [streamType, setStreamType] = useState(null);
     const [error, setError] = useState(null);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [isConfirmingRemove, setIsConfirmingRemove] = useState(false);
+    const { deleteCamera } = useDeleteCamera();
 
     useEffect(() => {
         const determineStreamType = async () => {
@@ -124,6 +127,15 @@ const CameraStreamBox = ({ cameraIP, cameraName, onRemove }) => {
         </button>
     );
 
+    const handelDeleteCamera = () => {
+        deleteCamera(cameraId, {
+            onSuccess: () => {
+                setIsConfirmingRemove(false);
+                setError(null);
+            },
+        });
+    };
+
     return (
         <div className="font-poppins overflow-hidden rounded-xl border bg-white shadow-md dark:border-gray-700 dark:bg-gray-800">
             <div
@@ -185,10 +197,7 @@ const CameraStreamBox = ({ cameraIP, cameraName, onRemove }) => {
                             Are you sure?
                         </span>
                         <button
-                            onClick={() => {
-                                onRemove();
-                                setIsConfirmingRemove(false);
-                            }}
+                            onClick={() => handelDeleteCamera()}
                             className="rounded bg-red-500 px-2 py-1 text-xs text-white transition-colors hover:bg-red-600"
                         >
                             Yes

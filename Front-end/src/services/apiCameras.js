@@ -30,3 +30,17 @@ export async function addCamera(cameraData) {
     }
     return res.json();
 }
+
+export async function deleteCamera(cameraId) {
+    const res = await fetch(`${VITE_API_URL}/cameras/${cameraId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+    });
+    if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error.message);
+    }
+}
