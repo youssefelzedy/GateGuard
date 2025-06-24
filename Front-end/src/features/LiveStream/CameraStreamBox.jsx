@@ -1,12 +1,13 @@
 import React, { useRef, useState, useEffect } from "react";
-import { FullscreenIcon } from "lucide-react";
+import { FullscreenIcon, Trash2Icon } from "lucide-react";
 
-const CameraStreamBox = ({ cameraIP, cameraName }) => {
+const CameraStreamBox = ({ cameraIP, cameraName, onRemove }) => {
     const videoRef = useRef(null);
     const containerRef = useRef(null);
     const [streamType, setStreamType] = useState(null);
     const [error, setError] = useState(null);
     const [isFullscreen, setIsFullscreen] = useState(false);
+    const [isConfirmingRemove, setIsConfirmingRemove] = useState(false);
 
     useEffect(() => {
         const determineStreamType = async () => {
@@ -176,8 +177,38 @@ const CameraStreamBox = ({ cameraIP, cameraName }) => {
                         </div>
                     )}
             </div>
-            <div className="p-3 text-sm font-medium text-slate-800 dark:text-primary-100">
-                {cameraName}
+            <div className="flex items-center justify-between p-3 text-sm font-medium text-slate-800 dark:text-primary-100">
+                <span>{cameraName}</span>
+                {isConfirmingRemove ? (
+                    <div className="flex items-center gap-2">
+                        <span className="text-xs text-gray-500 dark:text-gray-400">
+                            Are you sure?
+                        </span>
+                        <button
+                            onClick={() => {
+                                onRemove();
+                                setIsConfirmingRemove(false);
+                            }}
+                            className="rounded bg-red-500 px-2 py-1 text-xs text-white transition-colors hover:bg-red-600"
+                        >
+                            Yes
+                        </button>
+                        <button
+                            onClick={() => setIsConfirmingRemove(false)}
+                            className="rounded bg-gray-200 px-2 py-1 text-xs text-gray-800 transition-colors hover:bg-gray-300 dark:bg-gray-600 dark:text-white dark:hover:bg-gray-500"
+                        >
+                            No
+                        </button>
+                    </div>
+                ) : (
+                    <button
+                        onClick={() => setIsConfirmingRemove(true)}
+                        title="Remove camera"
+                        className="ml-2 rounded-full p-1.5 text-red-500 transition-colors hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    >
+                        <Trash2Icon className="h-4 w-4" />
+                    </button>
+                )}
             </div>
         </div>
     );
