@@ -131,6 +131,20 @@ const cameraController = {
       });
     },
   ),
+  deleteCamera: expressAsyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const camera: ICamera | null = await Camera.findByIdAndDelete(
+        req.params.id,
+      );
+      if (!camera) {
+        return next(new AppError('Camera not found', 404));
+      }
+      res.status(204).json({
+        status: 'success',
+        data: null,
+      });
+    },
+  ),
 };
 
 export default cameraController;
