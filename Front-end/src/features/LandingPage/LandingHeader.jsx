@@ -3,7 +3,7 @@ function LandingHeader() {
         <header className="flex items-center justify-between bg-transparent px-10 py-6">
             <div className="mx-4 flex items-center">
                 <img
-                    src="/Logo.svg"
+                    src="/Logo_light.svg"
                     alt="Logo"
                     className="h-14 w-auto bg-transparent"
                 />

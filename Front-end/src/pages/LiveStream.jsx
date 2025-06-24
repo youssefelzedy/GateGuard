@@ -19,11 +19,7 @@ function LiveStream() {
             </p>
             <div className="grid grid-cols-2 gap-4">
                 {cameras?.map((camera) => (
-                    <CameraStreamBox
-                        key={camera._id}
-                        cameraIP={camera.cameraIP}
-                        cameraName={camera.cameraName}
-                    />
+                    <CameraStreamBox key={camera._id} camera={camera} />
                 ))}
             </div>
             {/* Modal for adding a camera */}
