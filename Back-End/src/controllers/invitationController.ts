@@ -122,21 +122,142 @@ const invitationController = {
       });
       const invitationURL = `https://gateguard.me:5173/invite-user/${invitation.token}`;
       const htmlMessage = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e1e1e1; border-radius: 5px;">
-        <h2 style="color: #333; text-align: center;">GateGuard Invitation</h2>
-        <p>Hello,</p>
-        <p>You have been invited to join <strong>${garage.garageName}</strong> as a user.</p>
-        <p>Please click the button below to accept the invitation:</p>
-        <div style="text-align: center; margin: 25px 0;">
-          <a href="${invitationURL}" style="background-color: #4CAF50; color: white; padding: 12px 20px; text-decoration: none; border-radius: 4px; font-weight: bold;">Accept Invitation</a>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>GateGuard Invitation</title>
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
+            body {
+                background: #f8fafc;
+                margin: 0;
+                padding: 0;
+            }
+            .gg-card {
+                font-family: "Poppins", Arial, sans-serif;
+                max-width: 480px;
+                margin: 32px auto;
+                background: #fff;
+                border-radius: 18px;
+                border: 1px solid #e5e7eb;
+                box-shadow: 0 4px 24px rgba(30, 41, 59, 0.07);
+                overflow: hidden;
+            }
+            .gg-header {
+                background: linear-gradient(90deg, #2563eb 0%, #0ea5e9 100%);
+                padding: 32px 0 20px 0;
+                text-align: center;
+            }
+            .gg-header img {
+                height: 80px;
+                margin-bottom: 10px;
+            }
+            .gg-header h2 {
+                color: #fff;
+                font-size: 1.6rem;
+                font-weight: 700;
+                margin: 0;
+                letter-spacing: 0.01em;
+            }
+            .gg-content {
+                padding: 28px 28px 18px 28px;
+            }
+            .gg-content p {
+                color: #334155;
+                font-size: 1.05rem;
+                margin: 0 0 14px 0;
+            }
+            .gg-content strong {
+                color: #2563eb;
+                font-weight: 600;
+            }
+            .gg-content .role {
+                color: #0ea5e9;
+                font-weight: 500;
+            }
+            .gg-btn-wrap {
+                text-align: center;
+                margin: 30px 0;
+            }
+            .gg-btn {
+                display: inline-block;
+                background: linear-gradient(90deg, #2563eb 0%, #0ea5e9 100%);
+                color: #fff;
+                padding: 13px 36px;
+                border-radius: 7px;
+                font-weight: 600;
+                font-size: 1.08rem;
+                text-decoration: none;
+                box-shadow: 0 2px 8px rgba(16, 30, 54, 0.1);
+                letter-spacing: 0.01em;
+                transition: background 0.2s;
+            }
+            .gg-note {
+                color: #64748b;
+                font-size: 0.98rem;
+                margin-bottom: 8px;
+            }
+            .gg-url {
+                background: #f1f5f9;
+                color: #2563eb;
+                padding: 12px;
+                border-radius: 6px;
+                font-size: 0.93rem;
+                word-break: break-all;
+                margin-bottom: 18px;
+            }
+            .gg-footer {
+                font-size: 0.85rem;
+                color: #94a3b8;
+                margin-top: 32px;
+                text-align: center;
+                padding-bottom: 18px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="gg-card">
+            <div class="gg-header">
+                <img
+                    src="https://gateguard.me/Logo_light.svg"
+                    alt="GateGuard Logo" />
+                <h2>GateGuard Invitation</h2>
+            </div>
+            <div class="gg-content">
+                <p>Hello,</p>
+                <p>
+                    You have been invited to join
+                    <strong>${garage.garageName}</strong>
+                    as a
+                    <span class="role">User</span>
+                    .
+                </p>
+                <p>Please click the button below to accept the invitation:</p>
+                <div class="gg-btn-wrap">
+                    <a href="${invitationURL}" class="gg-btn">
+                        Accept Invitation
+                    </a>
+                </div>
+                <p class="gg-note">
+                    This invitation link will expire in
+                    <strong>7 days</strong>
+                    .
+                </p>
+                <p>
+                    If the button doesn't work, copy and paste this URL into
+                    your browser:
+                </p>
+                <div class="gg-url">${invitationURL}</div>
+                <div class="gg-footer">
+                    &copy; ${new Date().getFullYear()} GateGuard. All rights
+                    reserved.
+                </div>
+            </div>
         </div>
-        <p>This invitation link will expire in 7 days.</p>
-        <p>If the button doesn't work, copy and paste this URL into your browser:</p>
-        <p style="background-color: #f7f7f7; padding: 10px; word-break: break-all;">${invitationURL}</p>
-        <p style="font-size: 12px; color: #777; margin-top: 30px; text-align: center;">
-          &copy; ${new Date().getFullYear()} GateGuard. All rights reserved.
-        </p>
-      </div>
+    </body>
+</html>
+
     `;
       try {
         await sendEmail({
