@@ -48,7 +48,7 @@ function Settings() {
             {
                 id: admin?.garage?.id,
                 garageName,
-                garageLocation,
+                location: garageLocation,
             },
             {
                 onSuccess: () => {
