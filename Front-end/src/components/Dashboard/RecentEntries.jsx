@@ -1,9 +1,9 @@
 //eslint-disable-next-line
 import { motion } from "framer-motion";
 import { useAdmin } from "../../features/auth/useAdmin";
-import { useUsers } from "../../features/users/useUsers";
+import { useLogs } from "../../features/logsPage/useLogs";
 import Plate from "../../ui/Plate";
-import { Clock } from "lucide-react";
+import { Calendar, Clock } from "lucide-react";
 
 // Enhanced row animation variants
 const rowVariants = {
@@ -28,10 +28,13 @@ const rowVariants = {
 
 function RecentEntries() {
     const { admin } = useAdmin();
-    const { users } = useUsers(admin?.garage.id);
+    const garageId = admin?.garage?.id;
+    const { logs, isLoading } = useLogs(garageId);
 
-    const recentUsers = [...(users || [])]
-        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    // Get the latest 3 logs
+    const recentLogs = (logs || [])
+        .slice()
+        .sort((a, b) => new Date(b.accessTime) - new Date(a.accessTime))
         .slice(0, 3);
 
     return (
@@ -55,6 +58,12 @@ function RecentEntries() {
                                 Plate
                             </th>
                             <th className="px-4 py-3 text-left text-sm font-medium text-primary-900 dark:text-primary-100">
+                                User
+                            </th>
+                            <th className="px-4 py-3 text-left text-sm font-medium text-primary-900 dark:text-primary-100">
+                                Date
+                            </th>
+                            <th className="px-4 py-3 text-left text-sm font-medium text-primary-900 dark:text-primary-100">
                                 Time
                             </th>
                             <th className="px-4 py-3 text-left text-sm font-medium text-primary-900 dark:text-primary-100">
@@ -63,54 +72,104 @@ function RecentEntries() {
                         </tr>
                     </thead>
                     <tbody>
-                        {recentUsers.map((user, index) => (
-                            <motion.tr
-                                key={index}
-                                custom={index}
-                                initial="hidden"
-                                animate="visible"
-                                whileHover="hover"
-                                variants={rowVariants}
-                                className="border-t border-primary-200 bg-white dark:border-primary-700 dark:bg-gray-800"
-                            >
-                                <td className="px-4 py-5">
-                                    <div className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary-100 text-sm font-bold text-primary-700 shadow-sm dark:bg-primary-700 dark:text-primary-100">
-                                        {String(index + 1).padStart(2, "0")}
-                                    </div>
+                        {isLoading ? (
+                            <tr>
+                                <td
+                                    colSpan={6}
+                                    className="p-6 text-center text-gray-400 dark:text-gray-500"
+                                >
+                                    Loading...
                                 </td>
-
-                                <td className="py-5">
-                                    <div className="flex items-center gap-3">
-                                        <div>
-                                            <Plate
-                                                carPlate={user?.carPlate || "-"}
-                                                className="scale-90"
-                                            />
-                                            <div className="mt-1 text-xs text-primary-400 dark:text-primary-300">
-                                                Garage:{" "}
-                                                {user?.garage?.name || "1"}
-                                            </div>
+                            </tr>
+                        ) : recentLogs.length > 0 ? (
+                            recentLogs.map((log, index) => (
+                                <motion.tr
+                                    key={log._id}
+                                    custom={index}
+                                    initial="hidden"
+                                    animate="visible"
+                                    whileHover="hover"
+                                    variants={rowVariants}
+                                    className="border-t border-primary-200 bg-white dark:border-primary-700 dark:bg-gray-800"
+                                >
+                                    <td className="px-4 py-5">
+                                        <div className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary-100 text-sm font-bold text-primary-700 shadow-sm dark:bg-primary-700 dark:text-primary-100">
+                                            {String(index + 1).padStart(2, "0")}
                                         </div>
-                                    </div>
-                                </td>
-
-                                <td className="py-5 text-primary-600 dark:text-primary-300">
-                                    {new Date().toLocaleTimeString()}
-                                </td>
-
-                                <td className="py-5">
-                                    {user.status === "accept" ? (
-                                        <span className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-sm font-medium text-green-800 dark:bg-green-700 dark:text-green-100">
-                                            Accept
+                                    </td>
+                                    <td className="py-5">
+                                        <Plate
+                                            carPlate={log.plateText || "-"}
+                                            className="scale-90"
+                                        />
+                                    </td>
+                                    <td className="py-5">
+                                        {log.user && log.user.name ? (
+                                            <div>
+                                                <div className="font-semibold text-gray-800 dark:text-white">
+                                                    {log.user.name}
+                                                </div>
+                                                <div className="text-sm text-gray-500 dark:text-gray-400">
+                                                    {log.user.phoneNumber}
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <span className="italic text-gray-400 dark:text-gray-500">
+                                                No User Found
+                                            </span>
+                                        )}
+                                    </td>
+                                    <td className="py-5 text-primary-600 dark:text-primary-300">
+                                        <div className="flex items-center gap-2">
+                                            <Calendar className="h-5 w-5 text-gray-400" />
+                                            <span>
+                                                {new Date(
+                                                    log.accessTime,
+                                                ).toLocaleDateString("en-GB", {
+                                                    year: "numeric",
+                                                    month: "2-digit",
+                                                    day: "2-digit",
+                                                })}
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td className="py-5 text-primary-600 dark:text-primary-300">
+                                        <div className="flex items-center gap-2">
+                                            <Clock className="h-5 w-5 text-gray-400" />
+                                            <span>
+                                                {new Date(
+                                                    log.accessTime,
+                                                ).toLocaleTimeString("en-US", {
+                                                    hour: "2-digit",
+                                                    minute: "2-digit",
+                                                    hour12: true,
+                                                })}
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td className="py-5">
+                                        <span
+                                            className={`rounded-full px-3 py-1.5 text-sm font-semibold ${
+                                                log.action === "Accepted"
+                                                    ? "bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300"
+                                                    : "bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300"
+                                            }`}
+                                        >
+                                            {log.action}
                                         </span>
-                                    ) : (
-                                        <span className="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-sm font-medium text-red-800 dark:bg-red-700 dark:text-red-100">
-                                            Denied
-                                        </span>
-                                    )}
+                                    </td>
+                                </motion.tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td
+                                    colSpan={6}
+                                    className="p-6 text-center text-gray-400 dark:text-gray-500"
+                                >
+                                    No recent entries found.
                                 </td>
-                            </motion.tr>
-                        ))}
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>
