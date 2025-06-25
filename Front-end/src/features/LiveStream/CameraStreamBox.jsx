@@ -1,97 +1,93 @@
 import { useRef, useState, useEffect } from "react";
-import { FullscreenIcon, Trash2Icon } from "lucide-react";
+import Hls from "hls.js";
+import { FullscreenIcon, Trash2Icon, Loader2 } from "lucide-react";
 import { useDeleteCamera } from "./useDeleteCamera";
+
+const VideoControlButton = ({ onClick, icon, disabled, tooltip }) => (
+    <button
+        onClick={onClick}
+        className={`rounded-full bg-white/80 p-2.5 transition-all hover:scale-105 hover:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            disabled ? "cursor-not-allowed opacity-50" : ""
+        }`}
+        disabled={disabled}
+        title={tooltip}
+    >
+        {icon}
+    </button>
+);
 
 const CameraStreamBox = ({ camera }) => {
     const { cameraIP, cameraName, _id: cameraId } = camera;
     const videoRef = useRef(null);
     const containerRef = useRef(null);
-    const [streamType, setStreamType] = useState(null);
+
+    const [streamConfig, setStreamConfig] = useState({
+        type: "loading",
+        url: "",
+    });
+    const [fallbackAttempt, setFallbackAttempt] = useState(false);
     const [error, setError] = useState(null);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [isConfirmingRemove, setIsConfirmingRemove] = useState(false);
+
     const { deleteCamera } = useDeleteCamera();
 
     useEffect(() => {
-        const determineStreamType = async () => {
-            try {
-                const urlLower = cameraIP.toLowerCase();
-                if (
-                    urlLower.endsWith(".mp4") ||
-                    urlLower.endsWith(".webm") ||
-                    urlLower.endsWith(".m3u8")
-                ) {
-                    setStreamType("video");
-                    return;
-                }
-                if (
-                    urlLower.includes("mjpeg") ||
-                    urlLower.includes("jpg") ||
-                    urlLower.includes("jpeg") ||
-                    urlLower.includes("videofeed")
-                ) {
-                    setStreamType("mjpeg");
-                    return;
-                }
-                if (urlLower.startsWith("rtsp://")) {
-                    setStreamType("unsupported");
-                    setError(
-                        "RTSP streams are not supported directly. Use a server-side converter to HLS.",
-                    );
-                    return;
-                }
+        const sanitizedUrl = cameraIP.trim().replace(/^@/, "");
+        setStreamConfig({ type: "loading", url: "" });
+        setError(null);
+        setFallbackAttempt(false);
 
-                try {
-                    const response = await fetch(cameraIP, {
-                        method: "HEAD",
-                        mode: "cors",
-                    });
-                    const contentType = response.headers
-                        .get("content-type")
-                        ?.toLowerCase();
-                    if (
-                        contentType?.includes("video/") ||
-                        contentType?.includes("application/vnd.apple.mpegurl")
-                    ) {
-                        setStreamType("video");
-                    } else if (
-                        contentType?.includes("multipart/x-mixed-replace") ||
-                        contentType?.includes("image/jpeg")
-                    ) {
-                        setStreamType("mjpeg");
-                    } else {
-                        if (urlLower.includes("videofeed")) {
-                            setStreamType("mjpeg");
-                        } else {
-                            setStreamType("unsupported");
-                            setError("Unsupported stream format.");
-                        }
-                    }
-                } catch (fetchErr) {
-                    console.warn("Fetch failed, trying as MJPEG:", fetchErr);
-                    if (urlLower.includes("videofeed")) {
-                        setStreamType("mjpeg");
-                    } else {
-                        setStreamType("unsupported");
-                        setError(
-                            "Failed to fetch stream headers. Check CORS or network.",
-                        );
-                    }
-                }
-            } catch (err) {
-                console.error("Error determining stream type:", err);
-                setStreamType("unsupported");
-                setError("Failed to load stream. Check URL, CORS, or network.");
-            }
-        };
+        const urlLower = sanitizedUrl.toLowerCase();
 
-        determineStreamType();
+        if (urlLower.endsWith(".m3u8")) {
+            setStreamConfig({ type: "hls", url: sanitizedUrl });
+        } else if (urlLower.endsWith(".mp4") || urlLower.endsWith(".webm")) {
+            setStreamConfig({ type: "video", url: sanitizedUrl });
+        } else if (
+            urlLower.includes("mjpeg") ||
+            urlLower.includes("jpg") ||
+            urlLower.includes("jpeg") ||
+            urlLower.includes("videofeed")
+        ) {
+            setStreamConfig({ type: "mjpeg", url: sanitizedUrl });
+        } else if (urlLower.startsWith("rtsp://")) {
+            setStreamConfig({ type: "unsupported", url: sanitizedUrl });
+            setError(
+                "RTSP streams are not directly supported. Use a converter to HLS.",
+            );
+        } else {
+            setStreamConfig({ type: "unknown", url: sanitizedUrl });
+        }
     }, [cameraIP]);
 
     useEffect(() => {
-        const handleFullscreenChange = () => {
+        if (
+            streamConfig.type === "hls" &&
+            Hls.isSupported() &&
+            videoRef.current
+        ) {
+            const hls = new Hls();
+            hls.loadSource(streamConfig.url);
+            hls.attachMedia(videoRef.current);
+            hls.on(Hls.Events.MANIFEST_PARSED, () => {
+                videoRef.current.play().catch(() => {
+                    console.warn("Autoplay was prevented by the browser.");
+                });
+            });
+            hls.on(Hls.Events.ERROR, (event, data) => {
+                if (data.fatal) {
+                    setError(`HLS Error: ${data.details}`);
+                    console.error("HLS fatal error:", data);
+                }
+            });
+            return () => hls.destroy();
+        }
+    }, [streamConfig]);
+
+    useEffect(() => {
+        const handleFullscreenChange = () =>
             setIsFullscreen(!!document.fullscreenElement);
-        };
         document.addEventListener("fullscreenchange", handleFullscreenChange);
         return () =>
             document.removeEventListener(
@@ -114,20 +110,7 @@ const CameraStreamBox = ({ camera }) => {
         }
     };
 
-    const VideoControlButton = ({ onClick, icon, disabled, tooltip }) => (
-        <button
-            onClick={onClick}
-            className={`rounded-full bg-white/80 p-2.5 transition-all hover:scale-105 hover:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                disabled ? "cursor-not-allowed opacity-50" : ""
-            }`}
-            disabled={disabled}
-            title={tooltip}
-        >
-            {icon}
-        </button>
-    );
-
-    const handelDeleteCamera = () => {
+    const handleDelete = () => {
         deleteCamera(cameraId, {
             onSuccess: () => {
                 setIsConfirmingRemove(false);
@@ -136,58 +119,122 @@ const CameraStreamBox = ({ camera }) => {
         });
     };
 
+    const handleVideoError = () => {
+        if (streamConfig.type === "unknown" && !fallbackAttempt) {
+            setFallbackAttempt(true);
+        } else {
+            setError(`Failed to load video stream.`);
+        }
+    };
+
+    const handleImageError = () => {
+        setError(
+            "Could not load stream. Check URL, CORS, or network settings.",
+        );
+    };
+
+    const renderStream = () => {
+        if (streamConfig.type === "loading") {
+            return (
+                <div className="flex h-full w-full items-center justify-center">
+                    <Loader2 className="h-10 w-10 animate-spin text-white" />
+                </div>
+            );
+        }
+
+        if (error) {
+            return (
+                <div className="flex h-full w-full items-center justify-center p-4 text-center text-white dark:text-primary-100">
+                    <p>{error}</p>
+                </div>
+            );
+        }
+
+        if (streamConfig.type === "unknown") {
+            if (!fallbackAttempt) {
+                return (
+                    <video
+                        ref={videoRef}
+                        src={streamConfig.url}
+                        className="h-full w-full object-cover"
+                        autoPlay
+                        muted
+                        playsInline
+                        onError={handleVideoError}
+                    />
+                );
+            } else {
+                return (
+                    <img
+                        src={streamConfig.url}
+                        alt="MJPEG Stream"
+                        className="h-full w-full object-cover"
+                        onError={handleImageError}
+                    />
+                );
+            }
+        }
+
+        switch (streamConfig.type) {
+            case "hls":
+            case "video":
+                return (
+                    <video
+                        ref={videoRef}
+                        src={
+                            streamConfig.type === "video"
+                                ? streamConfig.url
+                                : undefined
+                        }
+                        className="h-full w-full object-cover"
+                        autoPlay
+                        muted
+                        playsInline
+                        onError={handleVideoError}
+                    />
+                );
+            case "mjpeg":
+                return (
+                    <img
+                        src={streamConfig.url}
+                        alt="MJPEG Stream"
+                        className="h-full w-full object-cover"
+                        onError={handleImageError}
+                    />
+                );
+            default:
+                return null;
+        }
+    };
+
     return (
         <div className="font-poppins overflow-hidden rounded-xl border bg-white shadow-md dark:border-gray-700 dark:bg-gray-800">
             <div
                 ref={containerRef}
                 className="relative h-[400px] w-full bg-black dark:bg-gray-900"
             >
-                {streamType === "video" && (
-                    <video
-                        ref={videoRef}
-                        src={cameraIP}
-                        className="h-full w-full object-cover"
-                        autoPlay
-                        muted
-                        playsInline
-                        onError={() => setError("Failed to load video stream.")}
-                    />
-                )}
-                {streamType === "mjpeg" && (
-                    <img
-                        src={cameraIP}
-                        alt="MJPEG Stream"
-                        className="h-full w-full object-cover"
-                        onError={() => setError("Failed to load MJPEG stream.")}
-                    />
-                )}
-                {(streamType === "unsupported" || error) && (
-                    <div className="flex h-full w-full items-center justify-center p-4 text-center text-white dark:text-primary-100">
-                        <p>{error || "Stream not supported."}</p>
+                {renderStream()}
+                {!error && (
+                    <div className="absolute bottom-3 right-3 flex gap-2">
+                        <VideoControlButton
+                            onClick={toggleFullscreen}
+                            icon={
+                                <FullscreenIcon
+                                    className={`h-5 w-5 transition-colors ${
+                                        isFullscreen
+                                            ? "text-primary-500 dark:text-primary-400"
+                                            : "text-gray-800"
+                                    }`}
+                                />
+                            }
+                            tooltip={
+                                isFullscreen
+                                    ? "Exit fullscreen"
+                                    : "Enter fullscreen"
+                            }
+                        />
                     </div>
                 )}
-                {(streamType === "video" || streamType === "mjpeg") &&
-                    !error && (
-                        <div className="absolute bottom-3 right-3 flex gap-2">
-                            <VideoControlButton
-                                onClick={toggleFullscreen}
-                                icon={
-                                    <FullscreenIcon
-                                        className={`h-5 w-5 transition-colors ${
-                                            isFullscreen
-                                                ? "text-primary-500 dark:text-primary-400"
-                                                : "text-gray-800"
-                                        }`}
-                                    />
-                                }
-                                tooltip={
-                                    isFullscreen
-                                        ? "Exit fullscreen"
-                                        : "Enter fullscreen"
-                                }
-                            />
-                        </div>
-                    )}
             </div>
             <div className="flex items-center justify-between p-3 text-sm font-medium text-slate-800 dark:text-primary-100">
                 <span>{cameraName}</span>
@@ -197,7 +244,7 @@ const CameraStreamBox = ({ camera }) => {
                             Are you sure?
                         </span>
                         <button
-                            onClick={() => handelDeleteCamera()}
+                            onClick={handleDelete}
                             className="rounded bg-red-500 px-2 py-1 text-xs text-white transition-colors hover:bg-red-600"
                         >
                             Yes
