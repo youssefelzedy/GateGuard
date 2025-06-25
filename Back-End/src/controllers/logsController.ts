@@ -16,10 +16,18 @@ const logsController = {
   getAllLogs: expressAsyncHandler(async (req: Request, res: Response) => {
     let filter = {};
     if (req.params.garageId) filter = { garage: req.params.garageId };
-    const logs: ILog[] = await Logs.find(filter).populate({
-      path: 'user',
-      select: 'phoneNumber carPlate garage',
-    });
+
+    const logs: ILog[] = await Logs.find(filter)
+      .populate({
+        path: 'user',
+        select: 'phoneNumber name',
+      })
+      .populate({
+        path: 'garage',
+        select: 'name location',
+      })
+      .sort({ accessTime: -1 }); // Sort by most recent first
+
     res.status(200).json({
       status: 'success',
       results: logs.length,
@@ -29,14 +37,21 @@ const logsController = {
     });
   }),
   getLog: expressAsyncHandler(async (req: Request, res: Response) => {
-    const log: ILog | null = await Logs.findById(req.params.id).populate({
-      path: 'user',
-      select: 'phoneNumber carPlate garage',
-    });
+    const log: ILog | null = await Logs.findById(req.params.id)
+      .populate({
+        path: 'user',
+        select: 'phoneNumber name',
+      })
+      .populate({
+        path: 'garage',
+        select: 'name location',
+      });
+
     if (!log) {
       res.status(404);
       throw new AppError('Log not found', 404);
     }
+
     res.status(200).json({
       status: 'success',
       data: {
