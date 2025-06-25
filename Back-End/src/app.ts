@@ -10,6 +10,10 @@ import cors, { CorsOptions } from 'cors';
 import fs from 'fs';
 import path from 'path';
 import { getUploadPath } from './utils/fileUpload';
+import {
+  getUploadConfig,
+  ensureUploadDirectories,
+} from './config/uploadConfig';
 
 import AppError from './utils/appError';
 import globalErrorhandler from './utils/errorHandler';
@@ -24,9 +28,9 @@ import cameraRouter from './routes/cameraRoutes';
 const app = express();
 
 // Ensure the upload directory exists and serve static files
-const publicPath = getUploadPath();
-getUploadPath('images/admins'); // Ensure admin images directory exists
-app.use(express.static(publicPath));
+ensureUploadDirectories();
+const uploadConfig = getUploadConfig();
+app.use(express.static(uploadConfig.basePath));
 
 // 1) GLOBAL MIDDLEWARES
 // Enable CORS for all routes

@@ -8,19 +8,44 @@ import fs from 'fs';
 export const getUploadPath = (subPath: string = ''): string => {
   const isProduction = process.env.NODE_ENV === 'production';
 
-  // In production: dist/ -> project root -> public/
-  // In development: src/ -> project root -> public/
-  const basePublicPath = isProduction
-    ? path.join(__dirname, '../../public')
-    : path.join(__dirname, '../../public');
+  // Use process.cwd() to get the actual working directory
+  // This is more reliable than __dirname which changes based on build location
+  const projectRoot = process.cwd();
+  const basePublicPath = path.join(projectRoot, 'public');
 
   const fullPath = subPath
     ? path.join(basePublicPath, subPath)
     : basePublicPath;
 
+  // Log for debugging
+  console.log('Upload path calculation:', {
+    isProduction,
+    projectRoot,
+    __dirname,
+    basePublicPath,
+    fullPath,
+    subPath,
+    exists_before_create: fs.existsSync(fullPath),
+  });
+
   // Ensure the directory exists
   if (!fs.existsSync(fullPath)) {
-    fs.mkdirSync(fullPath, { recursive: true });
+    console.log('Creating directory:', fullPath);
+    try {
+      fs.mkdirSync(fullPath, { recursive: true });
+      console.log('Directory created successfully');
+
+      // Verify it was created
+      if (fs.existsSync(fullPath)) {
+        console.log('Directory verification passed');
+      } else {
+        console.error('Directory creation verification failed');
+      }
+    } catch (error) {
+      console.error('Error creating directory:', error);
+    }
+  } else {
+    console.log('Directory already exists');
   }
 
   return fullPath;

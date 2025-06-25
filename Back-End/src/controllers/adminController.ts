@@ -9,17 +9,53 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 import { getUploadPath, verifyFileExists } from '../utils/fileUpload';
+import { getUploadConfig } from '../config/uploadConfig';
 
 // Configure multer for file storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const uploadPath = getUploadPath('images/admins');
-    cb(null, uploadPath);
+    try {
+      const uploadConfig = getUploadConfig();
+      const uploadPath = uploadConfig.adminsPath;
+
+      console.log('Multer destination callback:', {
+        uploadPath,
+        exists: fs.existsSync(uploadPath),
+        env: process.env.NODE_ENV,
+        uploadConfig,
+      });
+
+      // Double-check directory exists and is writable
+      if (!fs.existsSync(uploadPath)) {
+        fs.mkdirSync(uploadPath, { recursive: true });
+      }
+
+      // Test write permissions
+      const testFile = path.join(uploadPath, '.test-write');
+      fs.writeFileSync(testFile, 'test');
+      fs.unlinkSync(testFile);
+
+      cb(null, uploadPath);
+    } catch (error) {
+      console.error('Error in multer destination callback:', error);
+      cb(error as any, '');
+    }
   },
   filename: (req, file, cb) => {
-    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-    const ext = path.extname(file.originalname);
-    cb(null, `admin-${req.user!._id}-${uniqueSuffix}${ext}`);
+    try {
+      const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+      const ext = path.extname(file.originalname);
+      const filename = `admin-${req.user!._id}-${uniqueSuffix}${ext}`;
+      console.log('Multer filename callback:', {
+        originalname: file.originalname,
+        generatedFilename: filename,
+        userId: req.user!._id,
+      });
+      cb(null, filename);
+    } catch (error) {
+      console.error('Error in multer filename callback:', error);
+      cb(error as any, '');
+    }
   },
 });
 
@@ -104,8 +140,23 @@ const adminController = {
         dirname: __dirname,
       });
 
+      // Check if destination directory exists
+      const destinationExists = fs.existsSync(req.file.destination);
+      console.log('Destination directory check:', {
+        destination: req.file.destination,
+        exists: destinationExists,
+        stats: destinationExists ? fs.statSync(req.file.destination) : 'N/A',
+      });
+
       // Verify the file actually exists
-      if (!verifyFileExists(req.file.path)) {
+      const fileExists = verifyFileExists(req.file.path);
+      console.log('File existence check:', {
+        filePath: req.file.path,
+        exists: fileExists,
+        stats: fileExists ? fs.statSync(req.file.path) : 'N/A',
+      });
+
+      if (!fileExists) {
         return next(
           new AppError('File upload failed - file not saved to disk', 500),
         );
@@ -166,6 +217,83 @@ const adminController = {
         data: {
           admin,
         },
+      });
+    },
+  ),
+
+  // Debug endpoint to check file paths in production
+  debugPaths: expressAsyncHandler(async (req: Request, res: Response) => {
+    const uploadPath = getUploadPath('images/admins');
+    const uploadConfig = getUploadConfig();
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        environment: process.env.NODE_ENV,
+        cwd: process.cwd(),
+        dirname: __dirname,
+        oldUploadPath: uploadPath,
+        oldUploadPathExists: fs.existsSync(uploadPath),
+        newUploadConfig: uploadConfig,
+        newAdminsPathExists: fs.existsSync(uploadConfig.adminsPath),
+        publicPath: getUploadPath(),
+        publicPathExists: fs.existsSync(getUploadPath()),
+        directoryContents: fs.existsSync(uploadConfig.adminsPath)
+          ? fs.readdirSync(uploadConfig.adminsPath)
+          : 'Directory does not exist',
+      },
+    });
+  }),
+
+  // Serve individual admin images
+  getAdminImage: expressAsyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const { filename } = req.params;
+
+      if (!filename) {
+        return next(new AppError('Image filename is required', 400));
+      }
+
+      const uploadConfig = getUploadConfig();
+      const imagePath = path.join(uploadConfig.adminsPath, filename);
+
+      // Check if file exists
+      if (!fs.existsSync(imagePath)) {
+        return next(new AppError('Image not found', 404));
+      }
+
+      // Verify it's actually an image file
+      const ext = path.extname(filename).toLowerCase();
+      const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+
+      if (!allowedExtensions.includes(ext)) {
+        return next(new AppError('Invalid image format', 400));
+      }
+
+      // Set appropriate content type
+      const contentTypes: { [key: string]: string } = {
+        '.jpg': 'image/jpeg',
+        '.jpeg': 'image/jpeg',
+        '.png': 'image/png',
+        '.gif': 'image/gif',
+        '.webp': 'image/webp',
+      };
+
+      const contentType = contentTypes[ext] || 'image/jpeg';
+
+      // Set cache headers for better performance
+      res.set({
+        'Content-Type': contentType,
+        'Cache-Control': 'public, max-age=86400', // Cache for 24 hours
+        ETag: `"${filename}-${fs.statSync(imagePath).mtime.getTime()}"`,
+      });
+
+      // Send the file
+      res.sendFile(imagePath, (err) => {
+        if (err) {
+          console.error('Error sending file:', err);
+          return next(new AppError('Error serving image', 500));
+        }
       });
     },
   ),
