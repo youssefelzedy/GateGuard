@@ -1,7 +1,9 @@
-import { BellRing, Mail, LogOut, Sun, Moon } from "lucide-react";
+import { Sun, Moon } from "lucide-react";
 import { useAdmin } from "../features/auth/useAdmin";
 import { useNavigate } from "react-router-dom";
 import { useDarkMode } from "../context/DarkModeContext";
+
+const VITE_API_URL_PICTURE = import.meta.env.VITE_API_URL_PICTURE;
 
 function Header() {
     const { admin } = useAdmin();
@@ -28,7 +30,7 @@ function Header() {
                         <img
                             src={
                                 admin?.image
-                                    ? `https://gateguard.me:5174/public/images/admins/${admin.image}`
+                                    ? `${VITE_API_URL_PICTURE}/${admin.image}`
                                     : "default.jpg"
                             }
                             alt="Profile"

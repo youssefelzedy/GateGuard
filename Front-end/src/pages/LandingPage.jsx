@@ -9,7 +9,7 @@ import LandingHeader from "../features/LandingPage/LandingHeader";
 import Slider from "../features/LandingPage/Slider";
 import FloatingCTA from "../features/LandingPage/FloatingCTA";
 import ScrollProgress from "../features/LandingPage/ScrollProgress";
-import loader from "../../public/Loading_Animation_3_clip.webm";
+import loader from "/Loading_Animation_3_clip.webm";
 
 function LandingPage() {
     const [isLoading, setIsLoading] = useState(true);

@@ -6,6 +6,8 @@ import { User, Phone, IdCard, Camera } from "lucide-react";
 import { useAdmin } from "../features/auth/useAdmin";
 import { useUpdateAdmin } from "../features/auth/useUpdateAdmin";
 
+const VITE_API_URL_PICTURE = import.meta.env.VITE_API_URL_PICTURE;
+
 const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -158,7 +160,7 @@ function Profile() {
                                                           previewImage,
                                                       )
                                                     : admin?.image
-                                                      ? `https://gateguard.me:5174/public/images/admins/${admin.image}`
+                                                      ? `${VITE_API_URL_PICTURE}/${admin.image}`
                                                       : "/default.jpg"
                                             }
                                             alt="Profile"
