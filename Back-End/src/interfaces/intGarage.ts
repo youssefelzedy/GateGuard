@@ -5,7 +5,7 @@ interface IGarage extends Document {
   location: string;
   currentOccupancy: number;
   active: boolean;
+  gateStatus: 'Open' | 'Closed';
 }
-
 
 export default IGarage;
