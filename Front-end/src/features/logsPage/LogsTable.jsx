@@ -92,7 +92,7 @@ function LogsTable() {
 
     return (
         <div className="rounded-2xl bg-white p-6 shadow-xl dark:bg-gray-900">
-            <h2 className="mb-6 text-2xl font-bold text-gray-800 dark:text-white">
+            <h2 className="mb-6 text-4xl font-bold text-gray-800 dark:text-white">
                 Access Logs
             </h2>
             <LogsOperations
