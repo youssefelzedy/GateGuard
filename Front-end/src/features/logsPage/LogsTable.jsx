@@ -1,143 +1,198 @@
+import { useState, useMemo } from "react";
+import { Calendar, Clock } from "lucide-react";
 import Plate from "../../ui/Plate";
-
-// const logs = [
-//     {
-//         _id: "68542c1b1c065e30f713a86d",
-//         plateText: "2-3-9-5-o-b-tt",
-//         user: "682615ebda99c0a6bfe73d84",
-//         garage: {
-//             _id: "680a65522b17d013e41c592d",
-//             garageName: "Swefy Sun Mall",
-//             id: "680a65522b17d013e41c592d",
-//         },
-//         action: "Accepted",
-//         accessTime: "2025-06-19T15:26:19.658Z",
-//     },
-//     {
-//         _id: "68542c211c065e30f713a86f",
-//         plateText: "2-3-9-5-b-tt",
-//         user: "68542c211c065e30f713a86e",
-//         garage: {
-//             _id: "680a65522b17d013e41c592d",
-//             garageName: "Swefy Sun Mall",
-//             id: "680a65522b17d013e41c592d",
-//         },
-//         action: "Denied",
-//         accessTime: "2025-06-19T15:26:25.729Z",
-//     },
-//     {
-//         _id: "68542c271c065e30f713a871",
-//         plateText: "2-3-9-5-b-tt",
-//         user: "68542c271c065e30f713a870",
-//         garage: {
-//             _id: "680a65522b17d013e41c592d",
-//             garageName: "Swefy Sun Mall",
-//             id: "680a65522b17d013e41c592d",
-//         },
-//         action: "Denied",
-//         accessTime: "2025-06-19T15:26:31.855Z",
-//     },
-//     {
-//         carDetection: [
-//             [0, 76.94654083251953, 365.0900573730469, 319.8037414550781, 2],
-//         ],
-//         plateDetection: [
-//             [
-//                 24.344873428344727, 256.9582214355469, 89.09928131103516,
-//                 292.40753173828125, 0.8505282402038574, 0,
-//             ],
-//         ],
-//         _id: "68542c341c065e30f713a873",
-//         plateText: "4-9-7-3-tt",
-//         user: "68542c341c065e30f713a872",
-//         garage: {
-//             _id: "680a65522b17d013e41c592d",
-//             garageName: "Swefy Sun Mall",
-//             id: "680a65522b17d013e41c592d",
-//         },
-//         action: "Denied",
-//         accessTime: "2025-06-19T15:26:44.335Z",
-//     },
-//     {
-//         carDetection: [
-//             [
-//                 203.47401428222656, 17.961294174194336, 548.1224975585938,
-//                 302.43505859375, 1,
-//             ],
-//         ],
-//         plateDetection: [
-//             [
-//                 341.6512145996094, 239.9118194580078, 422.8898010253906,
-//                 279.5970458984375, 0.8905428051948547, 0,
-//             ],
-//         ],
-//         _id: "68542c3a1c065e30f713a875",
-//         plateText: "2-3-9-5-g-b-tt",
-//         user: "68542c3a1c065e30f713a874",
-//         garage: {
-//             _id: "680a65522b17d013e41c592d",
-//             garageName: "Swefy Sun Mall",
-//             id: "680a65522b17d013e41c592d",
-//         },
-//         action: "Denied",
-//         accessTime: "2025-06-19T15:26:50.333Z",
-//     },
-//     {
-//         carDetection: [
-//             [
-//                 240.3966522216797, 74.24916076660156, 644.3539428710938,
-//                 392.98834228515625, 2,
-//             ],
-//         ],
-//         plateDetection: [
-//             [
-//                 395.2613830566406, 321.51776123046875, 493.53167724609375,
-//                 369.6739501953125, 0.9132472276687622, 0,
-//             ],
-//         ],
-//         _id: "68542c521c065e30f713a877",
-//         plateText: "2-3-9-5-2-b-tt",
-//         user: "68542c521c065e30f713a876",
-//         garage: {
-//             _id: "680a65522b17d013e41c592d",
-//             garageName: "Swefy Sun Mall",
-//             id: "680a65522b17d013e41c592d",
-//         },
-//         action: "Denied",
-//         accessTime: "2025-06-19T15:27:14.714Z",
-//     },
-// ];
+import { useLogs } from "./useLogs";
+import { useAdmin } from "../auth/useAdmin";
+import LogsTableHeader from "./LogsTableHeader";
+import LogsOperations from "./LogsOperations";
+import TablePagination from "../../components/Tables/TablePagination";
 
 function LogsTable() {
+    const { admin } = useAdmin();
+    const garageId = admin?.garage?.id;
+    const { logs } = useLogs(garageId);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [filterValue, setFilterValue] = useState("all");
+    const [sortConfig, setSortConfig] = useState({
+        key: "accessTime",
+        direction: "desc",
+    });
+
+    const itemsPerPage = 6;
+
+    const handleSearch = (e) => {
+        setSearchQuery(e.target.value);
+        setCurrentPage(1);
+    };
+
+    const handleFilter = (e) => {
+        setFilterValue(e.target.value);
+        setCurrentPage(1);
+    };
+
+    const handleSort = (key) => {
+        setSortConfig((prev) => ({
+            key,
+            direction:
+                prev.key === key && prev.direction === "asc" ? "desc" : "asc",
+        }));
+    };
+
+    const filteredLogs = useMemo(() => {
+        if (!logs) return [];
+        return logs.filter((log) => {
+            const searchLower = searchQuery.toLowerCase();
+            const matchesSearch =
+                log.plateText.toLowerCase().includes(searchLower) ||
+                log.user?.name?.toLowerCase().includes(searchLower);
+
+            const matchesFilter =
+                filterValue === "all" || log.action === filterValue;
+
+            return matchesSearch && matchesFilter;
+        });
+    }, [logs, searchQuery, filterValue]);
+
+    const sortedLogs = useMemo(() => {
+        return [...filteredLogs].sort((a, b) => {
+            if (!sortConfig.key) return 0;
+
+            const keys = sortConfig.key.split(".");
+            let aValue = a;
+            let bValue = b;
+            for (let key of keys) {
+                aValue = aValue ? aValue[key] : undefined;
+                bValue = bValue ? bValue[key] : undefined;
+            }
+
+            aValue = aValue?.toString().toLowerCase() || "";
+            bValue = bValue?.toString().toLowerCase() || "";
+
+            if (aValue < bValue) return sortConfig.direction === "asc" ? -1 : 1;
+            if (aValue > bValue) return sortConfig.direction === "asc" ? 1 : -1;
+            return 0;
+        });
+    }, [filteredLogs, sortConfig]);
+
+    const paginatedLogs = useMemo(() => {
+        return sortedLogs.slice(
+            (currentPage - 1) * itemsPerPage,
+            currentPage * itemsPerPage,
+        );
+    }, [sortedLogs, currentPage, itemsPerPage]);
+
+    const totalPages = Math.ceil(sortedLogs.length / itemsPerPage);
+
+    const handlePrevPage = () =>
+        setCurrentPage((prev) => Math.max(prev - 1, 1));
+    const handleNextPage = () =>
+        setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+
     return (
-        <div className="mt-6">
-            <table className="w-full table-auto border-collapse rounded-3xl text-left">
-                <thead>
-                    <tr className="bg-primary-100 font-medium text-primary-900">
-                        <th className="p-3">Plate Number</th>
-                        <th className="p-3">Date</th>
-                        <th className="p-3">State</th>
-                        <th className="p-3">User Name</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {[1, 2, 3, 4, 5].map((item, index) => (
-                        <tr
-                            key={item}
-                            className={`border-b border-primary-200 transition hover:bg-primary-100 ${
-                                index % 2 === 0
-                                    ? "bg-primary-50"
-                                    : "bg-primary-100"
-                            }`}
-                        >
-                            <td className="p-3">{/* <Plate /> */}</td>
-                            <td className="p-3">2023-10-01</td>
-                            <td className="p-3">In</td>
-                            <td className="p-3">John Doe</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+        <div className="rounded-2xl bg-white p-6 shadow-xl dark:bg-gray-900">
+            <h2 className="mb-6 text-2xl font-bold text-gray-800 dark:text-white">
+                Access Logs
+            </h2>
+            <LogsOperations
+                searchQuery={searchQuery}
+                onSearchChange={handleSearch}
+                filterValue={filterValue}
+                onFilterChange={handleFilter}
+            />
+            <div className="overflow-x-auto">
+                <table className="w-full text-left">
+                    <LogsTableHeader
+                        onSort={handleSort}
+                        sortConfig={sortConfig}
+                    />
+                    <tbody>
+                        {paginatedLogs.length > 0 ? (
+                            paginatedLogs.map((log) => (
+                                <tr
+                                    key={log._id}
+                                    className="border-b border-gray-200 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800/50"
+                                >
+                                    <td className="p-4 align-middle">
+                                        <Plate carPlate={log.plateText} />
+                                    </td>
+                                    <td className="p-4 align-middle">
+                                        {log.user && log.user.name ? (
+                                            <div>
+                                                <div className="font-semibold text-gray-800 dark:text-white">
+                                                    {log.user.name}
+                                                </div>
+                                                <div className="text-sm text-gray-500 dark:text-gray-400">
+                                                    {log.user.phoneNumber}
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <span className="italic text-gray-400 dark:text-gray-500">
+                                                No User Found
+                                            </span>
+                                        )}
+                                    </td>
+                                    <td className="p-4 align-middle text-gray-700 dark:text-gray-300">
+                                        <div className="flex items-center gap-2">
+                                            <Calendar className="h-5 w-5 text-gray-400" />
+                                            <span>
+                                                {new Date(
+                                                    log.accessTime,
+                                                ).toLocaleDateString("en-GB", {
+                                                    year: "numeric",
+                                                    month: "2-digit",
+                                                    day: "2-digit",
+                                                })}
+                                            </span>
+                                        </div>
+                                        <div className="mt-1 flex items-center gap-2">
+                                            <Clock className="h-5 w-5 text-gray-400" />
+                                            <span>
+                                                {new Date(
+                                                    log.accessTime,
+                                                ).toLocaleTimeString("en-US", {
+                                                    hour: "2-digit",
+                                                    minute: "2-digit",
+                                                    hour12: true,
+                                                })}
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td className="p-4 align-middle">
+                                        <span
+                                            className={`rounded-full px-3 py-1.5 text-sm font-semibold ${
+                                                log.action === "Accepted"
+                                                    ? "bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300"
+                                                    : "bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300"
+                                            }`}
+                                        >
+                                            {log.action}
+                                        </span>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td
+                                    colSpan={4}
+                                    className="p-6 text-center text-gray-400 dark:text-gray-500"
+                                >
+                                    No logs found.
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+            {totalPages > 1 && (
+                <TablePagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPrevPage={handlePrevPage}
+                    onNextPage={handleNextPage}
+                />
+            )}
         </div>
     );
 }
