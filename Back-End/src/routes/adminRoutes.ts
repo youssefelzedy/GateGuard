@@ -4,6 +4,8 @@ import authController from '../controllers/authController';
 
 const router = express.Router({ mergeParams: true });
 
+router.get('/image/:filename', adminController.getAdminImage); // Route to serve admin images
+
 router.use(authController.protect);
 router.get(
   '/',
@@ -13,7 +15,6 @@ router.get(
 
 router.get('/me', adminController.getMe, adminController.getAdmin);
 router.get('/debug-paths', adminController.debugPaths); // Debug route for production
-router.get('/image/:filename', adminController.getAdminImage); // Route to serve admin images
 router.get('/:id', adminController.getAdmin);
 router.delete(
   '/:id',
