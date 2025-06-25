@@ -3,9 +3,12 @@ import mongoose from 'mongoose';
 
 interface ILog extends Document {
   action: 'Denied' | 'Accepted';
-  screenshot: string;
+  screenshot?: string;
+  plateId?: string;
+  carDetection?: number[][];
+  plateDetection?: number[][];
   accessTime: Date;
-  plateId: string;
+  user?: mongoose.Types.ObjectId;
   garage: mongoose.Types.ObjectId;
 }
 

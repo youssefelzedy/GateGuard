@@ -243,7 +243,7 @@ const invitationController = {
         invitedBy: req.user!._id,
         type: 'user', // Add this line
       });
-      const invitationURL = `https://gateguard.me:5173/invite-user/${invitation.token}`;
+      const invitationURL = `https://gateguard.me/invite-user/${invitation.token}`;
       const htmlMessage = ` <div
             style="
                 font-family: 'Poppins', Arial, sans-serif;
