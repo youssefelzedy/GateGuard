@@ -245,6 +245,59 @@ const adminController = {
     });
   }),
 
+  // Serve individual admin images
+  getAdminImage: expressAsyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const { filename } = req.params;
+
+      if (!filename) {
+        return next(new AppError('Image filename is required', 400));
+      }
+
+      const uploadConfig = getUploadConfig();
+      const imagePath = path.join(uploadConfig.adminsPath, filename);
+
+      // Check if file exists
+      if (!fs.existsSync(imagePath)) {
+        return next(new AppError('Image not found', 404));
+      }
+
+      // Verify it's actually an image file
+      const ext = path.extname(filename).toLowerCase();
+      const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+
+      if (!allowedExtensions.includes(ext)) {
+        return next(new AppError('Invalid image format', 400));
+      }
+
+      // Set appropriate content type
+      const contentTypes: { [key: string]: string } = {
+        '.jpg': 'image/jpeg',
+        '.jpeg': 'image/jpeg',
+        '.png': 'image/png',
+        '.gif': 'image/gif',
+        '.webp': 'image/webp',
+      };
+
+      const contentType = contentTypes[ext] || 'image/jpeg';
+
+      // Set cache headers for better performance
+      res.set({
+        'Content-Type': contentType,
+        'Cache-Control': 'public, max-age=86400', // Cache for 24 hours
+        ETag: `"${filename}-${fs.statSync(imagePath).mtime.getTime()}"`,
+      });
+
+      // Send the file
+      res.sendFile(imagePath, (err) => {
+        if (err) {
+          console.error('Error sending file:', err);
+          return next(new AppError('Error serving image', 500));
+        }
+      });
+    },
+  ),
+
   deleteAdmin: expressAsyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
       const admin: IAdmin | null = await Admin.findByIdAndDelete(req.params.id);
