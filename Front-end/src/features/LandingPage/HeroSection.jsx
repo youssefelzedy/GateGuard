@@ -69,7 +69,7 @@ function HeroSection() {
             >
                 Secure, automated access control for your garage. Monitor,
                 manage, and control entry with advanced license plate
-                recognition and OTP verification.
+                recognition.
             </motion.p>
 
             <motion.div
