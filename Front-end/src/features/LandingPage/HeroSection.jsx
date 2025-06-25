@@ -6,7 +6,7 @@ function HeroSection() {
     const [imageLoaded, setImageLoaded] = useState(false);
 
     return (
-        <section className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4 text-center text-white">
+        <section className="relative z-10 mt-8 flex min-h-screen flex-col items-center justify-center px-4 text-center text-white">
             <motion.h1
                 className="text-5xl font-bold sm:text-6xl md:text-7xl lg:text-8xl"
                 initial="hidden"

@@ -21,7 +21,7 @@ function AboutSection() {
                         },
                     }}
                 >
-                    <motion.div
+                    {/* <motion.div
                         className="mb-12 md:mb-0 md:w-1/2 lg:pr-8"
                         variants={{
                             hidden: { opacity: 0 },
@@ -160,8 +160,8 @@ function AboutSection() {
                             for government buildings, research labs, data
                             centers, and other sensitive sites.
                         </motion.p>
-                    </motion.div>
-                    <motion.div
+                    </motion.div> */}
+                    {/* <motion.div
                         className="flex justify-end md:w-1/2"
                         initial={{ opacity: 0, x: 50 }}
                         whileInView={{
@@ -207,7 +207,7 @@ function AboutSection() {
                                 },
                             }}
                         />
-                    </motion.div>
+                    </motion.div> */}
                 </motion.div>
                 <motion.div
                     className="mb-12 flex flex-col-reverse items-start justify-between md:mb-24 md:flex-row md:items-center md:space-x-8 lg:space-x-16"
