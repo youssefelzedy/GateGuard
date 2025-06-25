@@ -7,11 +7,14 @@ import expressAsyncHandler from 'express-async-handler';
 import AppError from '../utils/appError';
 import multer from 'multer';
 import path from 'path';
+import fs from 'fs';
+import { getUploadPath, verifyFileExists } from '../utils/fileUpload';
 
 // Configure multer for file storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'public/images/admins');
+    const uploadPath = getUploadPath('images/admins');
+    cb(null, uploadPath);
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
@@ -90,6 +93,24 @@ const adminController = {
         return next(new AppError('No image file uploaded', 400));
       }
 
+      // Log file information for debugging
+      console.log('File upload info:', {
+        filename: req.file.filename,
+        destination: req.file.destination,
+        path: req.file.path,
+        size: req.file.size,
+        environment: process.env.NODE_ENV,
+        cwd: process.cwd(),
+        dirname: __dirname,
+      });
+
+      // Verify the file actually exists
+      if (!verifyFileExists(req.file.path)) {
+        return next(
+          new AppError('File upload failed - file not saved to disk', 500),
+        );
+      }
+
       // Update admin with new image path
       const updatedAdmin = await Admin.findByIdAndUpdate(
         req.user!._id,
@@ -132,7 +153,7 @@ const adminController = {
         req.body.password
       ) {
         {
-          return next(  
+          return next(
             new AppError(
               'You can only edit your phoneNumber, national security and name',
               400,

@@ -11,6 +11,12 @@ const garageSchema = new mongoose.Schema(
       default: true,
       select: false,
     },
+    gateStatus:{
+      type: String,
+      enum: ['Open', 'Closed'],
+      default: 'Closed',
+      required: true,
+    }
   },
   {
     toJSON: { virtuals: true },

@@ -9,6 +9,7 @@ import xssClean from 'xss-clean';
 import cors, { CorsOptions } from 'cors';
 import fs from 'fs';
 import path from 'path';
+import { getUploadPath } from './utils/fileUpload';
 
 import AppError from './utils/appError';
 import globalErrorhandler from './utils/errorHandler';
@@ -22,12 +23,10 @@ import cameraRouter from './routes/cameraRoutes';
 
 const app = express();
 
-// Ensure the upload directory exists
-const uploadDir = path.join(__dirname, '../public/images/admins');
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
-}
-app.use(express.static(path.join(__dirname, '../public')));
+// Ensure the upload directory exists and serve static files
+const publicPath = getUploadPath();
+getUploadPath('images/admins'); // Ensure admin images directory exists
+app.use(express.static(publicPath));
 
 // 1) GLOBAL MIDDLEWARES
 // Enable CORS for all routes
