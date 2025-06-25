@@ -1,6 +1,6 @@
-import { useState } from "react";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 const Footer = () => {
     const [email, setEmail] = useState("");
@@ -11,7 +11,6 @@ const Footer = () => {
         setEmail("");
     };
 
-    // Variants
     const fadeInVariants = {
         hidden: { opacity: 0, y: 20 },
         visible: (customDelay = 0) => ({
@@ -30,7 +29,6 @@ const Footer = () => {
         <footer className="bg-primary-900 py-16 text-white">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
-                    {/* Logo and Made with love section */}
                     <div className="flex flex-col">
                         <motion.div
                             variants={fadeInVariants}
@@ -44,13 +42,10 @@ const Footer = () => {
                                 <img
                                     src="/Logo_light.svg"
                                     alt="GateGuard Logo"
-                                    width={150}
-                                    height={150}
-                                    className="mr-3"
+                                    className="mr-3 h-auto w-24 md:w-32"
                                 />
                             </a>
                         </motion.div>
-
                         <motion.p
                             variants={fadeInVariants}
                             initial="hidden"
@@ -64,7 +59,6 @@ const Footer = () => {
                             <br />
                             Faculty of Engineering, Port Said University.
                         </motion.p>
-
                         <motion.p
                             variants={fadeInVariants}
                             initial="hidden"
@@ -76,8 +70,6 @@ const Footer = () => {
                             All rights reserved.
                         </motion.p>
                     </div>
-
-                    {/* Support Links */}
                     <div className="flex flex-col">
                         <motion.h3
                             variants={fadeInVariants}
@@ -89,7 +81,6 @@ const Footer = () => {
                         >
                             Support
                         </motion.h3>
-
                         <motion.div
                             variants={fadeInVariants}
                             initial="hidden"
@@ -130,8 +121,6 @@ const Footer = () => {
                             </a>
                         </motion.div>
                     </div>
-
-                    {/* Contact Form */}
                     <div className="flex flex-col">
                         <motion.h3
                             variants={fadeInVariants}
@@ -143,7 +132,6 @@ const Footer = () => {
                         >
                             Want to know more about our solution?
                         </motion.h3>
-
                         <motion.p
                             variants={fadeInVariants}
                             initial="hidden"
@@ -154,7 +142,6 @@ const Footer = () => {
                         >
                             Provide us your email and we will contact you.
                         </motion.p>
-
                         <motion.form
                             variants={fadeInVariants}
                             initial="hidden"
@@ -170,14 +157,14 @@ const Footer = () => {
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="Email"
                                 required
-                                className="rounded-lg bg-gray-200 px-6 py-3 text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary-500 sm:text-lg"
+                                className="w-full rounded-lg bg-gray-200 px-4 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary-500 sm:px-6 sm:py-3 sm:text-base"
                             />
                             <motion.button
                                 type="submit"
                                 variants={buttonVariants}
                                 whileHover="hover"
                                 whileTap="tap"
-                                className="rounded-lg bg-primary-500 px-8 py-3 text-base font-medium text-white transition-colors hover:bg-primary-600 sm:text-lg"
+                                className="w-full rounded-lg bg-primary-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-600 sm:w-auto sm:px-8 sm:py-3 sm:text-base"
                             >
                                 Send
                             </motion.button>

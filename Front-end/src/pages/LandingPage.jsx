@@ -12,7 +12,6 @@ function LandingPage() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        // Simulate loading time for assets
         const timer = setTimeout(() => {
             setIsLoading(false);
         }, 1000);
@@ -24,8 +23,8 @@ function LandingPage() {
         return (
             <div className="flex min-h-screen items-center justify-center bg-primary-700">
                 <div className="flex flex-col items-center gap-4">
-                    <div className="h-16 w-16 animate-spin rounded-full border-4 border-white border-t-transparent"></div>
-                    <p className="text-xl font-semibold text-white">
+                    <div className="h-12 w-12 animate-spin rounded-full border-4 border-white border-t-transparent sm:h-16 sm:w-16"></div>
+                    <p className="text-lg font-semibold text-white sm:text-xl">
                         Loading GateGuard...
                     </p>
                 </div>
@@ -43,10 +42,10 @@ function LandingPage() {
                         <div className="absolute inset-0 bg-[url('/bg.jpg')] bg-cover bg-center bg-no-repeat"></div>
                         <div className="absolute inset-0 bg-primary-700 opacity-80 mix-blend-multiply backdrop-blur-sm"></div>
                     </div>
-                    <div className="relative z-30 mb-20 w-full px-4 md:px-6 lg:px-8">
+                    <div className="relative z-30 w-full px-4 sm:px-6 md:px-8">
                         <LandingHeader />
                     </div>
-                    <div className="relative z-20 mt-4 w-full md:mt-8">
+                    <div className="relative z-20 w-full">
                         <HeroSection />
                     </div>
                 </div>

@@ -114,9 +114,7 @@ function HeroSection() {
                 <img
                     src="/Dashboard.png"
                     alt="GateGuard Dashboard Interface"
-                    className={`h-auto w-full rounded-xl shadow-xl transition-opacity duration-300 ${
-                        imageLoaded ? "opacity-100" : "opacity-0"
-                    }`}
+                    className={`h-auto w-full rounded-xl shadow-xl transition-opacity duration-300 ${imageLoaded ? "opacity-100" : "opacity-0"} hidden lg:block`}
                     onLoad={() => setImageLoaded(true)}
                 />
             </motion.div>

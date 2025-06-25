@@ -5,9 +5,8 @@ function AboutSection() {
     return (
         <div id="about" className="bg-white py-16">
             <div className="container mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
-                {/* First Feature Row */}
                 <motion.div
-                    className="mb-24 flex flex-col items-start justify-between md:flex-row md:items-center md:space-x-8 lg:space-x-16"
+                    className="mb-12 flex flex-col items-start justify-between md:mb-24 md:flex-row md:items-center md:space-x-8 lg:space-x-16"
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
@@ -22,7 +21,6 @@ function AboutSection() {
                         },
                     }}
                 >
-                    {/* Text Content */}
                     <motion.div
                         className="mb-12 md:mb-0 md:w-1/2 lg:pr-8"
                         variants={{
@@ -37,7 +35,7 @@ function AboutSection() {
                         }}
                     >
                         <motion.h3
-                            className="mb-2 text-5xl font-bold text-primary-950"
+                            className="mb-2 text-3xl font-bold text-primary-950 sm:text-4xl md:text-5xl"
                             custom={0}
                             variants={{
                                 hidden: { opacity: 0, y: 30 },
@@ -73,7 +71,7 @@ function AboutSection() {
                             </motion.span>
                         </motion.h3>
                         <motion.p
-                            className="mb-4 text-xl font-medium text-gray-700"
+                            className="mb-4 text-lg font-medium text-gray-700 sm:text-xl"
                             custom={1}
                             variants={{
                                 hidden: { opacity: 0, y: 30 },
@@ -92,7 +90,7 @@ function AboutSection() {
                             for restricted access facilities.
                         </motion.p>
                         <motion.p
-                            className="mb-4 text-lg text-gray-600"
+                            className="mb-4 text-base text-gray-600 sm:text-lg"
                             custom={2}
                             variants={{
                                 hidden: { opacity: 0, y: 30 },
@@ -141,7 +139,7 @@ function AboutSection() {
                             (OTP) to a registered device or email.
                         </motion.p>
                         <motion.p
-                            className="text-base text-gray-600"
+                            className="text-sm text-gray-600 sm:text-base"
                             custom={3}
                             variants={{
                                 hidden: { opacity: 0, y: 30 },
@@ -163,8 +161,6 @@ function AboutSection() {
                             centers, and other sensitive sites.
                         </motion.p>
                     </motion.div>
-
-                    {/* Image */}
                     <motion.div
                         className="flex justify-end md:w-1/2"
                         initial={{ opacity: 0, x: 50 }}
@@ -183,7 +179,7 @@ function AboutSection() {
                         <motion.img
                             src="/about/otp2.png"
                             alt="Security features on mobile device"
-                            className="h-auto w-auto max-w-[400px] drop-shadow-xl"
+                            className="h-auto w-full max-w-[400px] drop-shadow-xl"
                             initial="hidden"
                             whileInView="visible"
                             whileHover="hover"
@@ -213,10 +209,8 @@ function AboutSection() {
                         />
                     </motion.div>
                 </motion.div>
-
-                {/* Second Feature Row (Reversed) */}
                 <motion.div
-                    className="mb-24 flex flex-col-reverse items-start justify-between md:flex-row md:items-center md:space-x-8 lg:space-x-16"
+                    className="mb-12 flex flex-col-reverse items-start justify-between md:mb-24 md:flex-row md:items-center md:space-x-8 lg:space-x-16"
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
@@ -231,7 +225,6 @@ function AboutSection() {
                         },
                     }}
                 >
-                    {/* Image */}
                     <motion.div
                         className="flex justify-start md:w-1/2"
                         initial={{ opacity: 0, x: -50 }}
@@ -250,7 +243,7 @@ function AboutSection() {
                         <motion.img
                             src="/about/otp1.png"
                             alt="Employee using the app"
-                            className="h-auto w-auto max-w-[400px] drop-shadow-xl"
+                            className="h-auto w-full max-w-[400px] drop-shadow-xl"
                             initial="hidden"
                             whileInView="visible"
                             whileHover="hover"
@@ -279,8 +272,6 @@ function AboutSection() {
                             }}
                         />
                     </motion.div>
-
-                    {/* Text Content */}
                     <motion.div
                         className="mb-12 md:mb-0 md:w-1/2 lg:pl-8"
                         variants={{
@@ -295,7 +286,7 @@ function AboutSection() {
                         }}
                     >
                         <motion.h3
-                            className="mb-2 text-4xl font-bold text-primary-950"
+                            className="mb-2 text-2xl font-bold text-primary-950 sm:text-3xl md:text-4xl"
                             custom={0}
                             variants={{
                                 hidden: { opacity: 0, y: 30 },
@@ -331,7 +322,7 @@ function AboutSection() {
                             </motion.span>
                         </motion.h3>
                         <motion.p
-                            className="mb-4 text-lg text-gray-600"
+                            className="mb-4 text-base text-gray-600 sm:text-lg"
                             custom={1}
                             variants={{
                                 hidden: { opacity: 0, y: 30 },
@@ -354,8 +345,6 @@ function AboutSection() {
                         </motion.p>
                     </motion.div>
                 </motion.div>
-
-                {/* Call to Action */}
                 <motion.div
                     className="mx-auto max-w-3xl text-center"
                     initial={{ opacity: 0, y: 30 }}
@@ -372,7 +361,7 @@ function AboutSection() {
                     viewport={{ once: true }}
                 >
                     <motion.h2
-                        className="mb-6 text-4xl font-bold text-gray-800"
+                        className="mb-6 text-2xl font-bold text-gray-800 sm:text-3xl md:text-4xl"
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{
                             opacity: 1,
@@ -407,7 +396,7 @@ function AboutSection() {
                     </motion.h2>
                     <motion.a
                         href="/signup"
-                        className="inline-block rounded bg-primary-800 px-6 py-3 text-base font-medium text-white shadow-md transition-all hover:bg-primary-700"
+                        className="inline-block rounded bg-primary-800 px-6 py-3 text-sm font-medium text-white shadow-md transition-all hover:bg-primary-700 sm:text-base"
                         whileHover={{
                             scale: 1.05,
                             boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.1)",
