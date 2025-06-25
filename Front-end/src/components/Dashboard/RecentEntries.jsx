@@ -49,7 +49,7 @@ function RecentEntries() {
                     <thead>
                         <tr className="border-b border-primary-200 bg-primary-50 dark:border-primary-700 dark:bg-primary-900">
                             <th className="px-4 py-3 text-left text-sm font-medium text-primary-900 dark:text-primary-100">
-                                #
+                                No
                             </th>
                             <th className="px-4 py-3 text-left text-sm font-medium text-primary-900 dark:text-primary-100">
                                 Plate
@@ -73,7 +73,11 @@ function RecentEntries() {
                                 variants={rowVariants}
                                 className="border-t border-primary-200 bg-white dark:border-primary-700 dark:bg-gray-800"
                             >
-                                <td className="py-5 font-bold text-primary-700 dark:text-primary-200">{`0${index + 1}`}</td>
+                                <td className="px-4 py-5">
+                                    <div className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary-100 text-sm font-bold text-primary-700 shadow-sm dark:bg-primary-700 dark:text-primary-100">
+                                        {String(index + 1).padStart(2, "0")}
+                                    </div>
+                                </td>
 
                                 <td className="py-5">
                                     <div className="flex items-center gap-3">
@@ -95,9 +99,15 @@ function RecentEntries() {
                                 </td>
 
                                 <td className="py-5">
-                                    <span className="inline-flex items-center rounded-full bg-primary-100 px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-700 dark:text-primary-100">
-                                        In
-                                    </span>
+                                    {user.status === "accept" ? (
+                                        <span className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-sm font-medium text-green-800 dark:bg-green-700 dark:text-green-100">
+                                            Accept
+                                        </span>
+                                    ) : (
+                                        <span className="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-sm font-medium text-red-800 dark:bg-red-700 dark:text-red-100">
+                                            Denied
+                                        </span>
+                                    )}
                                 </td>
                             </motion.tr>
                         ))}
