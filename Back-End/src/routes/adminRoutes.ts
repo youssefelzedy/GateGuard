@@ -12,6 +12,7 @@ router.get(
 );
 
 router.get('/me', adminController.getMe, adminController.getAdmin);
+router.get('/debug-paths', adminController.debugPaths); // Debug route for production
 router.get('/:id', adminController.getAdmin);
 router.delete(
   '/:id',
