@@ -64,7 +64,7 @@ function Sidebar({ onLogoutClick }) {
                         />
                     )}
                 </ul>
-                <div className="flex flex-col gap-4 px-4">
+                <div className="flex flex-col space-y-2 px-4">
                     {isOwner && <SettingsNavItem />}
                     <LogoutNavItem onLogoutClick={onLogoutClick} />
                 </div>
