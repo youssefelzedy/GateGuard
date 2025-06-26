@@ -17,13 +17,6 @@ const rowVariants = {
             ease: "easeOut",
         },
     }),
-    hover: {
-        scale: 1.02,
-        transition: {
-            duration: 0.2,
-            ease: "easeInOut",
-        },
-    },
 };
 
 function RecentEntries() {
@@ -51,9 +44,6 @@ function RecentEntries() {
                 <table className="w-full">
                     <thead>
                         <tr className="border-b border-primary-200 bg-primary-50 dark:border-primary-700 dark:bg-primary-900">
-                            <th className="px-4 py-3 text-left text-sm font-medium text-primary-900 dark:text-primary-100">
-                                No
-                            </th>
                             <th className="px-4 py-3 text-left text-sm font-medium text-primary-900 dark:text-primary-100">
                                 Plate
                             </th>
@@ -88,16 +78,10 @@ function RecentEntries() {
                                     custom={index}
                                     initial="hidden"
                                     animate="visible"
-                                    whileHover="hover"
                                     variants={rowVariants}
-                                    className="border-t border-primary-200 bg-white dark:border-primary-700 dark:bg-gray-800"
+                                    className="ml-4 border-t border-primary-200 bg-white dark:border-primary-700 dark:bg-gray-800"
                                 >
-                                    <td className="px-4 py-5">
-                                        <div className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary-100 text-sm font-bold text-primary-700 shadow-sm dark:bg-primary-700 dark:text-primary-100">
-                                            {String(index + 1).padStart(2, "0")}
-                                        </div>
-                                    </td>
-                                    <td className="py-5">
+                                    <td className="py-5 pl-4">
                                         <Plate
                                             carPlate={log.plateText || "-"}
                                             className="scale-90"

@@ -8,6 +8,7 @@ const logSchema = new mongoose.Schema({
   carDetection: { type: [[Number]], default: [] }, // Array of arrays of numbers
   plateDetection: { type: [[Number]], default: [] }, // Array of arrays of numbers
   accessTime: { type: Date, default: Date.now, required: true },
+  processed: { type: Boolean, default: false }, // Track if hardware has processed this log
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

@@ -1,3 +1,4 @@
+import { useSearchParams } from "react-router-dom";
 import {
     LineChart,
     Line,
@@ -7,17 +8,15 @@ import {
     CartesianGrid,
     ResponsiveContainer,
 } from "recharts";
-import { CalendarIcon } from "@heroicons/react/24/outline";
+import { format, subDays, isAfter, isSameDay } from "date-fns";
 import { useDarkMode } from "../../context/DarkModeContext";
+import { useAdmin } from "../../features/auth/useAdmin";
+import { useLogs } from "../../features/logsPage/useLogs";
 
-const data = [
-    { day: "Sun", value: 20 },
-    { day: "Mon", value: 25 },
-    { day: "Tue", value: 22 },
-    { day: "Wed", value: 27 },
-    { day: "Thu", value: 20 },
-    { day: "Fri", value: 25 },
-    { day: "Sat", value: 20 },
+const dayOptions = [
+    { label: "Last 7 days", value: 7 },
+    { label: "Last 15 days", value: 15 },
+    { label: "Last 30 days", value: 30 },
 ];
 
 function CustomTooltip({ active, payload }) {
@@ -33,6 +32,55 @@ function CustomTooltip({ active, payload }) {
 
 export default function Graph() {
     const { isDarkMode } = useDarkMode();
+    const { admin } = useAdmin();
+    const garageId = admin?.garage?.id;
+    const { logs } = useLogs(garageId);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const days = parseInt(searchParams.get("days")) || 7;
+
+    // Prepare chart data from logs
+    let chartData = [];
+    if (logs && Array.isArray(logs)) {
+        // Get today and the start date
+        const today = new Date();
+        const startDate = subDays(today, days - 1);
+        // Prepare a map for counts
+        const counts = {};
+        for (let i = 0; i < days; i++) {
+            const date = subDays(today, days - 1 - i);
+            const label =
+                days === 7 ? format(date, "EEE") : format(date, "MM/dd");
+            counts[label] = 0;
+        }
+        logs?.forEach((log) => {
+            if (log.action === "Accepted" && log.accessTime) {
+                const logDate = new Date(log.accessTime);
+                if (
+                    isAfter(logDate, subDays(today, days)) ||
+                    isSameDay(logDate, startDate)
+                ) {
+                    const label =
+                        days === 7
+                            ? format(logDate, "EEE")
+                            : format(logDate, "MM/dd");
+                    if (counts[label] !== undefined) {
+                        counts[label]++;
+                    }
+                }
+            }
+        });
+        // Build chart data array
+        console.log("Counts:", counts);
+        chartData = Object.entries(counts).map(([day, value]) => ({
+            day,
+            value,
+        }));
+    }
+
+    const handleDaysChange = (e) => {
+        setSearchParams({ days: e.target.value });
+    };
+
     return (
         <div className="w-full">
             <div className="w-full rounded-xl bg-white p-6 shadow-lg transition-colors duration-300 dark:bg-gray-800">
@@ -42,17 +90,24 @@ export default function Graph() {
                         Authorized Entries
                     </h2>
                     <div className="flex items-center gap-2">
-                        <button className="flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50 dark:border-slate-700 dark:bg-gray-800 dark:text-slate-100 dark:hover:bg-gray-700">
-                            Last 7 days{" "}
-                            <CalendarIcon className="h-4 w-4 text-slate-500 dark:text-slate-300" />
-                        </button>
+                        <select
+                            className="flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50 dark:border-slate-700 dark:bg-gray-800 dark:text-slate-100 dark:hover:bg-gray-700"
+                            value={days}
+                            onChange={handleDaysChange}
+                        >
+                            {dayOptions.map((option) => (
+                                <option key={option.value} value={option.value}>
+                                    {option.label}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                 </div>
 
                 {/* Chart */}
                 <div className="rounded-xl bg-blue-50/50 p-5 dark:bg-primary-900/50">
                     <ResponsiveContainer width="100%" height={400}>
-                        <LineChart data={data}>
+                        <LineChart data={chartData}>
                             <CartesianGrid
                                 strokeDasharray="4 4"
                                 vertical={false}
@@ -70,8 +125,6 @@ export default function Graph() {
                                 tickMargin={20}
                             />
                             <YAxis
-                                domain={[15, 30]}
-                                ticks={[15, 20, 25, 30]}
                                 tick={{
                                     fill: isDarkMode ? "#e5e7eb" : "#334155",
                                     fontSize: 12,

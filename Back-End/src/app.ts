@@ -24,6 +24,7 @@ import logsRouter from './routes/logsRoutes';
 import authRouter from './routes/authRoutes';
 import invitationRouter from './routes/invitationRoutes';
 import cameraRouter from './routes/cameraRoutes';
+import logsController from './controllers/logsController';
 
 const app = express();
 
@@ -66,7 +67,7 @@ app.use(morgan('dev'));
 
 // Limit request from same IP
 const limiter = rateLimit({
-  max: 100,
+  max: 1000,
   windowMs: 60 * 60 * 1000, // 1 hour
   message: 'Too many requests from this IP, Please try again in an hour!',
 });
@@ -91,6 +92,13 @@ app.use(`${API}/invitations`, invitationRouter);
 app.use(`${API}/users`, userRouter);
 app.use(`${API}/logs`, logsRouter);
 app.use(`${API}/cameras`, cameraRouter);
+
+// Hardware-specific routes (accessible without garage nesting)
+app.get(
+  `${API}/hardware/check-latest`,
+  logsController.checkLatestLogForHardware,
+);
+app.post(`${API}/hardware/mark-processed`, logsController.markLogAsProcessed);
 
 app.all('*', (req: customRequest, res: Response, next: NextFunction) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

@@ -2,6 +2,7 @@ import { Sun, Moon } from "lucide-react";
 import { useAdmin } from "../features/auth/useAdmin";
 import { useNavigate } from "react-router-dom";
 import { useDarkMode } from "../context/DarkModeContext";
+import { MapPinIcon, BuildingOfficeIcon } from "@heroicons/react/24/outline";
 
 const VITE_API_URL_PICTURE = import.meta.env.VITE_API_URL_PICTURE;
 
@@ -13,9 +14,17 @@ function Header() {
     return (
         <header className="flex items-center justify-between bg-primary-50 px-6 py-3 shadow-sm transition-colors duration-300 dark:bg-gray-800">
             <div>
-                <h1 className="text-xl font-bold text-primary-900 dark:text-primary-100">
-                    {admin?.garage?.garageName || "Dashboard"}
-                </h1>
+                <div className="mb-1 flex items-center gap-4">
+                    <h1 className="text-2xl font-bold text-primary-900 dark:text-primary-100">
+                        {admin?.garage?.garageName || "Dashboard"}
+                    </h1>
+                    <div className="flex items-center gap-1">
+                        <MapPinIcon className="h-5 w-5 text-primary-500 dark:text-primary-300" />
+                        <span className="text-base text-primary-700 dark:text-primary-200">
+                            {admin?.garage?.location}
+                        </span>
+                    </div>
+                </div>
                 <p className="text-base text-primary-900/50 dark:text-primary-100/50">
                     Hi, {admin?.name}
                 </p>
@@ -25,7 +34,7 @@ function Header() {
                 <div className="flex items-center gap-4 pr-3">
                     <button
                         onClick={() => navigate("/profile")}
-                        className="h-10 w-10 overflow-hidden rounded-full bg-gray-200 transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-blue-400"
+                        className="h-12 w-12 overflow-hidden rounded-full bg-gray-200 transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-blue-400"
                     >
                         <img
                             src={
@@ -34,14 +43,14 @@ function Header() {
                                     : "default.jpg"
                             }
                             alt="Profile"
-                            className="h-full w-full object-cover"
+                            className="w h-full object-cover"
                         />
                     </button>
                     <div className="hidden md:block">
-                        <p className="text-sm font-semibold text-primary-900 dark:text-primary-100">
+                        <p className="text-base font-semibold text-primary-900 dark:text-primary-100">
                             {admin?.name}
                         </p>
-                        <p className="text-xs text-primary-900/50 dark:text-primary-100/50">
+                        <p className="text-sm text-primary-900/50 dark:text-primary-100/50">
                             {admin?.role}
                         </p>
                     </div>

@@ -36,6 +36,7 @@ const logsController = {
       },
     });
   }),
+
   getLog: expressAsyncHandler(async (req: Request, res: Response) => {
     const log: ILog | null = await Logs.findById(req.params.id)
       .populate({
@@ -59,6 +60,112 @@ const logsController = {
       },
     });
   }),
+
+  // Hardware-specific endpoint to check for unprocessed logs
+  checkLatestLogForHardware: expressAsyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const { garage_id } = req.query;
+
+      if (!garage_id || typeof garage_id !== 'string') {
+        res.status(400);
+        throw new AppError(
+          'garage_id query parameter is required and must be a string',
+          400,
+        );
+      }
+
+      // Validate garage_id format
+      if (!mongoose.Types.ObjectId.isValid(garage_id)) {
+        res.status(400);
+        throw new AppError('Invalid garage_id format', 400);
+      }
+
+      // Find garage to ensure it exists
+      const garage = await Garage.findById(garage_id);
+      if (!garage) {
+        res.status(404);
+        throw new AppError('Garage not found', 404);
+      }
+
+      // Find the latest unprocessed log for this garage
+      const latestUnprocessedLog = await Logs.findOne({
+        garage: new mongoose.Types.ObjectId(garage_id),
+        $or: [
+          { processed: false },
+          { processed: { $exists: false } }, // Handle existing logs without the processed field
+        ],
+      })
+        .populate({
+          path: 'user',
+          select: 'phoneNumber name',
+        })
+        .sort({ accessTime: -1 }); // Most recent first
+
+      if (!latestUnprocessedLog) {
+        res.status(200).json({
+          status: 'success',
+          message: 'No unprocessed logs found',
+          action: 'denied', // Default to denied when no unprocessed logs
+          data: null,
+        });
+        return;
+      }
+
+      // Return the log status
+      res.status(200).json({
+        status: 'success',
+        action: latestUnprocessedLog.action.toLowerCase(), // 'accepted' or 'denied'
+        data: {
+          logId: latestUnprocessedLog._id,
+          accessTime: latestUnprocessedLog.accessTime,
+          user: latestUnprocessedLog.user,
+          plateId: latestUnprocessedLog.plateId,
+        },
+      });
+    },
+  ),
+
+  // Hardware endpoint to mark a log as processed
+  markLogAsProcessed: expressAsyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const { logId } = req.body;
+
+      if (!logId || typeof logId !== 'string') {
+        res.status(400);
+        throw new AppError(
+          'logId is required in request body and must be a string',
+          400,
+        );
+      }
+
+      // Validate logId format
+      if (!mongoose.Types.ObjectId.isValid(logId)) {
+        res.status(400);
+        throw new AppError('Invalid logId format', 400);
+      }
+
+      // Update the log to mark it as processed
+      const log = await Logs.findByIdAndUpdate(
+        logId,
+        { processed: true },
+        { new: true },
+      );
+
+      if (!log) {
+        res.status(404);
+        throw new AppError('Log not found', 404);
+      }
+
+      res.status(200).json({
+        status: 'success',
+        message: 'Log marked as processed',
+        data: {
+          logId: log._id,
+          processed: log.processed,
+        },
+      });
+    },
+  ),
 };
 
 // export const createLog = expressAsyncHandler(

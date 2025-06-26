@@ -8,6 +8,7 @@ interface ILog extends Document {
   carDetection?: number[][];
   plateDetection?: number[][];
   accessTime: Date;
+  processed: boolean;
   user?: mongoose.Types.ObjectId;
   garage: mongoose.Types.ObjectId;
 }
