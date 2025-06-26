@@ -30,27 +30,6 @@ function AboutSection() {
             id="about"
             className="relative min-h-screen overflow-hidden bg-gradient-to-br from-primary-50 via-white to-primary-100 py-20 dark:from-gray-900 dark:via-gray-950 dark:to-primary-900"
         >
-            {/* Animated background blobs */}
-            <AnimatedBlob
-                className="-left-24 -top-24 h-72 w-72"
-                colorFrom="#3F72AF"
-                colorTo="#112D4E"
-                duration={12}
-            />
-            <AnimatedBlob
-                className="right-0 top-1/2 h-60 w-60"
-                colorFrom="#F9F7F7"
-                colorTo="#DBE2EF"
-                duration={10}
-                delay={2}
-            />
-            <AnimatedBlob
-                className="bottom-0 left-1/2 h-80 w-80"
-                colorFrom="#3F72AF"
-                colorTo="#F9F7F7"
-                duration={14}
-                delay={4}
-            />
             <div className="container relative z-10 mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
                 {/* Section Title */}
                 <motion.h2
