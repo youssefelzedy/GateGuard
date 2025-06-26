@@ -18,7 +18,7 @@ function UsersHeader() {
         );
     };
     return (
-        <div className="flex items-center justify-between rounded">
+        <div className="mb-4 flex items-center justify-between rounded px-4">
             <h1 className="text-4xl font-bold text-primary-900 dark:text-primary-100">
                 Users
             </h1>

@@ -199,9 +199,9 @@ function UsersTable() {
                 type="user"
             />
 
-            <div className="mt-6">
+            <div className="rounded-2xl bg-white p-6 shadow-xl dark:bg-gray-900">
                 {/* Two Search Bars */}
-                <div className="mb-4 flex flex-col items-end gap-2 sm:flex-row sm:justify-end">
+                <div className="mt-4 flex flex-col items-end gap-2 sm:flex-row sm:justify-end">
                     <input
                         type="text"
                         placeholder="Search users (name, email, phone, ID)..."
@@ -219,34 +219,35 @@ function UsersTable() {
                 </div>
 
                 {/* Table */}
-                <table className="w-full table-auto border-collapse bg-white text-left dark:bg-gray-800">
-                    <UsersTableHeader
-                        onSort={handleSort}
-                        sortConfig={sortConfig}
-                    />
-                    <tbody>
-                        {paginatedUsers.length === 0 ? (
-                            <tr>
-                                <td
-                                    colSpan={6}
-                                    className="p-6 text-center text-primary-400 dark:text-primary-500"
-                                >
-                                    No users found.
-                                </td>
-                            </tr>
-                        ) : (
-                            paginatedUsers.map((user) => (
-                                <UserTableRow
-                                    key={user.nationalSecurityNumber}
-                                    user={user}
-                                    onEdit={handleEditClick}
-                                    onDelete={handleDeleteClick}
-                                />
-                            ))
-                        )}
-                    </tbody>
-                </table>
-
+                <div className="mt-6 overflow-x-auto">
+                    <table className="w-full text-left">
+                        <UsersTableHeader
+                            onSort={handleSort}
+                            sortConfig={sortConfig}
+                        />
+                        <tbody>
+                            {paginatedUsers.length === 0 ? (
+                                <tr>
+                                    <td
+                                        colSpan={6}
+                                        className="p-6 text-center text-gray-400 dark:text-gray-500"
+                                    >
+                                        No users found.
+                                    </td>
+                                </tr>
+                            ) : (
+                                paginatedUsers.map((user) => (
+                                    <UserTableRow
+                                        key={user.nationalSecurityNumber}
+                                        user={user}
+                                        onEdit={handleEditClick}
+                                        onDelete={handleDeleteClick}
+                                    />
+                                ))
+                            )}
+                        </tbody>
+                    </table>
+                </div>
                 {/* Pagination */}
                 <TablePagination
                     currentPage={currentPage}

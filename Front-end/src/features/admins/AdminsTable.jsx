@@ -105,7 +105,7 @@ function AdminsTable() {
                 type="admin"
             />
 
-            <div className="mt-6">
+            <div className="mt-6 rounded-2xl bg-white p-6 shadow-xl dark:bg-gray-900">
                 <div className="mb-4 flex justify-end">
                     <input
                         type="text"
@@ -115,20 +115,31 @@ function AdminsTable() {
                         className="grow rounded border border-primary-300 px-3 py-2 text-primary-900 placeholder:text-primary-400 focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-primary-100 dark:placeholder:text-primary-200"
                     />
                 </div>
-
-                <table className="w-full table-auto border-collapse bg-white text-left shadow-md transition-colors duration-300 dark:bg-gray-800">
-                    <AdminsTableHeader onSort={handleSort} />
-                    <tbody>
-                        {paginatedAdmins?.map((admin, index) => (
-                            <AdminTableRow
-                                key={index}
-                                admin={admin}
-                                onDelete={handleDeleteClick}
-                            />
-                        ))}
-                    </tbody>
-                </table>
-
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left">
+                        <AdminsTableHeader onSort={handleSort} />
+                        <tbody>
+                            {paginatedAdmins.length === 0 ? (
+                                <tr>
+                                    <td
+                                        colSpan={6}
+                                        className="p-6 text-center text-gray-400 dark:text-gray-500"
+                                    >
+                                        No admins found.
+                                    </td>
+                                </tr>
+                            ) : (
+                                paginatedAdmins.map((admin, index) => (
+                                    <AdminTableRow
+                                        key={index}
+                                        admin={admin}
+                                        onDelete={handleDeleteClick}
+                                    />
+                                ))
+                            )}
+                        </tbody>
+                    </table>
+                </div>
                 <TablePagination
                     currentPage={currentPage}
                     totalPages={totalPages}
