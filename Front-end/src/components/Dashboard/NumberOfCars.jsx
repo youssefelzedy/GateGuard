@@ -1,6 +1,9 @@
 //eslint-disable-next-line
 import { motion } from "framer-motion";
-import { TruckIcon, EllipsisVerticalIcon } from "@heroicons/react/24/outline";
+import { TruckIcon } from "@heroicons/react/24/outline";
+import { useAdmin } from "../../features/auth/useAdmin";
+import { useLogs } from "../../features/logsPage/useLogs";
+import { isSameDay, subDays } from "date-fns";
 
 const containerVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -21,6 +24,37 @@ const countVariants = {
 };
 
 export default function NumberOfCars() {
+    const { admin } = useAdmin();
+    const garageId = admin?.garage?.id;
+    const { logs } = useLogs(garageId);
+
+    // Calculate number of accepted cars today and yesterday
+    let todayCount = 0;
+    let yesterdayCount = 0;
+    if (logs && Array.isArray(logs)) {
+        const today = new Date();
+        const yesterday = subDays(today, 1);
+        logs.forEach((log) => {
+            if (log.action === "Accepted" && log.accessTime) {
+                const logDate = new Date(log.accessTime);
+                if (isSameDay(logDate, today)) {
+                    todayCount++;
+                } else if (isSameDay(logDate, yesterday)) {
+                    yesterdayCount++;
+                }
+            }
+        });
+    }
+    // Calculate percentage change
+    let percentChange = 0;
+    if (yesterdayCount === 0 && todayCount > 0) {
+        percentChange = 100;
+    } else if (yesterdayCount > 0) {
+        percentChange = Math.round(
+            ((todayCount - yesterdayCount) / yesterdayCount) * 100,
+        );
+    }
+
     return (
         <motion.div
             className="rounded-lg bg-white shadow-sm transition-colors duration-300 dark:bg-gray-800"
@@ -49,7 +83,7 @@ export default function NumberOfCars() {
                         className="text-4xl font-bold text-primary-900 dark:text-primary-100"
                         variants={countVariants}
                     >
-                        20 cars
+                        {todayCount} cars
                     </motion.p>
                 </div>
                 <motion.div
@@ -61,8 +95,8 @@ export default function NumberOfCars() {
                         ease: "easeInOut",
                     }}
                 >
-                    <span>↑</span>
-                    <span>25% from yesterday</span>
+                    <span>{percentChange >= 0 ? "↑" : "↓"}</span>
+                    <span>{Math.abs(percentChange)}% from yesterday</span>
                 </motion.div>
             </div>
         </motion.div>

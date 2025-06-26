@@ -22,7 +22,7 @@ const queryClient = new QueryClient({
         queries: {
             refetchOnWindowFocus: false,
             retry: 0,
-            staleTime: 1000 * 10,
+            staleTime: 1000 * 30,
         },
         mutations: {
             retry: 0,
