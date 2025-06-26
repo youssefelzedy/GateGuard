@@ -43,7 +43,7 @@ function Header() {
                                     : "default.jpg"
                             }
                             alt="Profile"
-                            className="w h-full object-cover"
+                            className="h-full w-full object-cover"
                         />
                     </button>
                     <div className="hidden md:block">
