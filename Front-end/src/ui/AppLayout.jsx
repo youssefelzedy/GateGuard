@@ -3,14 +3,17 @@ import { Navigate, Outlet } from "react-router";
 import { useAdmin } from "../features/auth/useAdmin";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
+import FullScreenLoader from "./FullScreenLoader";
 
 function AppLayout() {
-    const { isAuth, logout } = useAdmin();
+    const { isAuth, logout, isLoading } = useAdmin();
     const [showLogoutModal, setShowLogoutModal] = useState(false);
 
     if (!isAuth) {
         return <Navigate to="/login" replace />;
     }
+
+    if (isLoading) return <FullScreenLoader />;
 
     return (
         <div className="flex min-h-screen bg-primary-100 transition-colors duration-300 dark:bg-gray-900">
