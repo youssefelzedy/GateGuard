@@ -55,11 +55,10 @@ npm run build
 - **Styling:** [Tailwind CSS](https://tailwindcss.com/)
 - **Routing:** [react-router-dom](https://reactrouter.com/)
 - **State/Data:** [@tanstack/react-query](https://tanstack.com/query/latest)
+- **Form Handling:** [react-hook-form](https://react-hook-form.com/)
 - **Charts:** [Recharts](https://recharts.org/)
 - **UI/UX:** [Framer Motion](https://www.framer.com/motion/), [PrimeReact](https://primereact.org/), [Lucide React Icons](https://lucide.dev/)
 - **Notifications:** [react-hot-toast](https://react-hot-toast.com/)
-- **Form Handling:** [react-hook-form](https://react-hook-form.com/)
-- **Other:** [HLS.js](https://github.com/video-dev/hls.js/), [Swiper](https://swiperjs.com/)
 
 ---
 
@@ -135,16 +134,6 @@ src/
 
 ---
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/YourFeature`)
-3. Commit your changes (`git commit -m 'Add some feature'`)
-4. Push to the branch (`git push origin feature/YourFeature`)
-5. Open a Pull Request
-
----
-
 ## 📄 License
 
 This project is licensed under the MIT License.
@@ -153,9 +142,15 @@ This project is licensed under the MIT License.
 
 ## 👤 Contact / Author Info
 
-- **Author:** Your Name or Team
-- **Email:** your.email@example.com
-- **GitHub:** [https://github.com/your-username](https://github.com/your-username)
+#### Salah Swefy
+
+- **Email:** salahm.swefy@gmail.com
+- **GitHub:** [SalahMSwefy](https://github.com/SalahMSwefy)
+
+#### Saad Samir
+
+- **Email:** saadsamir7177@gmail.com
+- **GitHub:** [SaadSamir7](https://github.com/SaadSamir7)
 
 ---
 
