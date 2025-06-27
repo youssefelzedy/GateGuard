@@ -20,6 +20,12 @@ function LogsTable() {
         direction: "desc",
     });
 
+    // Add state for date filter
+    const [selectedDate, setSelectedDate] = useState(() => {
+        const today = new Date();
+        return today.toISOString().split("T")[0]; // "YYYY-MM-DD"
+    });
+
     const itemsPerPage = 6;
 
     const handleSearch = (e) => {
@@ -51,9 +57,18 @@ function LogsTable() {
             const matchesFilter =
                 filterValue === "all" || log.action === filterValue;
 
-            return matchesSearch && matchesFilter;
+            // Date filtering
+            let matchesDate = true;
+            if (selectedDate && selectedDate !== "all") {
+                const logDate = new Date(log.accessTime)
+                    .toISOString()
+                    .split("T")[0];
+                matchesDate = logDate === selectedDate;
+            }
+
+            return matchesSearch && matchesFilter && matchesDate;
         });
-    }, [logs, searchQuery, filterValue]);
+    }, [logs, searchQuery, filterValue, selectedDate]);
 
     const sortedLogs = useMemo(() => {
         return [...filteredLogs].sort((a, b) => {
@@ -91,7 +106,7 @@ function LogsTable() {
         setCurrentPage((prev) => Math.min(prev + 1, totalPages));
 
     return (
-        <div className="rounded-2xl bg-white p-6 shadow-xl dark:bg-gray-900">
+        <div className="rounded-2xl bg-white p-4 shadow-xl dark:bg-gray-900">
             <h2 className="mb-6 text-4xl font-bold text-gray-800 dark:text-white">
                 Access Logs
             </h2>
@@ -100,6 +115,11 @@ function LogsTable() {
                 onSearchChange={handleSearch}
                 filterValue={filterValue}
                 onFilterChange={handleFilter}
+                selectedDate={selectedDate}
+                onDateChange={(date) => {
+                    setSelectedDate(date);
+                    setCurrentPage(1);
+                }}
             />
             <div className="overflow-x-auto">
                 <table className="w-full text-left">

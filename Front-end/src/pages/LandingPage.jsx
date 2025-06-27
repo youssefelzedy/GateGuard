@@ -9,8 +9,8 @@ import LandingHeader from "../features/LandingPage/LandingHeader";
 import Slider from "../features/LandingPage/Slider";
 import FloatingCTA from "../features/LandingPage/FloatingCTA";
 import ScrollProgress from "../features/LandingPage/ScrollProgress";
-import loader from "../assets/Loading_Animation_3_clip.webm";
 import bgImage from "../assets/bg.jpg";
+import FullScreenLoader from "../ui/FullScreenLoader";
 
 function LandingPage() {
     const [isLoading, setIsLoading] = useState(true);
@@ -37,15 +37,7 @@ function LandingPage() {
                     {...fadeIn}
                     className="flex min-h-screen items-center justify-center bg-primary-100"
                 >
-                    <div className="flex flex-col items-center gap-4">
-                        <video
-                            autoPlay
-                            muted
-                            playsInline
-                            className="w-52 object-contain sm:w-48 md:w-60 lg:w-72 xl:w-96"
-                            src={loader}
-                        />
-                    </div>
+                    <FullScreenLoader />
                 </motion.div>
             ) : (
                 <motion.div
