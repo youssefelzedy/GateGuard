@@ -142,15 +142,8 @@ This project is licensed under the MIT License.
 
 ## 👤 Contact / Author Info
 
-#### Salah Swefy
-
-- **Email:** salahm.swefy@gmail.com
-- **GitHub:** [SalahMSwefy](https://github.com/SalahMSwefy)
-
-#### Saad Samir
-
-- **Email:** saadsamir7177@gmail.com
-- **GitHub:** [SaadSamir7](https://github.com/SaadSamir7)
+- Salah Swefy – [salahm.swefy@gmail.com](mailto:salahm.swefy@gmail.com) – [GitHub: SalahMSwefy](https://github.com/SalahMSwefy)
+- Saad Samir – [saadsamir7177@gmail.com](mailto:saadsamir7177@gmail.com) – [GitHub: SaadSamir7](https://github.com/SaadSamir7)
 
 ---
 
