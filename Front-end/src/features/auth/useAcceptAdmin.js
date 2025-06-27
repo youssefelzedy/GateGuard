@@ -1,10 +1,12 @@
 import toast from "react-hot-toast";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 import { acceptInvitation as apiAcceptInvitation } from "../../services/apiAuth";
 
 export function useAcceptAdmin() {
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
+
     const {
         mutate: acceptInvitation,
         isPending,
@@ -17,6 +19,7 @@ export function useAcceptAdmin() {
         },
         onSuccess: () => {
             toast.success("Invitation accepted successfully!");
+            queryClient.clear();
             navigate("/login");
         },
         onError: (error) => {
