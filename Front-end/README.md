@@ -63,21 +63,74 @@ npm run build
 
 ---
 
-## 📁 Folder Structure
+## 📁 Advanced Folder Structure
 
 ```
 src/
-  assets/         # Images, videos, and static files
-  components/     # Reusable UI components (Dashboard, Tables, etc.)
-  context/        # React context providers (e.g., DarkMode)
-  features/       # Feature modules (LandingPage, logsPage, users, admins, auth, garages, LiveStream)
-  hooks/          # Custom React hooks
-  pages/          # Main app pages (Dashboard, LandingPage, Logs, Users, Admins, etc.)
-  services/       # API and service logic
-  ui/             # Layout and UI primitives (Header, Sidebar, AppLayout, etc.)
-  utils/          # Utility functions and constants
-  main.jsx        # App entry point
-  main.css        # Global styles
+│
+├── assets/                           # Static assets (images, videos, SVGs, etc.)
+│   ├── about/                        # About page/section images
+│   ├── features/                     # Feature section images/icons
+│   ├── pages/                        # Page-specific images (e.g., Dashboard)
+│   ├── Slider/                       # Images for sliders/carousels
+│   ├── bg.jpg                        # General background image
+│   ├── Loading_Animation_3_clip.webm # Loader animation
+│   ├── Logo_dark.svg                 # Dark mode logo
+│   ├── Logo_light.svg                # Light mode logo
+│   └── Shield.svg                    # Security/feature icon
+│
+├── components/                    # Reusable UI components
+│   ├── Dashboard/                 # Dashboard widgets (charts, stats, etc.)
+│   ├── Tables/                    # Table components (pagination, headers, etc.)
+│   ├── InviteAdminForm/           # Admin invitation form components
+│   └── RegisterAdminForm/         # Registration form components
+│
+├── context/                       # React context providers
+│   └── DarkModeContext.jsx        # Dark mode state/context
+│
+├── features/                      # Feature-based modules (domain logic/UI)
+│   ├── LandingPage/               # Landing page sections (Hero, Features, About, etc.)
+│   ├── LiveStream/                # Live stream and camera management
+│   ├── logsPage/                  # Access logs and log table logic
+│   ├── admins/                    # Admin management (tables, headers)
+│   ├── users/                     # User management (tables, headers)
+│   ├── auth/                      # Authentication (login, registration, hooks)
+│   └── garages/                   # Garage management logic
+│
+├── pages/                         # Top-level pages (routed views)
+│   ├── Settings.jsx               # Garage and user settings page
+│   ├── Profile.jsx                # User profile page
+│   ├── Login.jsx                  # Login page
+│   ├── GetStarted.jsx             # Registration onboarding page
+│   ├── LandingPage.jsx            # Public landing page
+│   ├── Admins.jsx                 # Admin management page
+│   ├── Users.jsx                  # User management page
+│   ├── Logs.jsx                   # Access logs page
+│   ├── LiveStream.jsx             # Live camera stream page
+│   ├── Dashboard.jsx              # Main dashboard page
+│   ├── InviteUser.jsx             # User invitation page
+│   └── InviteAdmin.jsx            # Admin invitation page
+│
+├── services/                      # API and service logic
+│   ├── apiLogs.js                 # Logs API
+│   ├── apiCameras.js              # Cameras API
+│   ├── apiGarages.js              # Garages API
+│   ├── apiAdmins.js               # Admins API
+│   ├── apiUsers.js                # Users API
+│   └── apiAuth.js                 # Auth API
+│
+├── ui/                            # Layout and UI primitives
+│   ├── Sidebar.jsx                # Sidebar navigation
+│   ├── Header.jsx                 # Main app header
+│   ├── Plate.jsx                  # License plate UI component
+│   └── AppLayout.jsx              # Main app layout wrapper
+│
+├── utils/                         # Utility functions and constants
+│   ├── constants.js               # App-wide constants
+│   └── helper.js                  # Helper functions
+│
+├── main.jsx                       # App entry point (React root)
+└── main.css                       # Global styles (Tailwind, etc.)
 ```
 
 ---
