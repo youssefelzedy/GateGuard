@@ -10,6 +10,8 @@ import {
 import { NavLink } from "react-router";
 import { useAdmin } from "../features/auth/useAdmin";
 import { useDarkMode } from "../context/DarkModeContext";
+import LogoDark from "../assets/Logo_dark.svg";
+import LogoLight from "../assets/Logo_light.svg";
 
 const sidebarItems = [
     {
@@ -41,7 +43,7 @@ function Sidebar({ onLogoutClick }) {
         <aside className="sticky top-0 flex h-screen w-60 flex-col justify-center bg-primary-50 transition-all duration-300 dark:bg-gray-800">
             <div className="flex items-center justify-center p-8">
                 <img
-                    src={isDarkMode ? "/Logo_light.svg" : "/Logo_dark.svg"}
+                    src={isDarkMode ? LogoLight : LogoDark}
                     alt="Logo"
                     className="h-20 w-40 bg-transparent"
                 />

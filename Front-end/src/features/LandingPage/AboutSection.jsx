@@ -1,6 +1,11 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
-import ShieldIcon from "/public/Shield.svg";
+import ShieldIcon from "../../assets/Shield.svg";
+import otpImage from "../../assets/about/otp1.png";
+import arrowIcon from "../../assets/features/arrow-down-arrow-up.png";
+import usersIcon from "../../assets/features/users-group-alt.png";
+import videoIcon from "../../assets/features/video-square.png";
+import feature3Image from "../../assets/pages/feature-3.png";
 
 function AboutSection() {
     // Helper for animated background blobs
@@ -74,7 +79,7 @@ function AboutSection() {
                         viewport={{ once: true }}
                     >
                         <motion.img
-                            src="/about/otp1.png"
+                            src={otpImage}
                             alt="Employee using the app"
                             className="h-auto w-full max-w-[400px] drop-shadow-xl"
                             initial="hidden"
@@ -186,7 +191,7 @@ function AboutSection() {
                             viewport={{ once: true }}
                         >
                             <motion.img
-                                src="/features/arrow-down-arrow-up.png"
+                                src={arrowIcon}
                                 alt="Register"
                                 className="mb-4 h-16 w-16 animate-float object-contain drop-shadow-xl"
                                 initial={{ opacity: 0, scale: 0.8 }}
@@ -220,7 +225,7 @@ function AboutSection() {
                             viewport={{ once: true }}
                         >
                             <motion.img
-                                src="/features/users-group-alt.png"
+                                src={usersIcon}
                                 alt="Verify"
                                 className="mb-4 h-16 w-16 animate-float object-contain drop-shadow-xl"
                                 initial={{ opacity: 0, scale: 0.8 }}
@@ -254,7 +259,7 @@ function AboutSection() {
                             viewport={{ once: true }}
                         >
                             <motion.img
-                                src="/features/video-square.png"
+                                src={videoIcon}
                                 alt="Access"
                                 className="mb-4 h-16 w-16 animate-float object-contain drop-shadow-xl"
                                 initial={{ opacity: 0, scale: 0.8 }}
@@ -314,7 +319,7 @@ function AboutSection() {
                             viewport={{ once: true }}
                         >
                             <motion.img
-                                src="/features/arrow-down-arrow-up.png"
+                                src={arrowIcon}
                                 alt="Fast & Automated"
                                 className="mb-4 h-14 w-14 animate-float object-contain drop-shadow-xl"
                                 initial={{ opacity: 0, scale: 0.8 }}
@@ -348,7 +353,7 @@ function AboutSection() {
                             viewport={{ once: true }}
                         >
                             <motion.img
-                                src="/features/users-group-alt.png"
+                                src={usersIcon}
                                 alt="Real-Time Alerts"
                                 className="mb-4 h-14 w-14 animate-float object-contain drop-shadow-xl"
                                 initial={{ opacity: 0, scale: 0.8 }}
@@ -382,7 +387,7 @@ function AboutSection() {
                             viewport={{ once: true }}
                         >
                             <motion.img
-                                src="/Shield.svg"
+                                src={ShieldIcon}
                                 alt="Top-Tier Security"
                                 className="mb-4 h-14 w-14 animate-float object-contain drop-shadow-xl"
                                 initial={{ opacity: 0, scale: 0.8 }}
@@ -416,7 +421,7 @@ function AboutSection() {
                             viewport={{ once: true }}
                         >
                             <motion.img
-                                src="/feature-3.png"
+                                src={feature3Image}
                                 alt="Insightful Analytics"
                                 className="mb-4 h-14 w-14 animate-float object-contain drop-shadow-xl"
                                 initial={{ opacity: 0, scale: 0.8 }}

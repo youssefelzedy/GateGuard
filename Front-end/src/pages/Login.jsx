@@ -4,6 +4,7 @@ import LoginForm from "../features/auth/LoginForm";
 import { useAdmin } from "../features/auth/useAdmin";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
+import loader from "../assets/Loading_Animation_3_clip.webm";
 
 function Login() {
     const { isAuth } = useAdmin();
@@ -25,7 +26,7 @@ function Login() {
                     muted
                     playsInline
                     className="w-52 object-contain sm:w-48 md:w-60 lg:w-72 xl:w-96"
-                    src="/Loading_Animation_3_clip.webm"
+                    src={loader}
                 />
             </div>
         );

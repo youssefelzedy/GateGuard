@@ -1,12 +1,19 @@
+import { useDarkMode } from "../../context/DarkModeContext";
+import LogoDark from "../../assets/Logo_dark.svg";
+import LogoLight from "../../assets/Logo_light.svg";
+
 function HeaderLogin() {
+    const { isDarkMode } = useDarkMode();
     return (
-        <header className="flex w-fit items-center gap-6 rounded-lg bg-transparent px-6 py-4">
-            <img
-                src="/Logo_dark.svg"
-                alt="Logo"
-                className="h-40 w-80 bg-transparent"
-            />
-        </header>
+        <div className="absolute top-0 flex w-full items-center justify-between p-4 sm:p-6 md:p-8">
+            <div className="flex items-center gap-2">
+                <img
+                    src={!isDarkMode ? LogoDark : LogoLight}
+                    alt="Logo"
+                    className="h-12 w-auto"
+                />
+            </div>
+        </div>
     );
 }
 

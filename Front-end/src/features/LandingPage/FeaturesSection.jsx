@@ -1,5 +1,11 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
+import arrowIcon from "../../assets/features/arrow-down-arrow-up.png";
+import usersIcon from "../../assets/features/users-group-alt.png";
+import videoIcon from "../../assets/features/video-square.png";
+import feature1 from "../../assets/pages/feature-1.png";
+import feature2 from "../../assets/pages/feature-2.png";
+import feature3 from "../../assets/pages/feature-3.png";
 
 function FeaturesSection() {
     return (
@@ -45,7 +51,7 @@ function FeaturesSection() {
                                 whileInView={{ rotate: 0, scale: 1 }}
                                 transition={{ duration: 0.5, delay: 0.3 }}
                                 viewport={{ once: true }}
-                                src="/features/arrow-down-arrow-up.png"
+                                src={arrowIcon}
                                 alt=""
                                 className="absolute -top-10 left-1/2 h-64 w-64 -translate-x-1/2 opacity-20 md:left-0 md:translate-x-0"
                             />
@@ -70,7 +76,7 @@ function FeaturesSection() {
                                     stiffness: 400,
                                     damping: 10,
                                 }}
-                                src="/feature-1.png"
+                                src={feature1}
                                 alt="Feature 1 Screenshot"
                                 className="h-auto w-full max-w-[400px] rounded-xl shadow-xl sm:max-w-[450px] md:max-w-[600px] lg:max-w-[700px]"
                                 loading="lazy"
@@ -104,7 +110,7 @@ function FeaturesSection() {
                                 whileInView={{ rotate: 0, scale: 1 }}
                                 transition={{ duration: 0.5, delay: 0.3 }}
                                 viewport={{ once: true }}
-                                src="/features/users-group-alt.png"
+                                src={usersIcon}
                                 alt=""
                                 className="absolute -top-10 left-1/2 h-64 w-64 -translate-x-1/2 opacity-20 md:left-0 md:translate-x-0"
                             />
@@ -128,7 +134,7 @@ function FeaturesSection() {
                                     stiffness: 400,
                                     damping: 10,
                                 }}
-                                src="/feature-2.png"
+                                src={feature2}
                                 alt="Feature 2 Screenshot"
                                 className="h-auto w-full max-w-[400px] rounded-xl shadow-xl sm:max-w-[450px] md:max-w-[600px] lg:max-w-[700px]"
                                 loading="lazy"
@@ -162,7 +168,7 @@ function FeaturesSection() {
                                 whileInView={{ rotate: 0, scale: 1 }}
                                 transition={{ duration: 0.5, delay: 0.3 }}
                                 viewport={{ once: true }}
-                                src="/features/video-square.png"
+                                src={videoIcon}
                                 alt=""
                                 className="absolute -top-10 left-1/2 h-32 w-32 -translate-x-1/2 opacity-20 md:left-0 md:translate-x-0"
                             />
@@ -187,7 +193,7 @@ function FeaturesSection() {
                                     stiffness: 400,
                                     damping: 10,
                                 }}
-                                src="/feature-3.png"
+                                src={feature3}
                                 alt="Feature 3 Screenshot"
                                 className="h-auto w-full max-w-[400px] rounded-xl shadow-xl sm:max-w-[450px] md:max-w-[600px] lg:max-w-[700px]"
                                 loading="lazy"

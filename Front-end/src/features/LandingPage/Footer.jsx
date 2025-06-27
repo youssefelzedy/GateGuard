@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { useState } from "react";
+import logoLight from "../../assets/Logo_light.svg";
 
 const Footer = () => {
     const [email, setEmail] = useState("");
@@ -40,7 +41,7 @@ const Footer = () => {
                         >
                             <a href="#" className="flex items-center">
                                 <img
-                                    src="/Logo_light.svg"
+                                    src={logoLight}
                                     alt="GateGuard Logo"
                                     className="mr-3 h-auto w-24 md:w-32"
                                 />

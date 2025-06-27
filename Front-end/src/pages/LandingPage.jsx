@@ -9,7 +9,8 @@ import LandingHeader from "../features/LandingPage/LandingHeader";
 import Slider from "../features/LandingPage/Slider";
 import FloatingCTA from "../features/LandingPage/FloatingCTA";
 import ScrollProgress from "../features/LandingPage/ScrollProgress";
-import loader from "/Loading_Animation_3_clip.webm";
+import loader from "../assets/Loading_Animation_3_clip.webm";
+import bgImage from "../assets/bg.jpg";
 
 function LandingPage() {
     const [isLoading, setIsLoading] = useState(true);
@@ -56,7 +57,10 @@ function LandingPage() {
                     <div className="relative">
                         {/* Hero Section with Background */}
                         <div className="absolute inset-0 z-0">
-                            <div className="absolute inset-0 bg-[url('/bg.jpg')] bg-cover bg-center bg-no-repeat"></div>
+                            <div
+                                className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                                style={{ backgroundImage: `url(${bgImage})` }}
+                            ></div>
                             <div className="absolute inset-0 bg-primary-700 opacity-80 mix-blend-multiply backdrop-blur-sm"></div>
                         </div>
                         <div className="relative z-30 w-full px-4 sm:px-6 md:px-8">

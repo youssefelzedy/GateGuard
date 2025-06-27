@@ -1,35 +1,46 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { EffectCoverflow, Pagination, Navigation } from "swiper/modules";
+import c1 from "../../assets/Slider/c1.jpg";
+import c2 from "../../assets/Slider/c2.jpg";
+import c3 from "../../assets/Slider/c3.jpg";
 
 function Slider() {
-    const slides = [
-        {
-            image: "/Slider/c1.jpg",
-            title: "Enterprise Security",
-            description:
-                "Our advanced security solutions protect large enterprises with seamless integration and real-time monitoring capabilities.",
-        },
-        {
-            image: "/Slider/c2.jpg",
-            title: "Residential Protection",
-            description:
-                "Providing peace of mind for homeowners with smart access control and visitor management systems.",
-        },
-        {
-            image: "/Slider/c3.jpg",
-            title: "Commercial Security",
-            description:
-                "Tailored security solutions for businesses of all sizes, ensuring safety while maintaining operational efficiency.",
-        },
-    ];
+    const slides = useMemo(
+        () => [
+            {
+                image: c1,
+                title: "Enterprise Security",
+                description:
+                    "Our advanced security solutions protect large enterprises with seamless integration and real-time monitoring capabilities.",
+            },
+            {
+                image: c2,
+                title: "Residential Protection",
+                description:
+                    "Providing peace of mind for homeowners with smart access control and visitor management systems.",
+            },
+            {
+                image: c3,
+                title: "Commercial Security",
+                description:
+                    "Tailored security solutions for businesses of all sizes, ensuring safety while maintaining operational efficiency.",
+            },
+        ],
+        [],
+    );
 
     const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
-        }, 6000);
+        }, 10 * 1000);
         return () => clearInterval(interval);
     }, [slides.length]);
 

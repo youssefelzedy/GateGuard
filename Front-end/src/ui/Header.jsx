@@ -3,6 +3,7 @@ import { useAdmin } from "../features/auth/useAdmin";
 import { useNavigate } from "react-router-dom";
 import { useDarkMode } from "../context/DarkModeContext";
 import { MapPinIcon, BuildingOfficeIcon } from "@heroicons/react/24/outline";
+import defaultImage from "../assets/default.jpg";
 
 const VITE_API_URL_PICTURE = import.meta.env.VITE_API_URL_PICTURE;
 
@@ -40,7 +41,7 @@ function Header() {
                             src={
                                 admin?.image
                                     ? `${VITE_API_URL_PICTURE}/${admin.image}`
-                                    : "default.jpg"
+                                    : defaultImage
                             }
                             alt="Profile"
                             className="h-full w-full object-cover"

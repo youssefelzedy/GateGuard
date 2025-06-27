@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import HeaderLogin from "../features/auth/HeaderLogin";
 import RegistrationStepper from "../features/auth/RegistrationForm";
+import loader from "../assets/Loading_Animation_3_clip.webm";
 
 function GetStarted() {
     const [isLoading, setIsLoading] = useState(true);
@@ -21,7 +22,7 @@ function GetStarted() {
                     muted
                     playsInline
                     className="w-52 object-contain sm:w-48 md:w-60 lg:w-72 xl:w-96"
-                    src="/Loading_Animation_3_clip.webm"
+                    src={loader}
                 />
             </div>
         );
