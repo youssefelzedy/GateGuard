@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { User, Phone, IdCard, Camera } from "lucide-react";
 import { useAdmin } from "../features/auth/useAdmin";
 import { useUpdateAdmin } from "../features/auth/useUpdateAdmin";
-import defaultImage from "../assets/default.jpg";
 
 const VITE_API_URL_PICTURE = import.meta.env.VITE_API_URL_PICTURE;
 
@@ -162,7 +161,7 @@ function Profile() {
                                                       )
                                                     : admin?.image
                                                       ? `${VITE_API_URL_PICTURE}/${admin.image}`
-                                                      : defaultImage
+                                                      : "/default.jpg"
                                             }
                                             alt="Profile"
                                             className="h-full w-full object-cover"
