@@ -6,7 +6,7 @@ export function useLogs(garageId) {
         queryKey: ["logs", garageId],
         queryFn: () => getLogs(garageId),
         enabled: !!garageId,
-        refetchInterval: 30 * 1000,
+        refetchInterval: 20 * 1000,
     });
 
     return { logs: data?.data?.logs, isLoading };
