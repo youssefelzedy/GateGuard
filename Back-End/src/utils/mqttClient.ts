@@ -5,12 +5,13 @@ interface GateStatus {
   timestamp: Date;
 }
 
+interface GarageGateStatus {
+  [garageId: string]: GateStatus;
+}
+
 class MQTTClient {
   private client: MqttClient | null = null;
-  private gateStatus: GateStatus | null = {
-    status: 'closed',
-    timestamp: new Date(),
-  };
+  private garageGateStatus: GarageGateStatus = {};
   private readonly brokerUrl =
     process.env.MQTT_BROKER_URL || 'mqtt://localhost:1883';
   private readonly statusTopic = process.env.MQTT_STATUS_TOPIC || 'gate/status';
@@ -20,11 +21,11 @@ class MQTTClient {
   private retryCount = 0;
   private readonly maxRetries = 5;
   private readonly retryDelay = 5000; // 5 seconds
-  private autoCloseTimer: NodeJS.Timeout | null = null;
+  private autoCloseTimers: { [garageId: string]: NodeJS.Timeout } = {};
   private readonly autoCloseDelay = 15000; // 15 seconds
 
   constructor() {
-    console.log(`MQTT client initialized with default gate status: closed`);
+    console.log(`MQTT client initialized for multi-garage support`);
     console.log(`MQTT Broker URL: ${this.brokerUrl}`);
     console.log(`Status Topic: ${this.statusTopic}`);
     console.log(`Command Topic: ${this.commandTopic}`);
@@ -107,121 +108,141 @@ class MQTTClient {
       return;
     }
 
-    this.client.subscribe(this.statusTopic, (error) => {
+    // Subscribe to garage-specific status topics
+    this.client.subscribe(`${this.statusTopic}/+`, (error) => {
       if (error) {
-        console.error('Failed to subscribe to status topic:', error);
+        console.error('Failed to subscribe to status topics:', error);
       } else {
-        console.log('Subscribed to gate/status');
+        console.log(
+          `Subscribed to ${this.statusTopic}/+ (all garage status topics)`,
+        );
       }
     });
   }
 
   private handleMessage(topic: string, message: Buffer): void {
-    if (topic === this.statusTopic) {
+    // Handle garage-specific status topics: gate/status/{garageId}
+    if (topic.startsWith(this.statusTopic + '/')) {
+      const garageId = topic.split('/')[2]; // Extract garage ID from topic
+
       try {
         const status = message.toString().trim().toLowerCase();
 
         if (status === 'open' || status === 'closed') {
-          this.gateStatus = {
+          this.garageGateStatus[garageId] = {
             status: status as 'open' | 'closed',
             timestamp: new Date(),
           };
 
-          console.log(`Gate status updated: ${status}`);
+          console.log(`Gate status updated for garage ${garageId}: ${status}`);
 
           // If gate is opened, start auto-close timer
           if (status === 'open') {
-            this.startAutoCloseTimer();
+            this.startAutoCloseTimer(garageId);
           } else if (status === 'closed') {
-            this.clearAutoCloseTimer();
+            this.clearAutoCloseTimer(garageId);
           }
         } else {
-          console.warn(`Invalid gate status received: ${status}`);
+          console.warn(
+            `Invalid gate status received for garage ${garageId}: ${status}`,
+          );
         }
       } catch (error) {
-        console.error('Error processing gate status message:', error);
+        console.error(
+          `Error processing gate status message for garage ${garageId}:`,
+          error,
+        );
       }
     }
   }
 
-  private startAutoCloseTimer(): void {
-    // Clear any existing timer
-    this.clearAutoCloseTimer();
+  private startAutoCloseTimer(garageId: string): void {
+    // Clear any existing timer for this garage
+    this.clearAutoCloseTimer(garageId);
 
     console.log(
-      `Auto-close timer started. Gate will close in ${this.autoCloseDelay / 1000} seconds.`,
+      `Auto-close timer started for garage ${garageId}. Gate will close in ${this.autoCloseDelay / 1000} seconds.`,
     );
 
-    this.autoCloseTimer = setTimeout(() => {
-      console.log('Auto-close timer expired. Sending close command...');
-      this.sendCommand('close');
+    this.autoCloseTimers[garageId] = setTimeout(() => {
+      console.log(
+        `Auto-close timer expired for garage ${garageId}. Sending close command...`,
+      );
+      this.sendCommand(garageId, 'close');
 
       // Update status immediately to "closed" for better UX
-      this.gateStatus = {
+      this.garageGateStatus[garageId] = {
         status: 'closed',
         timestamp: new Date(),
       };
-      console.log('Gate status updated to closed (auto-close timer)');
+      console.log(
+        `Gate status updated to closed for garage ${garageId} (auto-close timer)`,
+      );
 
-      this.autoCloseTimer = null;
+      delete this.autoCloseTimers[garageId];
     }, this.autoCloseDelay);
   }
 
-  private clearAutoCloseTimer(): void {
-    if (this.autoCloseTimer) {
-      clearTimeout(this.autoCloseTimer);
-      this.autoCloseTimer = null;
-      console.log('Auto-close timer cleared.');
+  private clearAutoCloseTimer(garageId: string): void {
+    if (this.autoCloseTimers[garageId]) {
+      clearTimeout(this.autoCloseTimers[garageId]);
+      delete this.autoCloseTimers[garageId];
+      console.log(`Auto-close timer cleared for garage ${garageId}.`);
     }
   }
 
-  private sendCommand(command: string): boolean {
+  private sendCommand(garageId: string, command: string): boolean {
     if (!this.client || !this.client.connected) {
       console.error('Cannot send command: MQTT not connected');
       return false;
     }
 
     try {
-      this.client.publish(this.commandTopic, command, (error) => {
+      const topic = `${this.commandTopic}/${garageId}`;
+      this.client.publish(topic, command, (error) => {
         if (error) {
-          console.error('Failed to send command:', error);
+          console.error(`Failed to send command to garage ${garageId}:`, error);
         } else {
-          console.log(`Command sent: ${command}`);
+          console.log(`Command sent to garage ${garageId}: ${command}`);
         }
       });
       return true;
     } catch (error) {
-      console.error('Error sending command:', error);
+      console.error(`Error sending command to garage ${garageId}:`, error);
       return false;
     }
   }
 
-  public openGate(): boolean {
-    console.log('Opening gate...');
-    const success = this.sendCommand('open');
+  public openGate(garageId: string): boolean {
+    console.log(`Opening gate for garage ${garageId}...`);
+    const success = this.sendCommand(garageId, 'open');
 
     if (success) {
       // Update status immediately for better UX
-      this.gateStatus = {
+      this.garageGateStatus[garageId] = {
         status: 'open',
         timestamp: new Date(),
       };
 
       // Start auto-close timer when gate is opened via API
-      this.startAutoCloseTimer();
+      this.startAutoCloseTimer(garageId);
     }
 
     return success;
   }
 
-  public closeGate(): boolean {
-    console.log('Closing gate...');
-    this.clearAutoCloseTimer(); // Clear timer when manually closing
-    return this.sendCommand('close');
+  public closeGate(garageId: string): boolean {
+    console.log(`Closing gate for garage ${garageId}...`);
+    this.clearAutoCloseTimer(garageId); // Clear timer when manually closing
+    return this.sendCommand(garageId, 'close');
   }
 
-  public getGateStatus(): GateStatus | null {
-    return this.gateStatus;
+  public getGateStatus(garageId: string): GateStatus | null {
+    return this.garageGateStatus[garageId] || null;
+  }
+
+  public getAllGateStatuses(): GarageGateStatus {
+    return { ...this.garageGateStatus };
   }
 
   public getConnectionStatus(): string {
@@ -237,12 +258,20 @@ class MQTTClient {
     return 'disconnected';
   }
 
-  public isAutoCloseTimerActive(): boolean {
-    return this.autoCloseTimer !== null;
+  public isAutoCloseTimerActive(garageId: string): boolean {
+    return this.autoCloseTimers[garageId] !== undefined;
+  }
+
+  public isAnyAutoCloseTimerActive(): boolean {
+    return Object.keys(this.autoCloseTimers).length > 0;
   }
 
   public disconnect(): void {
-    this.clearAutoCloseTimer();
+    // Clear all timers
+    Object.keys(this.autoCloseTimers).forEach((garageId) => {
+      this.clearAutoCloseTimer(garageId);
+    });
+
     if (this.client) {
       this.client.end();
       this.client = null;
