@@ -9,20 +9,12 @@ const gateController = {
     const gateStatus = mqttClient.getGateStatus(garageId);
     const connectionStatus = mqttClient.getConnectionStatus();
 
-    if (!gateStatus) {
-      res.status(404).json({
-        status: 'error',
-        message: 'Gate status not available for this garage',
-        connectionStatus: connectionStatus,
-        data: null,
-      });
-      return;
-    }
-
-    // If MQTT is not connected, indicate that this is a default status
-    const isDefaultStatus = connectionStatus !== 'connected';
+    // gateStatus will never be null now due to default status
+    const isDefaultStatus =
+      connectionStatus !== 'connected' ||
+      !mqttClient.getAllGateStatuses()[garageId];
     const message = isDefaultStatus
-      ? 'Using default gate status (MQTT not connected)'
+      ? 'Using default gate status (MQTT not connected or no status received yet)'
       : 'Gate status from ESP device';
 
     res.status(200).json({
