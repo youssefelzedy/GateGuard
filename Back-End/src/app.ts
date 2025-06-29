@@ -24,6 +24,7 @@ import logsRouter from './routes/logsRoutes';
 import authRouter from './routes/authRoutes';
 import invitationRouter from './routes/invitationRoutes';
 import cameraRouter from './routes/cameraRoutes';
+import gateRouter from './routes/gateRoutes';
 import logsController from './controllers/logsController';
 
 const app = express();
@@ -92,6 +93,7 @@ app.use(`${API}/invitations`, invitationRouter);
 app.use(`${API}/users`, userRouter);
 app.use(`${API}/logs`, logsRouter);
 app.use(`${API}/cameras`, cameraRouter);
+app.use(`${API}/gate`, gateRouter);
 
 // Hardware-specific routes (accessible without garage nesting)
 app.get(

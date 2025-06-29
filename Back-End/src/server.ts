@@ -4,6 +4,7 @@ import WebSocket from 'ws';
 import dbConnect from '../config/dbConnect';
 import app from './app';
 import startWsClient from './wsServer';
+import mqttClient from './utils/mqttClient';
 
 dotenv.config({ path: './config.env' });
 
@@ -38,6 +39,7 @@ const PORT = process.env.PORT || 8000;
 console.log('PORT:', PORT);
 server.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
+  console.log('MQTT client initialized');
 
   // Only start the WS client if needed
   // startWsClient();
@@ -49,5 +51,21 @@ process.on('unhandledRejection', (err: Error) => {
   console.log('UNHANDLED REJECTION! Shutting down...');
   server.close(() => {
     process.exit(1);
+  });
+});
+
+process.on('SIGINT', () => {
+  console.log('Received SIGINT. Shutting down gracefully...');
+  mqttClient.disconnect();
+  server.close(() => {
+    process.exit(0);
+  });
+});
+
+process.on('SIGTERM', () => {
+  console.log('Received SIGTERM. Shutting down gracefully...');
+  mqttClient.disconnect();
+  server.close(() => {
+    process.exit(0);
   });
 });
