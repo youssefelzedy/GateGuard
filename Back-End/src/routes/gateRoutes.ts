@@ -9,9 +9,6 @@ router.get('/status/:garageId', gateController.getGateStatus);
 // POST /api/gate/open/:garageId - Open the gate for specific garage (auto-closes after 15 seconds)
 router.post('/open/:garageId', gateController.openGate);
 
-// POST /api/gate/close/:garageId - Manually close the gate for specific garage
-router.post('/close/:garageId', gateController.closeGate);
-
 // GET /api/gate/all - Get all garage gate statuses
 router.get('/all', gateController.getAllGarageGateStatuses);
 
