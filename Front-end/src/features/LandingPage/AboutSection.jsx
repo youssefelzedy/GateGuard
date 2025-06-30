@@ -300,7 +300,7 @@ function AboutSection() {
                     >
                         Why Choose GateGuard?
                     </motion.h3>
-                    <div className="relative z-10 grid gap-10 sm:grid-cols-4">
+                    <div className="relative z-10 grid gap-10 sm:grid-cols-2">
                         {/* Feature 1: Fast & Automated */}
                         <motion.div
                             className="relative flex flex-col items-center overflow-visible rounded-2xl border border-primary-100 bg-white/95 p-6 shadow-2xl backdrop-blur-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl dark:border-primary-800 dark:bg-primary-900/70"
@@ -489,7 +489,7 @@ function AboutSection() {
                         </motion.span>
                     </motion.h2>
                     <motion.a
-                        href="/signup"
+                        href="/get-started"
                         className="inline-block rounded-full bg-gradient-to-r from-primary-700 to-primary-500 px-8 py-3 text-base font-semibold text-white shadow-lg transition-all hover:from-primary-800 hover:to-primary-600 focus:outline-none focus:ring-4 focus:ring-primary-300"
                         whileHover={{
                             scale: 1.08,

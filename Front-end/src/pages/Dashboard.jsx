@@ -55,9 +55,9 @@ function Dashboard() {
                 animate="visible"
                 variants={containerVariants}
             >
-                <motion.div variants={itemVariants}>
+                {/* <motion.div variants={itemVariants}>
                     <GateControl />
-                </motion.div>
+                </motion.div> */}
                 <motion.div variants={itemVariants}>
                     <NumberOfCars />
                 </motion.div>

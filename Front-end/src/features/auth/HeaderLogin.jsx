@@ -6,12 +6,14 @@ function HeaderLogin() {
     const { isDarkMode } = useDarkMode();
 
     return (
-        <div className="absolute top-0 flex w-full items-center justify-between p-4 sm:p-6 md:p-8">
+        <div className="w-full flex justify-center mt-8 mb-6">
             <div className="flex items-center gap-2">
                 <img
-                    src={!isDarkMode ? LogoLight : LogoDark}
+                    src={LogoDark}
                     alt="Logo"
-                    className="h-12 w-auto"
+                    className="h-24 w-auto"
+                    onClick={() => window.location.href = '/'}
+                    style={{ cursor: 'pointer' }}
                 />
             </div>
         </div>
