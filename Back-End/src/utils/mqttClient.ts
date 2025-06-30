@@ -238,23 +238,12 @@ class MQTTClient {
   }
 
   public getGateStatus(garageId: string): GateStatus {
-<<<<<<< HEAD
-    // If no status exists for this garage, return default "closed" status
-    if (!this.garageGateStatus[garageId]) {
-      return {
-        status: 'closed',
-        timestamp: new Date(),
-      };
-    }
-    return this.garageGateStatus[garageId];
-=======
     return (
       this.garageGateStatus[garageId] || {
         status: 'closed',
         timestamp: new Date(),
       }
     );
->>>>>>> 0810b3acce384a5bef096cdec8d847a06f7650ec
   }
 
   public getAllGateStatuses(): GarageGateStatus {
