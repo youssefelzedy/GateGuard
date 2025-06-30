@@ -285,7 +285,7 @@ function AboutSection() {
 
                 {/* Why Choose GateGuard Section */}
                 <motion.div
-                    className="relative mx-auto mb-20 max-w-5xl overflow-hidden rounded-3xl border border-primary-100 bg-gradient-to-br from-primary-50 via-white to-primary-100 px-6 py-14 shadow-2xl backdrop-blur-xl dark:border-primary-800 dark:from-gray-900 dark:via-gray-950 dark:to-primary-900"
+                    className="relative mx-auto mb-20 max-w-6xl overflow-hidden rounded-3xl border border-primary-100 bg-gradient-to-br from-primary-50 via-white to-primary-100 px-6 py-14 shadow-2xl backdrop-blur-xl dark:border-primary-800 dark:from-gray-900 dark:via-gray-950 dark:to-primary-900"
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7, ease: "easeOut" }}
@@ -300,7 +300,7 @@ function AboutSection() {
                     >
                         Why Choose GateGuard?
                     </motion.h3>
-                    <div className="relative z-10 grid gap-10 sm:grid-cols-2">
+                    <div className="relative z-10 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
                         {/* Feature 1: Fast & Automated */}
                         <motion.div
                             className="relative flex flex-col items-center overflow-visible rounded-2xl border border-primary-100 bg-white/95 p-6 shadow-2xl backdrop-blur-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl dark:border-primary-800 dark:bg-primary-900/70"

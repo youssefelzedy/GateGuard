@@ -29,8 +29,8 @@ const Footer = () => {
     return (
         <footer className="bg-primary-900 py-16 text-white">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
-                    <div className="flex flex-col">
+                <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
+                    <div className="flex flex-col items-center md:items-start">
                         <motion.div
                             variants={fadeInVariants}
                             initial="hidden"
@@ -53,7 +53,7 @@ const Footer = () => {
                             whileInView="visible"
                             custom={0.2}
                             viewport={{ once: true }}
-                            className="mb-2 text-base sm:text-lg"
+                            className="mb-2 text-center text-base sm:text-left sm:text-lg"
                         >
                             Made with <span className="text-red-500">❤</span>{" "}
                             by Computer and Control Students,
@@ -71,7 +71,7 @@ const Footer = () => {
                             All rights reserved.
                         </motion.p>
                     </div>
-                    <div className="flex flex-col">
+                    {/* <div className="flex flex-col">
                         <motion.h3
                             variants={fadeInVariants}
                             initial="hidden"
@@ -121,8 +121,8 @@ const Footer = () => {
                                 Status
                             </a>
                         </motion.div>
-                    </div>
-                    <div className="flex flex-col">
+                    </div> */}
+                    <div className="flex flex-col items-center md:items-start">
                         <motion.h3
                             variants={fadeInVariants}
                             initial="hidden"
@@ -150,7 +150,7 @@ const Footer = () => {
                             custom={0.2}
                             viewport={{ once: true }}
                             onSubmit={handleSubmit}
-                            className="flex flex-col space-y-4 sm:flex-row sm:space-x-2 sm:space-y-0"
+                            className="flex w-full flex-col space-y-4 sm:flex-row sm:space-x-2 sm:space-y-0"
                         >
                             <input
                                 type="email"
