@@ -237,8 +237,13 @@ class MQTTClient {
     return this.sendCommand(garageId, 'close');
   }
 
-  public getGateStatus(garageId: string): GateStatus | null {
-    return this.garageGateStatus[garageId] || null;
+  public getGateStatus(garageId: string): GateStatus {
+    return (
+      this.garageGateStatus[garageId] || {
+        status: 'closed',
+        timestamp: new Date(),
+      }
+    );
   }
 
   public getAllGateStatuses(): GarageGateStatus {
