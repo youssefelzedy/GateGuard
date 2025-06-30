@@ -5,6 +5,7 @@ import dbConnect from '../config/dbConnect';
 import app from './app';
 import startWsClient from './wsServer';
 import mqttClient from './utils/mqttClient';
+import { startBroker } from './utils/mqttBroker';
 
 dotenv.config({ path: './config.env' });
 
@@ -35,11 +36,12 @@ wss.on('connection', (ws) => {
   });
 });
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 5000;
 console.log('PORT:', PORT);
 server.listen(PORT, () => {
-  console.log(`Server is running on port: ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
   console.log('MQTT client initialized');
+  startBroker();
 
   // Only start the WS client if needed
   // startWsClient();
@@ -69,3 +71,5 @@ process.on('SIGTERM', () => {
     process.exit(0);
   });
 });
+
+export default server;
