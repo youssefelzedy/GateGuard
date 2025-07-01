@@ -6,6 +6,7 @@ import arrowIcon from "../../assets/features/arrow-down-arrow-up.png";
 import usersIcon from "../../assets/features/users-group-alt.png";
 import videoIcon from "../../assets/features/video-square.png";
 import feature3Image from "../../assets/pages/feature-3.png";
+import { useAdmin } from "../auth/useAdmin";
 
 function AboutSection() {
     // Helper for animated background blobs
@@ -30,6 +31,7 @@ function AboutSection() {
             }}
         />
     );
+    const { isAuth } = useAdmin();
     return (
         <div
             id="about"
@@ -439,40 +441,65 @@ function AboutSection() {
                         </motion.div>
                     </div>
                 </motion.div>
-                <motion.div
-                    className="mx-auto max-w-3xl text-center"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{
-                        opacity: 1,
-                        y: 0,
-                        transition: {
-                            type: "spring",
-                            stiffness: 50,
-                            damping: 15,
-                            duration: 0.8,
-                        },
-                    }}
-                    viewport={{ once: true }}
-                >
-                    <motion.h2
-                        className="mb-6 text-3xl font-extrabold tracking-tight text-gray-800 sm:text-4xl md:text-5xl"
-                        initial={{ opacity: 0, scale: 0.9 }}
+                {!isAuth && (
+                    <motion.div
+                        className="mx-auto max-w-3xl text-center"
+                        initial={{ opacity: 0, y: 30 }}
                         whileInView={{
                             opacity: 1,
-                            scale: 1,
+                            y: 0,
                             transition: {
                                 type: "spring",
-                                stiffness: 100,
-                                damping: 10,
-                                delay: 0.2,
+                                stiffness: 50,
+                                damping: 15,
+                                duration: 0.8,
                             },
                         }}
                         viewport={{ once: true }}
                     >
-                        Are you{" "}
-                        <motion.span
-                            className="bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-primary-500 text-transparent"
-                            initial={{ opacity: 0, y: 10 }}
+                        <motion.h2
+                            className="mb-6 text-3xl font-extrabold tracking-tight text-gray-800 sm:text-4xl md:text-5xl"
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{
+                                opacity: 1,
+                                scale: 1,
+                                transition: {
+                                    type: "spring",
+                                    stiffness: 100,
+                                    damping: 10,
+                                    delay: 0.2,
+                                },
+                            }}
+                            viewport={{ once: true }}
+                        >
+                            Are you{" "}
+                            <motion.span
+                                className="bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-primary-500 text-transparent"
+                                initial={{ opacity: 0, y: 10 }}
+                                whileInView={{
+                                    opacity: 1,
+                                    y: 0,
+                                    transition: {
+                                        type: "spring",
+                                        stiffness: 200,
+                                        damping: 10,
+                                        delay: 0.5,
+                                    },
+                                }}
+                                viewport={{ once: true }}
+                            >
+                                convinced?
+                            </motion.span>
+                        </motion.h2>
+                        <motion.a
+                            href="/get-started"
+                            className="inline-block rounded-full bg-gradient-to-r from-primary-700 to-primary-500 px-8 py-3 text-base font-semibold text-white shadow-lg transition-all hover:from-primary-800 hover:to-primary-600 focus:outline-none focus:ring-4 focus:ring-primary-300"
+                            whileHover={{
+                                scale: 1.08,
+                                boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.15)",
+                            }}
+                            whileTap={{ scale: 0.97 }}
+                            initial={{ opacity: 0, y: 20 }}
                             whileInView={{
                                 opacity: 1,
                                 y: 0,
@@ -480,38 +507,15 @@ function AboutSection() {
                                     type: "spring",
                                     stiffness: 200,
                                     damping: 10,
-                                    delay: 0.5,
+                                    delay: 0.7,
                                 },
                             }}
                             viewport={{ once: true }}
                         >
-                            convinced?
-                        </motion.span>
-                    </motion.h2>
-                    <motion.a
-                        href="/get-started"
-                        className="inline-block rounded-full bg-gradient-to-r from-primary-700 to-primary-500 px-8 py-3 text-base font-semibold text-white shadow-lg transition-all hover:from-primary-800 hover:to-primary-600 focus:outline-none focus:ring-4 focus:ring-primary-300"
-                        whileHover={{
-                            scale: 1.08,
-                            boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.15)",
-                        }}
-                        whileTap={{ scale: 0.97 }}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{
-                            opacity: 1,
-                            y: 0,
-                            transition: {
-                                type: "spring",
-                                stiffness: 200,
-                                damping: 10,
-                                delay: 0.7,
-                            },
-                        }}
-                        viewport={{ once: true }}
-                    >
-                        Get Started
-                    </motion.a>
-                </motion.div>
+                            Get Started
+                        </motion.a>
+                    </motion.div>
+                )}
             </div>
         </div>
     );
