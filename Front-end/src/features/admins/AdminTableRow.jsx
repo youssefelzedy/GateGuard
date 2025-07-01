@@ -1,11 +1,16 @@
 import { Trash2 } from "lucide-react";
+const VITE_API_URL_PICTURE = import.meta.env.VITE_API_URL_PICTURE;
 
 function AdminTableRow({ admin, onDelete }) {
     return (
         <tr className="border-b border-primary-200 hover:bg-primary-100 hover:shadow-md dark:border-gray-900 dark:bg-gray-900 dark:hover:bg-gray-700">
             <td className="flex items-center gap-4 p-5">
                 <img
-                    src={admin.image}
+                    src={
+                        admin?.image
+                            ? `${VITE_API_URL_PICTURE}/${admin.image}`
+                            : "/default.jpg"
+                    }
                     alt={admin.name}
                     className="h-12 w-12 rounded-full object-cover"
                 />
