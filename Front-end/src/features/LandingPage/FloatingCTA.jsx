@@ -1,7 +1,10 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
+import { useAdmin } from "../auth/useAdmin";
 
 function FloatingCTA() {
+    const { isAuth } = useAdmin();
+    if (!isAuth) return;
     return (
         <motion.div
             className="fixed bottom-8 right-8 z-50"
