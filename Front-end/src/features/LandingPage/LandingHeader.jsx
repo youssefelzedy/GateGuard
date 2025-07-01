@@ -1,8 +1,10 @@
 import { useState } from "react";
 import Logo from "../../assets/Logo_light.svg";
+import { useAdmin } from "../auth/useAdmin";
 
 function LandingHeader() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { isAuth } = useAdmin();
 
     return (
         <header className="py-5">
@@ -41,18 +43,29 @@ function LandingHeader() {
                     </li>
                 </ul>
                 <div className="hidden items-center space-x-4 md:flex">
-                    <a
-                        href="/login"
-                        className="rounded-md px-5 py-2 text-lg font-medium text-white transition-colors hover:bg-white/10"
-                    >
-                        Log in
-                    </a>
-                    <a
-                        href="/get-started"
-                        className="rounded-md bg-white px-5 py-2 text-lg font-medium text-primary-700 shadow-sm transition-colors hover:bg-primary-100"
-                    >
-                        Get Started
-                    </a>
+                    {isAuth ? (
+                        <a
+                            href="/dashboard"
+                            className="rounded-md bg-white px-5 py-2 text-lg font-medium text-primary-700 shadow-sm transition-colors hover:bg-primary-100"
+                        >
+                            Dashboard
+                        </a>
+                    ) : (
+                        <>
+                            <a
+                                href="/login"
+                                className="rounded-md px-5 py-2 text-lg font-medium text-white transition-colors hover:bg-white/10"
+                            >
+                                Log in
+                            </a>
+                            <a
+                                href="/get-started"
+                                className="rounded-md bg-white px-5 py-2 text-lg font-medium text-primary-700 shadow-sm transition-colors hover:bg-primary-100"
+                            >
+                                Get Started
+                            </a>
+                        </>
+                    )}
                 </div>
                 <div className="md:hidden">
                     <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -108,18 +121,29 @@ function LandingHeader() {
                         </li>
                     </ul>
                     <div className="mt-6 border-t pt-6">
-                        <a
-                            href="/login"
-                            className="block w-full rounded-md py-2 text-center text-lg font-medium text-gray-700 hover:bg-gray-100"
-                        >
-                            Log in
-                        </a>
-                        <a
-                            href="/get-started"
-                            className="mt-2 block w-full rounded-md bg-primary-600 py-2 text-center text-lg font-medium text-white shadow-sm hover:bg-primary-700"
-                        >
-                            Get Started
-                        </a>
+                        {isAuth ? (
+                            <a
+                                href="/dashboard"
+                                className="block w-full rounded-md bg-primary-600 py-2 text-center text-lg font-medium text-white shadow-sm hover:bg-primary-700"
+                            >
+                                Dashboard
+                            </a>
+                        ) : (
+                            <>
+                                <a
+                                    href="/login"
+                                    className="block w-full rounded-md py-2 text-center text-lg font-medium text-gray-700 hover:bg-gray-100"
+                                >
+                                    Log in
+                                </a>
+                                <a
+                                    href="/get-started"
+                                    className="mt-2 block w-full rounded-md bg-primary-600 py-2 text-center text-lg font-medium text-white shadow-sm hover:bg-primary-700"
+                                >
+                                    Get Started
+                                </a>
+                            </>
+                        )}
                     </div>
                 </div>
             )}
