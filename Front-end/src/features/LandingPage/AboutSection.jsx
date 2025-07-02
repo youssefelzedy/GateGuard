@@ -6,6 +6,7 @@ import arrowIcon from "../../assets/features/arrow-down-arrow-up.png";
 import usersIcon from "../../assets/features/users-group-alt.png";
 import videoIcon from "../../assets/features/video-square.png";
 import feature3Image from "../../assets/pages/feature-3.png";
+import { useAdmin } from "../auth/useAdmin";
 
 function AboutSection() {
     // Helper for animated background blobs
@@ -30,10 +31,11 @@ function AboutSection() {
             }}
         />
     );
+    const { isAuth } = useAdmin();
     return (
         <div
             id="about"
-            className="relative min-h-screen overflow-hidden bg-gradient-to-br from-primary-50 via-white to-primary-100 py-20 dark:from-gray-900 dark:via-gray-950 dark:to-primary-900"
+            className="relative min-h-screen overflow-hidden bg-gradient-to-br from-primary-50 via-white to-primary-100 py-20"
         >
             <div className="container relative z-10 mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
                 {/* Section Title */}
@@ -136,7 +138,7 @@ function AboutSection() {
                             </span>
                         </motion.h3>
                         <motion.p
-                            className="mb-4 text-lg text-gray-700 dark:text-gray-200 sm:text-xl"
+                            className="mb-4 text-lg text-gray-700 sm:text-xl"
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.7, delay: 0.3 }}
@@ -157,14 +159,14 @@ function AboutSection() {
 
                 {/* How GateGuard Works Section */}
                 <motion.div
-                    className="relative mx-auto mb-20 max-w-4xl overflow-hidden rounded-3xl border border-primary-100 bg-white/80 px-6 py-14 shadow-2xl backdrop-blur-2xl dark:border-primary-800 dark:bg-primary-900/60"
+                    className="relative mx-auto mb-20 max-w-4xl overflow-hidden rounded-3xl border border-primary-100 bg-white/80 px-6 py-14 shadow-2xl backdrop-blur-2xl"
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7, ease: "easeOut" }}
                     viewport={{ once: true }}
                 >
                     <motion.h3
-                        className="relative z-10 mb-12 animate-pulse bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-center text-3xl font-extrabold tracking-tight text-primary-900 text-transparent dark:text-primary-100 sm:text-4xl"
+                        className="relative z-10 mb-12 animate-pulse bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-center text-3xl font-extrabold tracking-tight text-primary-900 text-transparent sm:text-4xl"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1, duration: 0.5 }}
@@ -175,7 +177,7 @@ function AboutSection() {
                     <div className="relative z-10 grid gap-12 sm:grid-cols-3">
                         {/* Step 1: Register */}
                         <motion.div
-                            className="relative flex flex-col items-center overflow-visible rounded-2xl border border-primary-100 bg-white/95 p-6 shadow-2xl backdrop-blur-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl dark:border-primary-800 dark:bg-primary-900/70"
+                            className="relative flex flex-col items-center overflow-visible rounded-2xl border border-primary-100 bg-white/95 p-6 shadow-2xl backdrop-blur-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl"
                             initial={{ opacity: 0, y: 40, scale: 0.95 }}
                             whileInView={{ opacity: 1, y: 0, scale: 1 }}
                             transition={{
@@ -199,17 +201,17 @@ function AboutSection() {
                                 transition={{ duration: 0.7, delay: 0.2 }}
                                 viewport={{ once: true }}
                             />
-                            <h4 className="mb-2 text-lg font-bold tracking-wide text-primary-900 drop-shadow-sm dark:text-primary-100">
+                            <h4 className="mb-2 text-lg font-bold tracking-wide text-primary-900 drop-shadow-sm">
                                 Register
                             </h4>
-                            <p className="px-2 text-center text-sm text-gray-700 dark:text-gray-200">
+                            <p className="px-2 text-center text-sm text-gray-700">
                                 Users and vehicles are registered quickly and
                                 securely through our intuitive platform.
                             </p>
                         </motion.div>
                         {/* Step 2: Verify */}
                         <motion.div
-                            className="relative flex flex-col items-center overflow-visible rounded-2xl border border-primary-100 bg-white/95 p-6 shadow-2xl backdrop-blur-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl dark:border-primary-800 dark:bg-primary-900/70"
+                            className="relative flex flex-col items-center overflow-visible rounded-2xl border border-primary-100 bg-white/95 p-6 shadow-2xl backdrop-blur-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl"
                             initial={{ opacity: 0, y: 40, scale: 0.95 }}
                             whileInView={{ opacity: 1, y: 0, scale: 1 }}
                             transition={{
@@ -233,17 +235,17 @@ function AboutSection() {
                                 transition={{ duration: 0.7, delay: 0.3 }}
                                 viewport={{ once: true }}
                             />
-                            <h4 className="mb-2 text-lg font-bold tracking-wide text-primary-900 drop-shadow-sm dark:text-primary-100">
+                            <h4 className="mb-2 text-lg font-bold tracking-wide text-primary-900 drop-shadow-sm">
                                 Verify
                             </h4>
-                            <p className="px-2 text-center text-sm text-gray-700 dark:text-gray-200">
+                            <p className="px-2 text-center text-sm text-gray-700">
                                 Admins review and approve access, ensuring only
                                 authorized vehicles can enter.
                             </p>
                         </motion.div>
                         {/* Step 3: Access */}
                         <motion.div
-                            className="relative flex flex-col items-center overflow-visible rounded-2xl border border-primary-100 bg-white/95 p-6 shadow-2xl backdrop-blur-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl dark:border-primary-800 dark:bg-primary-900/70"
+                            className="relative flex flex-col items-center overflow-visible rounded-2xl border border-primary-100 bg-white/95 p-6 shadow-2xl backdrop-blur-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl"
                             initial={{ opacity: 0, y: 40, scale: 0.95 }}
                             whileInView={{ opacity: 1, y: 0, scale: 1 }}
                             transition={{
@@ -267,10 +269,10 @@ function AboutSection() {
                                 transition={{ duration: 0.7, delay: 0.4 }}
                                 viewport={{ once: true }}
                             />
-                            <h4 className="mb-2 text-lg font-bold tracking-wide text-primary-900 drop-shadow-sm dark:text-primary-100">
+                            <h4 className="mb-2 text-lg font-bold tracking-wide text-primary-900 drop-shadow-sm">
                                 Access
                             </h4>
-                            <p className="px-2 text-center text-sm text-gray-700 dark:text-gray-200">
+                            <p className="px-2 text-center text-sm text-gray-700">
                                 Seamless, automated entry with license plate
                                 recognition and real-time monitoring.
                             </p>
@@ -285,14 +287,14 @@ function AboutSection() {
 
                 {/* Why Choose GateGuard Section */}
                 <motion.div
-                    className="relative mx-auto mb-20 max-w-6xl overflow-hidden rounded-3xl border border-primary-100 bg-gradient-to-br from-primary-50 via-white to-primary-100 px-6 py-14 shadow-2xl backdrop-blur-xl dark:border-primary-800 dark:from-gray-900 dark:via-gray-950 dark:to-primary-900"
+                    className="relative mx-auto mb-20 max-w-6xl overflow-hidden rounded-3xl border border-primary-100 bg-gradient-to-br from-primary-50 via-white to-primary-100 px-6 py-14 shadow-2xl backdrop-blur-xl"
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7, ease: "easeOut" }}
                     viewport={{ once: true }}
                 >
                     <motion.h3
-                        className="relative z-10 mb-12 animate-pulse bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-center text-3xl font-extrabold tracking-tight text-primary-900 text-transparent dark:text-primary-100 sm:text-4xl"
+                        className="relative z-10 mb-12 animate-pulse bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-center text-3xl font-extrabold tracking-tight text-primary-900 text-transparent sm:text-4xl"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1, duration: 0.5 }}
@@ -303,7 +305,7 @@ function AboutSection() {
                     <div className="relative z-10 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
                         {/* Feature 1: Fast & Automated */}
                         <motion.div
-                            className="relative flex flex-col items-center overflow-visible rounded-2xl border border-primary-100 bg-white/95 p-6 shadow-2xl backdrop-blur-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl dark:border-primary-800 dark:bg-primary-900/70"
+                            className="relative flex flex-col items-center overflow-visible rounded-2xl border border-primary-100 bg-white/95 p-6 shadow-2xl backdrop-blur-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl"
                             initial={{ opacity: 0, y: 40, scale: 0.95 }}
                             whileInView={{ opacity: 1, y: 0, scale: 1 }}
                             transition={{
@@ -327,17 +329,17 @@ function AboutSection() {
                                 transition={{ duration: 0.7, delay: 0.2 }}
                                 viewport={{ once: true }}
                             />
-                            <h4 className="mb-1 text-base font-semibold tracking-wide text-primary-900 drop-shadow-sm dark:text-primary-100">
+                            <h4 className="mb-1 text-base font-semibold tracking-wide text-primary-900 drop-shadow-sm">
                                 Fast & Automated
                             </h4>
-                            <p className="px-2 text-center text-xs text-gray-700 dark:text-gray-200">
+                            <p className="px-2 text-center text-xs text-gray-700">
                                 Instant access and approvals, reducing wait
                                 times and manual work.
                             </p>
                         </motion.div>
                         {/* Feature 2: Real-Time Alerts */}
                         <motion.div
-                            className="relative flex flex-col items-center overflow-visible rounded-2xl border border-primary-100 bg-white/95 p-6 shadow-2xl backdrop-blur-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl dark:border-primary-800 dark:bg-primary-900/70"
+                            className="relative flex flex-col items-center overflow-visible rounded-2xl border border-primary-100 bg-white/95 p-6 shadow-2xl backdrop-blur-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl"
                             initial={{ opacity: 0, y: 40, scale: 0.95 }}
                             whileInView={{ opacity: 1, y: 0, scale: 1 }}
                             transition={{
@@ -361,17 +363,17 @@ function AboutSection() {
                                 transition={{ duration: 0.7, delay: 0.3 }}
                                 viewport={{ once: true }}
                             />
-                            <h4 className="mb-1 text-base font-semibold tracking-wide text-primary-900 drop-shadow-sm dark:text-primary-100">
+                            <h4 className="mb-1 text-base font-semibold tracking-wide text-primary-900 drop-shadow-sm">
                                 Real-Time Alerts
                             </h4>
-                            <p className="px-2 text-center text-xs text-gray-700 dark:text-gray-200">
+                            <p className="px-2 text-center text-xs text-gray-700">
                                 Stay informed with instant notifications for
                                 every entry and event.
                             </p>
                         </motion.div>
                         {/* Feature 3: Top-Tier Security */}
                         <motion.div
-                            className="relative flex flex-col items-center overflow-visible rounded-2xl border border-primary-100 bg-white/95 p-6 shadow-2xl backdrop-blur-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl dark:border-primary-800 dark:bg-primary-900/70"
+                            className="relative flex flex-col items-center overflow-visible rounded-2xl border border-primary-100 bg-white/95 p-6 shadow-2xl backdrop-blur-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl"
                             initial={{ opacity: 0, y: 40, scale: 0.95 }}
                             whileInView={{ opacity: 1, y: 0, scale: 1 }}
                             transition={{
@@ -395,17 +397,17 @@ function AboutSection() {
                                 transition={{ duration: 0.7, delay: 0.4 }}
                                 viewport={{ once: true }}
                             />
-                            <h4 className="mb-1 text-base font-semibold tracking-wide text-primary-900 drop-shadow-sm dark:text-primary-100">
+                            <h4 className="mb-1 text-base font-semibold tracking-wide text-primary-900 drop-shadow-sm">
                                 Top-Tier Security
                             </h4>
-                            <p className="px-2 text-center text-xs text-gray-700 dark:text-gray-200">
+                            <p className="px-2 text-center text-xs text-gray-700">
                                 Advanced encryption and authentication keep your
                                 facility safe.
                             </p>
                         </motion.div>
                         {/* Feature 4: Insightful Analytics */}
                         <motion.div
-                            className="relative flex flex-col items-center overflow-visible rounded-2xl border border-primary-100 bg-white/95 p-6 shadow-2xl backdrop-blur-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl dark:border-primary-800 dark:bg-primary-900/70"
+                            className="relative flex flex-col items-center overflow-visible rounded-2xl border border-primary-100 bg-white/95 p-6 shadow-2xl backdrop-blur-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl"
                             initial={{ opacity: 0, y: 40, scale: 0.95 }}
                             whileInView={{ opacity: 1, y: 0, scale: 1 }}
                             transition={{
@@ -429,50 +431,75 @@ function AboutSection() {
                                 transition={{ duration: 0.7, delay: 0.5 }}
                                 viewport={{ once: true }}
                             />
-                            <h4 className="mb-1 text-base font-semibold tracking-wide text-primary-900 drop-shadow-sm dark:text-primary-100">
+                            <h4 className="mb-1 text-base font-semibold tracking-wide text-primary-900 drop-shadow-sm">
                                 Insightful Analytics
                             </h4>
-                            <p className="px-2 text-center text-xs text-gray-700 dark:text-gray-200">
+                            <p className="px-2 text-center text-xs text-gray-700">
                                 Track usage, trends, and security events with
                                 powerful reporting tools.
                             </p>
                         </motion.div>
                     </div>
                 </motion.div>
-                <motion.div
-                    className="mx-auto max-w-3xl text-center"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{
-                        opacity: 1,
-                        y: 0,
-                        transition: {
-                            type: "spring",
-                            stiffness: 50,
-                            damping: 15,
-                            duration: 0.8,
-                        },
-                    }}
-                    viewport={{ once: true }}
-                >
-                    <motion.h2
-                        className="mb-6 text-3xl font-extrabold tracking-tight text-gray-800 sm:text-4xl md:text-5xl"
-                        initial={{ opacity: 0, scale: 0.9 }}
+                {!isAuth && (
+                    <motion.div
+                        className="mx-auto max-w-3xl text-center"
+                        initial={{ opacity: 0, y: 30 }}
                         whileInView={{
                             opacity: 1,
-                            scale: 1,
+                            y: 0,
                             transition: {
                                 type: "spring",
-                                stiffness: 100,
-                                damping: 10,
-                                delay: 0.2,
+                                stiffness: 50,
+                                damping: 15,
+                                duration: 0.8,
                             },
                         }}
                         viewport={{ once: true }}
                     >
-                        Are you{" "}
-                        <motion.span
-                            className="bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-primary-500 text-transparent"
-                            initial={{ opacity: 0, y: 10 }}
+                        <motion.h2
+                            className="mb-6 text-3xl font-extrabold tracking-tight text-gray-800 sm:text-4xl md:text-5xl"
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{
+                                opacity: 1,
+                                scale: 1,
+                                transition: {
+                                    type: "spring",
+                                    stiffness: 100,
+                                    damping: 10,
+                                    delay: 0.2,
+                                },
+                            }}
+                            viewport={{ once: true }}
+                        >
+                            Are you{" "}
+                            <motion.span
+                                className="bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-primary-500 text-transparent"
+                                initial={{ opacity: 0, y: 10 }}
+                                whileInView={{
+                                    opacity: 1,
+                                    y: 0,
+                                    transition: {
+                                        type: "spring",
+                                        stiffness: 200,
+                                        damping: 10,
+                                        delay: 0.5,
+                                    },
+                                }}
+                                viewport={{ once: true }}
+                            >
+                                convinced?
+                            </motion.span>
+                        </motion.h2>
+                        <motion.a
+                            href="/get-started"
+                            className="inline-block rounded-full bg-gradient-to-r from-primary-700 to-primary-500 px-8 py-3 text-base font-semibold text-white shadow-lg transition-all hover:from-primary-800 hover:to-primary-600 focus:outline-none focus:ring-4 focus:ring-primary-300"
+                            whileHover={{
+                                scale: 1.08,
+                                boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.15)",
+                            }}
+                            whileTap={{ scale: 0.97 }}
+                            initial={{ opacity: 0, y: 20 }}
                             whileInView={{
                                 opacity: 1,
                                 y: 0,
@@ -480,38 +507,15 @@ function AboutSection() {
                                     type: "spring",
                                     stiffness: 200,
                                     damping: 10,
-                                    delay: 0.5,
+                                    delay: 0.7,
                                 },
                             }}
                             viewport={{ once: true }}
                         >
-                            convinced?
-                        </motion.span>
-                    </motion.h2>
-                    <motion.a
-                        href="/get-started"
-                        className="inline-block rounded-full bg-gradient-to-r from-primary-700 to-primary-500 px-8 py-3 text-base font-semibold text-white shadow-lg transition-all hover:from-primary-800 hover:to-primary-600 focus:outline-none focus:ring-4 focus:ring-primary-300"
-                        whileHover={{
-                            scale: 1.08,
-                            boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.15)",
-                        }}
-                        whileTap={{ scale: 0.97 }}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{
-                            opacity: 1,
-                            y: 0,
-                            transition: {
-                                type: "spring",
-                                stiffness: 200,
-                                damping: 10,
-                                delay: 0.7,
-                            },
-                        }}
-                        viewport={{ once: true }}
-                    >
-                        Get Started
-                    </motion.a>
-                </motion.div>
+                            Get Started
+                        </motion.a>
+                    </motion.div>
+                )}
             </div>
         </div>
     );
