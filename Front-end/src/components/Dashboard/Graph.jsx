@@ -49,7 +49,7 @@ export default function Graph() {
         for (let i = 0; i < days; i++) {
             const date = subDays(today, days - 1 - i);
             const label =
-                days === 7 ? format(date, "EEE") : format(date, "MM/dd");
+                days === 7 ? format(date, "EEE MM/dd") : format(date, "MM/dd");
             counts[label] = 0;
         }
         logs?.forEach((log) => {
@@ -61,7 +61,7 @@ export default function Graph() {
                 ) {
                     const label =
                         days === 7
-                            ? format(logDate, "EEE")
+                            ? format(logDate, "EEE MM/dd")
                             : format(logDate, "MM/dd");
                     if (counts[label] !== undefined) {
                         counts[label]++;
