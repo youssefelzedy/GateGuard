@@ -40,8 +40,8 @@ const PORT = process.env.PORT || 5000;
 console.log('PORT:', PORT);
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-  console.log('MQTT client initialized');
-  startBroker();
+  // console.log('MQTT client initialized');
+  // startBroker();
 
   // Only start the WS client if needed
   // startWsClient();
