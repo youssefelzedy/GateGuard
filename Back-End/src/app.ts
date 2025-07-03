@@ -84,21 +84,21 @@ app.use(mongoSanitize());
 app.use(xssClean());
 
 // Routes
-const API_URL = process.env.API_URL;
-app.use(`${API_URL}/admins`, adminRouter);
-app.use(`${API_URL}/auth`, authRouter);
-app.use(`${API_URL}/garages`, garageRouter);
-app.use(`${API_URL}/invitations`, invitationRouter);
-app.use(`${API_URL}/users`, userRouter);
-app.use(`${API_URL}/logs`, logsRouter);
-app.use(`${API_URL}/cameras`, cameraRouter);
+const API = '/api/v1';
+app.use(`${API}/admins`, adminRouter);
+app.use(`${API}/auth`, authRouter);
+app.use(`${API}/garages`, garageRouter);
+app.use(`${API}/invitations`, invitationRouter);
+app.use(`${API}/users`, userRouter);
+app.use(`${API}/logs`, logsRouter);
+app.use(`${API}/cameras`, cameraRouter);
 
 // Hardware-specific routes (accessible without garage nesting)
 app.get(
-  `${API_URL}/hardware/check-latest`,
+  `${API}/hardware/check-latest`,
   logsController.checkLatestLogForHardware,
 );
-app.post(`${API_URL}/hardware/mark-processed`, logsController.markLogAsProcessed);
+app.post(`${API}/hardware/mark-processed`, logsController.markLogAsProcessed);
 
 app.all('*', (req: customRequest, res: Response, next: NextFunction) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
