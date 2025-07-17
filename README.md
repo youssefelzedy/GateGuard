@@ -6,17 +6,17 @@ A modern, automated gate and garage access management system for organizations. 
 
 ## 🚀 Features
 
--   **Automated Registration & Approval:** Employees and vehicle owners register; admins review and approve access.
--   **Live Stream Monitoring:** Real-time video feeds from garage gates and cameras.
--   **Access Logs:** Searchable, filterable, and paginated logs of all entries and exits.
--   **Role-Based Management:** Admin and user management with invitation flows.
--   **Dashboard Analytics:** Visualize entries, trends, and car counts with interactive charts.
--   **Gate Control:** Open/close the garage gate directly from the dashboard.
--   **Profile & Settings:** Manage personal and garage information.
--   **Dark Mode:** Seamless light/dark theme support.
--   **Responsive UI:** Works beautifully on all devices.
--   **Secure REST API:** Authentication, authorization, and data validation.
--   **Email Notifications:** For invitations and approvals.
+- **Automated Registration & Approval:** Employees and vehicle owners register; admins review and approve access.
+- **Live Stream Monitoring:** Real-time video feeds from garage gates and cameras.
+- **Access Logs:** Searchable, filterable, and paginated logs of all entries and exits.
+- **Role-Based Management:** Admin and user management with invitation flows.
+- **Dashboard Analytics:** Visualize entries, trends, and car counts with interactive charts.
+- **Gate Control:** Open/close the garage gate directly from the dashboard.
+- **Profile & Settings:** Manage personal and garage information.
+- **Dark Mode:** Seamless light/dark theme support.
+- **Responsive UI:** Works beautifully on all devices.
+- **Secure REST API:** Authentication, authorization, and data validation.
+- **Email Notifications:** For invitations and approvals.
 
 ---
 
@@ -24,9 +24,9 @@ A modern, automated gate and garage access management system for organizations. 
 
 ### Prerequisites
 
--   [Node.js](https://nodejs.org/) (v18+ recommended)
--   [MongoDB](https://www.mongodb.com/) (local or cloud instance)
--   npm (comes with Node.js)
+- [Node.js](https://nodejs.org/) (v18+ recommended)
+- [MongoDB](https://www.mongodb.com/) (local or cloud instance)
+- npm (comes with Node.js)
 
 ---
 
@@ -48,7 +48,7 @@ npm install
 npm start
 ```
 
--   The backend will start on the port specified in your `config.env` (default: 5000).
+- The backend will start on the port specified in your `config.env` (default: 5000).
 
 ---
 
@@ -62,7 +62,7 @@ npm install
 npm run dev
 ```
 
--   The frontend will start on [http://localhost:5173](http://localhost:5173).
+- The frontend will start on [http://localhost:5173](http://localhost:5173).
 
 ---
 
@@ -70,26 +70,26 @@ npm run dev
 
 ### Frontend
 
--   **Framework:** [React](https://react.dev/) (with Vite)
--   **Styling:** [Tailwind CSS](https://tailwindcss.com/)
--   **Routing:** [react-router-dom](https://reactrouter.com/)
--   **State/Data:** [@tanstack/react-query](https://tanstack.com/query/latest)
--   **Form Handling:** [react-hook-form](https://react-hook-form.com/)
--   **Charts:** [Recharts](https://recharts.org/)
--   **UI/UX:** [Framer Motion](https://www.framer.com/motion/), [PrimeReact](https://primereact.org/), [Lucide React Icons](https://lucide.dev/)
--   **Notifications:** [react-hot-toast](https://react-hot-toast.com/)
+- **Framework:** [React](https://react.dev/) (with Vite)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Routing:** [react-router-dom](https://reactrouter.com/)
+- **State/Data:** [@tanstack/react-query](https://tanstack.com/query/latest)
+- **Form Handling:** [react-hook-form](https://react-hook-form.com/)
+- **Charts:** [Recharts](https://recharts.org/)
+- **UI/UX:** [Framer Motion](https://www.framer.com/motion/), [PrimeReact](https://primereact.org/), [Lucide React Icons](https://lucide.dev/)
+- **Notifications:** [react-hot-toast](https://react-hot-toast.com/)
 
 ### Backend
 
--   **Runtime:** [Node.js](https://nodejs.org/)
--   **Framework:** [Express.js](https://expressjs.com/)
--   **Database:** [MongoDB](https://www.mongodb.com/) (with Mongoose)
--   **Authentication:** JWT, bcryptjs
--   **Email:** Nodemailer
--   **Security:** Helmet, CORS, express-rate-limit, xss-clean, express-mongo-sanitize, hpp
--   **WebSockets:** ws (for live features)
--   **Video Processing:** fluent-ffmpeg
--   **Validation:** validator
+- **Runtime:** [Node.js](https://nodejs.org/)
+- **Framework:** [Express.js](https://expressjs.com/)
+- **Database:** [MongoDB](https://www.mongodb.com/) (with Mongoose)
+- **Authentication:** JWT, bcryptjs
+- **Email:** Nodemailer
+- **Security:** Helmet, CORS, express-rate-limit, xss-clean, express-mongo-sanitize, hpp
+- **WebSockets:** ws (for live features)
+- **Video Processing:** fluent-ffmpeg
+- **Validation:** validator
 
 ---
 
@@ -159,15 +159,17 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 **Frontend:**
 
--   Salah Swefy – [salahm.swefy@gmail.com](mailto:salahm.swefy@gmail.com) – [GitHub: SalahMSwefy](https://github.com/SalahMSwefy)
+- Salah Swefy – [salahm.swefy@gmail.com](mailto:salahm.swefy@gmail.com) – [GitHub: SalahMSwefy](https://github.com/SalahMSwefy)
 
--   Saad Samir – [saadsamir7177@gmail.com](mailto:saadsamir7177@gmail.com) – [GitHub: SaadSamir7](https://github.com/SaadSamir7)
+- Saad Samir – [saadsamir7177@gmail.com](mailto:saadsamir7177@gmail.com) – [GitHub: SaadSamir7](https://github.com/SaadSamir7)
 
 **Backend:**
 
--   Youssef Megahed – [youssefmegahed99n@gmail.com](mailto:youssefmegahed99n@gmail.com) – [GitHub: YoussefMegahed](https://github.com/YoussefMegahed)
+- Youssef Megahed – [youssefmegahed99n@gmail.com](mailto:youssefmegahed99n@gmail.com) – [GitHub: YoussefMegahed](https://github.com/Bor3y9)
 
--   Youssef Elzedy – [youssefelzedy90@gmail.com](mailto:youssefmegahed99n@gmail.com) – [GitHub: youssefelzedy](https://github.com/youssefelzedy)
+**Ai:**
+
+- Youssef Elzedy – [youssefelzedy90@gmail.com](mailto:youssefmegahed99n@gmail.com) – [GitHub: youssefelzedy](https://github.com/youssefelzedy)
 
 ---
 
