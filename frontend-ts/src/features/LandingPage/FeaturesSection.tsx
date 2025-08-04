@@ -1,0 +1,197 @@
+import { motion } from "framer-motion";
+import arrowIcon from "../../assets/features/arrow-down-arrow-up.png";
+import usersIcon from "../../assets/features/users-group-alt.png";
+import videoIcon from "../../assets/features/video-square.png";
+import feature1 from "../../assets/pages/feature-1.png";
+import feature2 from "../../assets/pages/feature-2.png";
+import feature3 from "../../assets/pages/feature-3.png";
+
+function FeaturesSection() {
+    return (
+        <section
+            id="features"
+            className="relative z-20 w-full bg-white px-6 py-24">
+            <div className="mx-auto max-w-7xl">
+                <motion.h2
+                    initial={{ opacity: 0, y: -20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                    className="mb-16 text-center text-2xl font-bold text-primary-500 sm:text-3xl md:text-4xl lg:text-5xl">
+                    Featu<span className="text-primary-800">res</span>
+                </motion.h2>
+
+                <div className="flex flex-col gap-20 md:gap-28 lg:gap-36">
+                    {/* === Feature 1 === */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ duration: 0.8 }}
+                        viewport={{ once: true }}
+                        className="flex flex-col items-center md:flex-row md:items-start md:justify-between">
+                        <motion.div
+                            initial={{ opacity: 0, x: -50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.6, delay: 0.2 }}
+                            viewport={{ once: true }}
+                            className="relative max-w-md text-center md:text-left">
+                            <h3 className="flex flex-col text-2xl font-extrabold leading-snug text-primary-900 sm:text-3xl md:text-3xl lg:text-5xl">
+                                Stay{" "}
+                                <span className="italic text-primary-500">
+                                    Informed
+                                </span>
+                            </h3>
+                            <motion.img
+                                initial={{ rotate: -10, scale: 0.9 }}
+                                whileInView={{ rotate: 0, scale: 1 }}
+                                transition={{ duration: 0.5, delay: 0.3 }}
+                                viewport={{ once: true }}
+                                src={arrowIcon}
+                                alt=""
+                                className="absolute -top-10 left-1/2 h-64 w-64 -translate-x-1/2 opacity-20 md:left-0 md:translate-x-0"
+                            />
+                            <p className="mt-6 text-xs text-gray-600 sm:text-sm md:text-sm lg:text-lg">
+                                Be aware of every vehicle that entered the
+                                garage, manage employee & visitor access
+                                efficiently.
+                            </p>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.6, delay: 0.4 }}
+                            viewport={{ once: true }}
+                            className="mt-10 md:ml-8 md:mt-4">
+                            <motion.img
+                                whileHover={{ scale: 1.03 }}
+                                transition={{
+                                    type: "spring",
+                                    stiffness: 400,
+                                    damping: 10,
+                                }}
+                                src={feature1}
+                                alt="Feature 1 Screenshot"
+                                className="h-auto w-full max-w-[400px] rounded-xl shadow-xl sm:max-w-[450px] md:max-w-[600px] lg:max-w-[700px]"
+                                loading="lazy"
+                            />
+                        </motion.div>
+                    </motion.div>
+
+                    {/* === Feature 2 === */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ duration: 0.8 }}
+                        viewport={{ once: true }}
+                        className="flex flex-col items-center md:flex-row-reverse md:items-start md:justify-between">
+                        <motion.div
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.6, delay: 0.2 }}
+                            viewport={{ once: true }}
+                            className="relative max-w-md text-center md:text-left">
+                            <h3 className="flex flex-col text-2xl font-extrabold leading-snug text-primary-900 sm:text-3xl md:text-3xl lg:text-5xl">
+                                Stay{" "}
+                                <span className="italic text-primary-500">
+                                    In Control
+                                </span>
+                            </h3>
+                            <motion.img
+                                initial={{ rotate: 10, scale: 0.9 }}
+                                whileInView={{ rotate: 0, scale: 1 }}
+                                transition={{ duration: 0.5, delay: 0.3 }}
+                                viewport={{ once: true }}
+                                src={usersIcon}
+                                alt=""
+                                className="absolute -top-10 left-1/2 h-64 w-64 -translate-x-1/2 opacity-20 md:left-0 md:translate-x-0"
+                            />
+                            <p className="mt-6 text-xs text-gray-600 sm:text-sm md:text-sm lg:text-lg">
+                                Control who has access to your garage, automate
+                                entry & reduce security risks.
+                            </p>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, x: -50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.6, delay: 0.4 }}
+                            viewport={{ once: true }}
+                            className="mt-10 md:mr-8 md:mt-4">
+                            <motion.img
+                                whileHover={{ scale: 1.03 }}
+                                transition={{
+                                    type: "spring",
+                                    stiffness: 400,
+                                    damping: 10,
+                                }}
+                                src={feature2}
+                                alt="Feature 2 Screenshot"
+                                className="h-auto w-full max-w-[400px] rounded-xl shadow-xl sm:max-w-[450px] md:max-w-[600px] lg:max-w-[700px]"
+                                loading="lazy"
+                            />
+                        </motion.div>
+                    </motion.div>
+
+                    {/* === Feature 3 === */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ duration: 0.8 }}
+                        viewport={{ once: true }}
+                        className="flex flex-col items-center md:flex-row md:items-start md:justify-between">
+                        <motion.div
+                            initial={{ opacity: 0, x: -50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.6, delay: 0.2 }}
+                            viewport={{ once: true }}
+                            className="relative max-w-md text-center md:text-left">
+                            <h3 className="flex flex-col text-2xl font-extrabold leading-snug text-primary-900 sm:text-3xl md:text-3xl lg:text-5xl">
+                                Stay{" "}
+                                <span className="italic text-primary-500">
+                                    Vigilant
+                                </span>
+                            </h3>
+                            <motion.img
+                                initial={{ rotate: -10, scale: 0.9 }}
+                                whileInView={{ rotate: 0, scale: 1 }}
+                                transition={{ duration: 0.5, delay: 0.3 }}
+                                viewport={{ once: true }}
+                                src={videoIcon}
+                                alt=""
+                                className="absolute -top-10 left-1/2 h-32 w-32 -translate-x-1/2 opacity-20 md:left-0 md:translate-x-0"
+                            />
+                            <p className="mt-6 text-xs text-gray-600 sm:text-sm md:text-sm lg:text-lg">
+                                Using the live stream feature, keep an eye on
+                                the garage gate 24/7, with the ability to add
+                                other cameras.
+                            </p>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.6, delay: 0.4 }}
+                            viewport={{ once: true }}
+                            className="mt-10 md:ml-8 md:mt-4">
+                            <motion.img
+                                whileHover={{ scale: 1.03 }}
+                                transition={{
+                                    type: "spring",
+                                    stiffness: 400,
+                                    damping: 10,
+                                }}
+                                src={feature3}
+                                alt="Feature 3 Screenshot"
+                                className="h-auto w-full max-w-[400px] rounded-xl shadow-xl sm:max-w-[450px] md:max-w-[600px] lg:max-w-[700px]"
+                                loading="lazy"
+                            />
+                        </motion.div>
+                    </motion.div>
+                </div>
+            </div>
+        </section>
+    );
+}
+
+export default FeaturesSection;
